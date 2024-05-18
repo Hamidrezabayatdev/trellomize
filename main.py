@@ -2,8 +2,12 @@ from rich.console import Console
 console = Console()
 from datetime import datetime
 import json
+with open("users.json", 'r') as usersFR:
+    users = json.load(usersFR)
+with open("projects.json", 'r') as projectsFR:
+    projects = json.load(projectsFR)
 
-inUser = {}
+inUser = 1000
 
 def signUp ():
     console.print('Please enter needed values to continue...', style='magenta')
@@ -29,15 +33,16 @@ def signUp ():
         'leaderOf' : [],
         'memberOf' : [],
     }
+    global users
     users.append(user)
     with open("users.json", 'w') as usersFW:
         json.dump(users, usersFW)
 
-
-def usernameCheck (users, usernameC):
-    for user in users:
-        if user['username'] == usernameC:
-            return user
+def usernameCheck (usernameC):
+    global users
+    for i in range(len(users)):
+        if users[i]['username'] == usernameC:
+            return i
     return False
 
 def login():
@@ -45,23 +50,21 @@ def login():
     console.print('Username: ', end='')
     while True:
         username = input()
-        if usernameCheck(users, username) != False:
+        if str(usernameCheck(username)) != False:
             break
         else:
             console.print('Username does not exist, please enter another usename...', style='red bold')
     console.print('Password: ', end='')
     while True:
         password = input()
-        if password == usernameCheck(users, username)['password']:
+        if password == users[usernameCheck(username)]['password']:
             global inUser
-            inUser = usernameCheck(users, username)
+            inUser = usernameCheck(username)
             break
         else:
             console.print('Password does not match, please enter another password...', style='red bold')
-with open("users.json", 'r') as usersFR:
-    users = json.load(usersFR)
 
-def newTask(project):
+def newTask():
     task = {
         'id' : '',
         'title' : '',
@@ -106,17 +109,17 @@ def newTask(project):
     console.print('press enter if you want to continue with default value(LOW)', style='yellow')
     console.print('\t1. CRITICAL\n\t2. HIGH\n\t3. MEDIUM', style='magenta')
     while True:
-        prioritry = input()
-        if prioritry == '1':
-            task['prioritry'] = 'CRITICAL'
+        priority = input()
+        if priority == '1':
+            task['priority'] = 'CRITICAL'
             break
-        elif status == '2':
-            task['prioritry'] = 'HIGH'
+        elif priority == '2':
+            task['priority'] = 'HIGH'
             break
-        elif prioritry == '3':
-            task['prioritry'] = 'MEDIUM'
+        elif priority == '3':
+            task['priority'] = 'MEDIUM'
             break
-        elif prioritry == '':
+        elif priority == '':
             break
         else:
             console.print('Please enter between 1 to 3', style='red bold')
@@ -131,7 +134,7 @@ def newTask(project):
             console.print('Comment added; If you want to add another comment, please type it...', end=' ', style='green')
             console.print('press enter to continue', style='yellow')
             comment = input()
-    console.print('Task has been successfully added', end=' ', style='green')
+    console.print('Task has been successfully added', style='green')
     return task
 def newProject():
     project = {
@@ -144,6 +147,7 @@ def newProject():
     console.print('Alright!\nPlease enter expected values... ', style='magenta')
     console.print('Project name: ', end='', style='')
     project['name'] = input()
+    users[inUser]['leaderOf'].append(project['name'])
     console.print('Project collaborators: ', end='', style='')
     while True:
         collaborator = input()
@@ -151,13 +155,13 @@ def newProject():
             break
         else:
             project['collaborators'].append(collaborator)
-    project['leader'] = inUser['username']
-    while True:
-        project['tasks'].append(newTask(project))
-        if collaborator == 'end':
-            break
-        else:
-            project['tasks'].append(newTask(project))
+    project['leader'] = users[inUser]['username']
+    console.print('Press \'1\' to add a new task to your project', end=' ', style='magenta')
+    console.print('press enter to continue', style='yellow')
+    while input() != '':
+        project['tasks'].append(newTask())
+        console.print('Do you want to add another task to your project?', end=' ', style='magenta')
+        console.print('press enter to continue', style='yellow')
     return project
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
@@ -171,6 +175,7 @@ while True:
         break
     elif signInType == '2':
         signUp()
+        console.print(users)
         console.print("\t1. Login \n\t2. sign up", style='magenta')
     else:
         console.print('Please enter 1 or 2', style='red bold')
@@ -178,4 +183,16 @@ console.print('Here is your panel', style='magenta')
 console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
 panelJob = input()
 if panelJob == '1':
-    newProject()
+    project = newProject()
+    # users[inUser]['leaderOf'].append(project['name'])
+    projects.append(project)
+
+
+
+
+
+
+with open("users.json", 'w') as usersFW:
+    json.dump(users, usersFW)
+with open("projects.json", 'w') as projectsFW:
+    json.dump(projects, projectsFW)
