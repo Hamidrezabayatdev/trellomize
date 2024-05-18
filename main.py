@@ -161,16 +161,24 @@ def newProject():
     console.print('Project name: ', end='', style='')
     project['name'] = input()
     users[inUser]['leaderOf'].append(project['name'])
+    project['collaborators'].append(users[inUser]['username'])
     console.print('Project collaborators username: ', end=' ', style='')
     console.print('press enter to continue', style='yellow')
     collaborator = input()
     while collaborator != '':
         if checkInUser(collaborator, 'username'):
-            console.print('this username doesn\'t exist! Please enter an existing username', style='red bold')
+            console.print('This username doesn\'t exist! Please enter an existing username', style='red bold')
             console.print('Project collaborators username: ', end=' ', style='')
             console.print('press enter to continue', style='yellow')
         else:
-            project['collaborators'].append(collaborator)
+            if collaborator not in project['collaborators']:
+                project['collaborators'].append(collaborator)
+                console.print(collaborator, 'has been successfully added to task\'s collaborators', style='green')
+                console.print('Project collaborators username: ', end=' ', style='')
+                console.print('press enter to continue', style='yellow')
+            else:
+                console.print('Already added! Please add another username', end=' ', style='red bold')
+                console.print('or press enter to continue', style='yellow')
         collaborator = input()
     project['leader'] = users[inUser]['username']
     console.print('Press \'1\' to add a new task to your project', end=' ', style='magenta')
