@@ -9,25 +9,30 @@ with open("projects.json", 'r') as projectsFR:
 
 inUser = 1000
 
+def filesWrite():
+    with open("users.json", 'w') as usersFW:
+        json.dump(users, usersFW)
+    with open("projects.json", 'w') as projectsFW:
+        json.dump(projects, projectsFW)
+
 def checkInUser(val, checkType):
-    for i in users:
-        if i[checkType] == val:
-            return False
-    return True
+    for i in range(len(users)):
+        if users[i][checkType] == val:
+            return i
+    return False
 
 def signUp ():
     console.print('Please enter needed values to continue...', style='magenta')
     console.print('Username: ', end='')
     inpUsername = input()
-    while checkInUser(inpUsername, 'username') == False:
+    while checkInUser(inpUsername, 'username') != False or str(checkInUser(inpUsername, 'username')) == '0':
         console.print('Username already exists, please enter another username...', style='red bold')
         inpUsername = input()
     console.print('Email address: ', end='')
     inpEmail = input()
-    while checkInUser(inpEmail, 'email') == False:
+    while checkInUser(inpEmail, 'email') != False or str(checkInUser(inpEmail, 'email')) == '0':
         console.print('Email already exists, please enter another email...', style='red bold')
         inpEmail = input()
-    checkInUser(inpEmail, 'email')
     console.print('Password: ', end='')
     inpPassword = input()
     #push in data
@@ -166,13 +171,15 @@ def newProject():
     console.print('press enter to continue', style='yellow')
     collaborator = input()
     while collaborator != '':
-        if checkInUser(collaborator, 'username'):
+        if checkInUser(collaborator, 'username') == False and str(checkInUser(collaborator, 'username')) != '0':
             console.print('This username doesn\'t exist! Please enter an existing username', style='red bold')
             console.print('Project collaborators username: ', end=' ', style='')
             console.print('press enter to continue', style='yellow')
         else:
             if collaborator not in project['collaborators']:
                 project['collaborators'].append(collaborator)
+                users[checkInUser(collaborator, 'username')]['memberOf'].append(project['name'])
+                ## collab memberOf
                 console.print(collaborator, 'has been successfully added to task\'s collaborators', style='green')
                 console.print('Project collaborators username: ', end=' ', style='')
                 console.print('press enter to continue', style='yellow')
@@ -217,7 +224,3 @@ if panelJob == '1':
 
 
 
-with open("users.json", 'w') as usersFW:
-    json.dump(users, usersFW)
-with open("projects.json", 'w') as projectsFW:
-    json.dump(projects, projectsFW)
