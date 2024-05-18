@@ -3,7 +3,7 @@ console = Console()
 from datetime import datetime
 import json
 
-inUser = []
+inUser = {}
 
 def signUp ():
     console.print('Please enter needed values to continue...', style='magenta')
@@ -53,7 +53,8 @@ def login():
     while True:
         password = input()
         if password == usernameCheck(users, username)['password']:
-            inUser.append(usernameCheck(users, username))
+            global inUser
+            inUser = usernameCheck(users, username)
             break
         else:
             console.print('Password does not match, please enter another password...', style='red bold')
@@ -74,15 +75,15 @@ def newTask(project):
         'comments' : []
     }
     console.print('Alright!\nPlease enter expected values... ', style='magenta')
-    console.print('Project title: ', end='')
+    console.print('Task title: ', end='')
     task['title'] = input()
-    console.print('Project description: ', end='')
+    console.print('Task description: ', end='')
     task['description'] = input()
     # assigness left here
     #time&date and endtime&enddate
-    console.print('Choose project status', end='')
-    console.print('press enter if you want to continue with default value(BACKLOG)', style='yellow')
-    console.print('\t1. TODO\n\t2. DOING\n\t3. DONE\t\n4. ARCHIVED', style='magenta')
+    console.print('Choose ask status', end=' ')
+    console.print('(press enter if you want to continue with default value (BACKLOG))', style='yellow')
+    console.print('\t1. TODO\n\t2. DOING\n\t3. DONE\n\t4. ARCHIVED', style='magenta')
     while True:
         status = input()
         if status == '1':
@@ -101,7 +102,7 @@ def newTask(project):
             break
         else:
             console.print('Please enter between 1 to 4', style='red bold')
-    console.print('Project priority: ', end='')
+    console.print('Task priority: ', end='')
     console.print('press enter if you want to continue with default value(LOW)', style='yellow')
     console.print('\t1. CRITICAL\n\t2. HIGH\n\t3. MEDIUM', style='magenta')
     while True:
@@ -127,29 +128,12 @@ def newTask(project):
             break
         else:
             task['comments'].append(comment)
-            console.print('comment added; If you want to add another comment, please type it...', end=' ', style='green')
+            console.print('Comment added; If you want to add another comment, please type it...', end=' ', style='green')
             console.print('press enter to continue', style='yellow')
             comment = input()
-
-# -------------- main code starts from here ---------------------
-# -------------- main code starts from here ---------------------
-# -------------- main code starts from here ---------------------
-# -------------- main code starts from here ---------------------
-console.print("\t1. Login \n\t2. sign up", style='magenta')
-while True:
-    signInType = input()
-    if signInType == '1':
-        login()
-        break
-    elif signInType == '2':
-        signUp()
-        console.print("\t1. Login \n\t2. sign up", style='magenta')
-    else:
-        console.print('Please enter 1 or 2', style='red bold')
-console.print('Here is your panel', style='magenta')
-console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
-panelJob = input()
-if panelJob == '1':
+    console.print('Task has been successfully added', end=' ', style='green')
+    return task
+def newProject():
     project = {
         'id' : '',
         'name' : '',
@@ -174,3 +158,24 @@ if panelJob == '1':
             break
         else:
             project['tasks'].append(newTask(project))
+    return project
+# -------------- main code starts from here ---------------------
+# -------------- main code starts from here ---------------------
+# -------------- main code starts from here ---------------------
+# -------------- main code starts from here ---------------------
+console.print("\t1. Login \n\t2. sign up", style='magenta')
+while True:
+    signInType = input()
+    if signInType == '1':
+        login()
+        break
+    elif signInType == '2':
+        signUp()
+        console.print("\t1. Login \n\t2. sign up", style='magenta')
+    else:
+        console.print('Please enter 1 or 2', style='red bold')
+console.print('Here is your panel', style='magenta')
+console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
+panelJob = input()
+if panelJob == '1':
+    newProject()
