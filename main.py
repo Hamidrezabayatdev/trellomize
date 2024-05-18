@@ -31,7 +31,6 @@ def signUp ():
     console.print('Password: ', end='')
     inpPassword = input()
     #push in data
-    # check for repeated username or email
 
     checkForValidSignup = True
     creationTime = 0
@@ -64,7 +63,7 @@ def login():
     console.print('Username: ', end='')
     while True:
         username = input()
-        if usernameCheck(username) != False or str(usernameCheck(username)) == 0:
+        if usernameCheck(username) != False or str(usernameCheck(username)) == '0':
             break
         else:
             console.print('Username does not exist, please enter another usename...', style='red bold')
@@ -162,13 +161,17 @@ def newProject():
     console.print('Project name: ', end='', style='')
     project['name'] = input()
     users[inUser]['leaderOf'].append(project['name'])
-    console.print('Project collaborators: ', end='', style='')
-    while True:
-        collaborator = input()
-        if collaborator == 'end':
-            break
+    console.print('Project collaborators username: ', end=' ', style='')
+    console.print('press enter to continue', style='yellow')
+    collaborator = input()
+    while collaborator != '':
+        if checkInUser(collaborator, 'username'):
+            console.print('this username doesn\'t exist! Please enter an existing username', style='red bold')
+            console.print('Project collaborators username: ', end=' ', style='')
+            console.print('press enter to continue', style='yellow')
         else:
             project['collaborators'].append(collaborator)
+        collaborator = input()
     project['leader'] = users[inUser]['username']
     console.print('Press \'1\' to add a new task to your project', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
