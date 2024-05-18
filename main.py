@@ -9,16 +9,30 @@ with open("projects.json", 'r') as projectsFR:
 
 inUser = 1000
 
+def checkInUser(val, checkType):
+    for i in users:
+        if i[checkType] == val:
+            return False
+    return True
+
 def signUp ():
     console.print('Please enter needed values to continue...', style='magenta')
     console.print('Username: ', end='')
     inpUsername = input()
+    while checkInUser(inpUsername, 'username') == False:
+        console.print('Username already exists, please enter another username...', style='red bold')
+        inpUsername = input()
     console.print('Email address: ', end='')
     inpEmail = input()
+    while checkInUser(inpEmail, 'email') == False:
+        console.print('Email already exists, please enter another email...', style='red bold')
+        inpEmail = input()
+    checkInUser(inpEmail, 'email')
     console.print('Password: ', end='')
     inpPassword = input()
     #push in data
     # check for repeated username or email
+
     checkForValidSignup = True
     creationTime = 0
     if checkForValidSignup:
@@ -50,7 +64,7 @@ def login():
     console.print('Username: ', end='')
     while True:
         username = input()
-        if str(usernameCheck(username)) != False:
+        if usernameCheck(username) != False or str(usernameCheck(username)) == 0:
             break
         else:
             console.print('Username does not exist, please enter another usename...', style='red bold')
@@ -72,8 +86,8 @@ def newTask():
         'time' : '',
         'date' : '',
         'assigness' : [],
-        'priority' : '',
-        'status' : '',
+        'priority' : 'LOW',
+        'status' : 'BACKLOG',
         'history' : [],
         'comments' : []
     }
@@ -160,7 +174,7 @@ def newProject():
     console.print('press enter to continue', style='yellow')
     while input() != '':
         project['tasks'].append(newTask())
-        console.print('Do you want to add another task to your project?', end=' ', style='magenta')
+        console.print('Press \'1\' to add a new task to your project', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
     return project
 # -------------- main code starts from here ---------------------
