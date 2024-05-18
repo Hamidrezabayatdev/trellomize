@@ -53,8 +53,7 @@ def signUp ():
     }
     global users
     users.append(user)
-    with open("users.json", 'w') as usersFW:
-        json.dump(users, usersFW)
+    filesWrite()
 
 def usernameCheck (usernameC):
     global users
@@ -216,7 +215,6 @@ console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your pro
 panelJob = input()
 if panelJob == '1':
     project = newProject()
-    # users[inUser]['leaderOf'].append(project['name'])
     projects.append(project)
 
 
@@ -224,3 +222,4 @@ if panelJob == '1':
 
 
 
+filesWrite()
