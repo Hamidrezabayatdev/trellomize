@@ -73,16 +73,63 @@ def newTask(project):
         'history' : [],
         'comments' : []
     }
-    # console.print('Alright!\nPlease enter expected values... ', style='magenta')
-    # console.print('Project title: ', end='')
-    # task['title'] = input()
-    # console.print('Project description: ', end='')
-    # task['description'] = input()
-    # # assigness left here
-
-    # console.print('Project title: ', end='')
-    # console.print('Project title: ', end='')
-    # console.print('Project title: ', end='')
+    console.print('Alright!\nPlease enter expected values... ', style='magenta')
+    console.print('Project title: ', end='')
+    task['title'] = input()
+    console.print('Project description: ', end='')
+    task['description'] = input()
+    # assigness left here
+    #time&date and endtime&enddate
+    console.print('Choose project status', end='')
+    console.print('press enter if you want to continue with default value(BACKLOG)', style='yellow')
+    console.print('\t1. TODO\n\t2. DOING\n\t3. DONE\t\n4. ARCHIVED', style='magenta')
+    while True:
+        status = input()
+        if status == '1':
+            task['status'] = 'TODO'
+            break
+        elif status == '2':
+            task['status'] = 'DOING'
+            break
+        elif status == '3':
+            task['status'] = 'DONE'
+            break
+        elif status == '4':
+            task['status'] = 'ARCHIVED'
+            break
+        elif status == '':
+            break
+        else:
+            console.print('Please enter between 1 to 4', style='red bold')
+    console.print('Project priority: ', end='')
+    console.print('press enter if you want to continue with default value(LOW)', style='yellow')
+    console.print('\t1. CRITICAL\n\t2. HIGH\n\t3. MEDIUM', style='magenta')
+    while True:
+        prioritry = input()
+        if prioritry == '1':
+            task['prioritry'] = 'CRITICAL'
+            break
+        elif status == '2':
+            task['prioritry'] = 'HIGH'
+            break
+        elif prioritry == '3':
+            task['prioritry'] = 'MEDIUM'
+            break
+        elif prioritry == '':
+            break
+        else:
+            console.print('Please enter between 1 to 3', style='red bold')
+    console.print('If you want to add comments, please type here...', end=' ', style='magenta')
+    console.print('press enter to continue', style='yellow')
+    comment = input()
+    while True:
+        if comment == '':
+            break
+        else:
+            task['comments'].append(comment)
+            console.print('comment added; If you want to add another comment, please type it...', end=' ', style='green')
+            console.print('press enter to continue', style='yellow')
+            comment = input()
 
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
