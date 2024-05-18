@@ -216,7 +216,7 @@ panelJob = input()
 if panelJob == '1':
     project = newProject()
     projects.append(project)
-
+    filesWrite()
 
 
 
