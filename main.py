@@ -15,9 +15,15 @@ def filesWrite():
     with open("projects.json", 'w') as projectsFW:
         json.dump(projects, projectsFW)
 
-def checkInUser(val, checkType):
+def checkInUsers(val, checkType):
     for i in range(len(users)):
         if users[i][checkType] == val:
+            return i
+    return False
+
+def checkInProjects(val, checkType):
+    for i in range(len(projects)):
+        if projects[i][checkType] == val:
             return i
     return False
 
@@ -25,12 +31,12 @@ def signUp ():
     console.print('Please enter needed values to continue...', style='magenta')
     console.print('Username: ', end='')
     inpUsername = input()
-    while checkInUser(inpUsername, 'username') != False or str(checkInUser(inpUsername, 'username')) == '0':
+    while checkInUsers(inpUsername, 'username') != False or str(checkInUsers(inpUsername, 'username')) == '0':
         console.print('Username already exists, please enter another username...', style='red bold')
         inpUsername = input()
     console.print('Email address: ', end='')
     inpEmail = input()
-    while checkInUser(inpEmail, 'email') != False or str(checkInUser(inpEmail, 'email')) == '0':
+    while checkInUsers(inpEmail, 'email') != False or str(checkInUsers(inpEmail, 'email')) == '0':
         console.print('Email already exists, please enter another email...', style='red bold')
         inpEmail = input()
     console.print('Password: ', end='')
@@ -170,14 +176,14 @@ def newProject():
     console.print('press enter to continue', style='yellow')
     collaborator = input()
     while collaborator != '':
-        if checkInUser(collaborator, 'username') == False and str(checkInUser(collaborator, 'username')) != '0':
+        if checkInUsers(collaborator, 'username') == False and str(checkInUsers(collaborator, 'username')) != '0':
             console.print('This username doesn\'t exist! Please enter an existing username', style='red bold')
             console.print('Project collaborators username: ', end=' ', style='')
             console.print('press enter to continue', style='yellow')
         else:
             if collaborator not in project['collaborators']:
                 project['collaborators'].append(collaborator)
-                users[checkInUser(collaborator, 'username')]['memberOf'].append(project['name'])
+                users[checkInUsers(collaborator, 'username')]['memberOf'].append(project['name'])
                 ## collab memberOf
                 console.print(collaborator, 'has been successfully added to task\'s collaborators', style='green')
                 console.print('Project collaborators username: ', end=' ', style='')
@@ -194,6 +200,14 @@ def newProject():
         console.print('Press \'1\' to add a new task to your project', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
     return project
+def showLeaderProjects():
+    console.print('Projects that you are leader of them:', style='magenta')
+    for projs in users[inUser]['leaderOf']:
+        console.log('\t', projs)
+def showMemberProjects():
+    console.print('Projects that you are member of them:', style='magenta')
+    for projs in users[inUser]['memberOf']:
+        console.log('\t', projs)
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
@@ -206,7 +220,7 @@ while True:
         break
     elif signInType == '2':
         signUp()
-        console.print(users)
+        # console.print(users)
         console.print("\t1. Login \n\t2. sign up", style='magenta')
     else:
         console.print('Please enter 1 or 2', style='red bold')
@@ -217,6 +231,25 @@ if panelJob == '1':
     project = newProject()
     projects.append(project)
     filesWrite()
+elif panelJob == '2':
+    showLeaderProjects()
+    showMemberProjects()
+elif panelJob == '3':
+    showLeaderProjects()
+    console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
+    editProj = input()
+    editProjIndex = checkInProjects(editProj, 'name')
+    while editProjIndex == False and str(editProjIndex) != '0':
+        console.print('You can only edit the projects that you are the leader of them!', end=' ', style='red bold')
+        console.print('Projects that you are leader of them:', style='magenta')
+        showLeaderProjects()
+        console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
+        editProj = input()
+        editProjIndex = checkInProjects(editProj, 'name')
+
+    console.log('your projects specifications:', projects[editProjIndex])
+
+
 
 
 
