@@ -178,7 +178,7 @@ def newProject():
     project['name'] = input()
     users[inUser]['leaderOf'].append(project['name'])
     project['collaborators'].append(users[inUser]['username'])
-    console.print('Project collaborators username: ', end=' ', style='')
+    console.print('Project collaborators usernames: ', end=' ', style='')
     console.print('press enter to continue', style='yellow')
     collaborator = input()
     while collaborator != '':
@@ -259,9 +259,30 @@ elif panelJob == '3':
     collabEdit = input()
     while collabEdit != '':
         if collabEdit in projects[editProjIndex]:
-            projects[editProjIndex].remove(collabEdit)
+            if collabEdit in projects[editProjIndex]['collaborators']:
+                projects[editProjIndex]['collaborators'].remove(collabEdit)
+            else:
+                console.print(collabEdit, 'is not a collaborator in this project!', end=' ', style='red bold')
         else:
-            projects[editProjIndex].append(collabEdit)
+            console.print('Project collaborator username: ', end=' ', style='')
+            console.print('press enter to continue', style='yellow')
+            if checkInUsers(collabEdit, 'username') == False and str(checkInUsers(collabEdit, 'username')) != '0':
+                console.print('This username doesn\'t exist! Please enter an existing username', style='red bold')
+                console.print('Project collaborators username: ', end=' ', style='')
+                console.print('press enter to continue', style='yellow')
+            else:
+                if collabEdit not in projects[editProjIndex]['collaborators']:
+                    projects[editProjIndex]['collaborators'].append(collabEdit)
+                    users[checkInUsers(collabEdit, 'username')]['memberOf'].append(projects[editProjIndex]['name'])
+                    ## collab memberOf
+                    console.print(collabEdit, 'has been successfully added to task\'s collaborators', style='green')
+                    console.print('Project collaborators username: ', end=' ', style='')
+                    console.print('press enter to continue', style='yellow')
+                else:
+                    console.print('Already added! Please add another username', end=' ', style='red bold')
+                    console.print('or press enter to continue', style='yellow')
+            collabEdit = input()
+            projects[editProjIndex]['collaborators'].append(collabEdit)
         console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
         collabEdit = input()
