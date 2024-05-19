@@ -233,123 +233,127 @@ while True:
 console.print('Here is your panel', style='magenta')
 console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
 panelJob = input()
-if panelJob == '1':
-    project = newProject()
-    projects.append(project)
-    filesWrite()
-elif panelJob == '2':
-    showLeaderProjects()
-    showMemberProjects()
-elif panelJob == '3':
-    showLeaderProjects()
-    console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
-    editProjName = input()
-    editProjIndex = checkInProjects(editProjName, 'name')
-    while editProjIndex == False and str(editProjIndex) != '0':
-        console.print('You can only edit the projects that you are the leader of them!', end=' ', style='red bold')
-        console.print('Projects that you are leader of them:', style='magenta')
+while panelJob != '':
+    if panelJob == '1':
+        project = newProject()
+        projects.append(project)
+        filesWrite()
+    elif panelJob == '2':
+        showLeaderProjects()
+        showMemberProjects()
+    elif panelJob == '3':
         showLeaderProjects()
         console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
         editProjName = input()
         editProjIndex = checkInProjects(editProjName, 'name')
+        while editProjIndex == False and str(editProjIndex) != '0':
+            console.print('You can only edit the projects that you are the leader of them!', end=' ', style='red bold')
+            console.print('Projects that you are leader of them:', style='magenta')
+            showLeaderProjects()
+            console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
+            editProjName = input()
+            editProjIndex = checkInProjects(editProjName, 'name')
 
-    console.log('your projects specifications:', projects[editProjIndex])
-    console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
-    console.print('press enter to continue', style='yellow')
-    collabEdit = input()
-    while collabEdit != '':
-        if collabEdit in projects[editProjIndex]['collaborators']:
-            if collabEdit == projects[editProjIndex]['leader']:
-                console.print('You can not remove the project leader from collaborators!', style='red bold')
-            else:
-                projects[editProjIndex]['collaborators'].remove(collabEdit)
-                console.print(collabEdit, 'has been successfully removed from this task\'s collaborators', style='green')
-        else:
-            if checkInUsers(collabEdit, 'username') == False and str(checkInUsers(collabEdit, 'username')) != '0':
-                console.print('This username doesn\'t exist! Please enter an existing username', style='red bold')
-            else:
-                if collabEdit not in projects[editProjIndex]['collaborators']:
-                    projects[editProjIndex]['collaborators'].append(collabEdit)
-                    users[checkInUsers(collabEdit, 'username')]['memberOf'].append(projects[editProjIndex]['name'])
-                    ## collab memberOf
-                    console.print(collabEdit, 'has been successfully added to task\'s collaborators', style='green')
-                else:
-                    console.print('Already added! Please add another username', end=' ', style='red bold')
-                    console.print('or press enter to continue', style='yellow')
+        console.log('your projects specifications:', projects[editProjIndex])
         console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
         collabEdit = input()
-    # console.print(projects, style='blue')
-    console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
-    console.print('press enter to continue', style='yellow')
-    editTaskName = input()
-    while editTaskName != '':
-        ediTaskIndex = taskIndex(editTaskName, 'title', editProjIndex)
-        console.print('Enter the task item that you want to edit', end=' ', style='magenta')
-        console.print('press enter to continue', style='yellow')
-        taskItemEdit = input()
-        while taskItemEdit != '':
-            if taskItemEdit == 'title' or taskItemEdit == 'description':
-                console.print('Ok, Enter the text that you want to replace in', taskItemEdit, end=' ', style='magenta')
-                projects[editProjIndex]['tasks'][ediTaskIndex][taskItemEdit] = input()
-            elif taskItemEdit == 'priority':
-                console.print('press enter to continue', style='yellow')
-                console.print('\t1. CRITICAL\n\t2. HIGH\n\t3. MEDIUM\n\t4. LOW', style='magenta')
-                while True:
-                    priority = input()
-                    if priority == '1':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['priority'] = 'CRITICAL'
-                        break
-                    elif priority == '2':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['priority'] = 'HIGH'
-                        break
-                    elif priority == '3':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['priority'] = 'MEDIUM'
-                        break
-                    elif priority == '4':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['priority'] = 'LOW'
-                        break
-                    elif priority == '':
-                        break
-                    else:
-                        console.print('Please enter between 1 to 3', style='red bold')
-            elif taskItemEdit == 'status':
-                console.print('press enter to continue', style='yellow')
-                console.print('\t1. TODO\n\t2. DOING\n\t3. DONE\n\t4. ARCHIVED\n\t5. BACKLOG', style='magenta')
-                while True:
-                    status = input()
-                    if status == '1':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'TODO'
-                        break
-                    elif status == '2':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'DOING'
-                        break
-                    elif status == '3':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'DONE'
-                        break
-                    elif status == '4':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'ARCHIVED'
-                        break
-                    elif status == '5':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'BACKLOG'
-                        break
-                    elif status == '':
-                        break
-                    else:
-                        console.print('Please enter between 1 to 4', style='red bold')
-            elif taskItemEdit == 'comments':
-                console.print('Enter the comment that you want to add', style='magenta')
-                projects[editProjIndex]['tasks'][ediTaskIndex]['comments'].append(input())
-            elif taskItemEdit == '':
-                break
+        while collabEdit != '':
+            if collabEdit in projects[editProjIndex]['collaborators']:
+                if collabEdit == projects[editProjIndex]['leader']:
+                    console.print('You can not remove the project leader from collaborators!', style='red bold')
+                else:
+                    projects[editProjIndex]['collaborators'].remove(collabEdit)
+                    users[checkInUsers(collabEdit, 'username')]['memberOf'].remove(projects[editProjIndex]['name'])
+                    console.print(collabEdit, 'has been successfully removed from this task\'s collaborators', style='green')
             else:
-                console.print('This task does not have this item!', style='red bold')
-            console.print('Enter the task item that you want to edit', end=' ', style='magenta')
+                if checkInUsers(collabEdit, 'username') == False and str(checkInUsers(collabEdit, 'username')) != '0':
+                    console.print('This username doesn\'t exist! Please enter an existing username', style='red bold')
+                else:
+                    if collabEdit not in projects[editProjIndex]['collaborators']:
+                        projects[editProjIndex]['collaborators'].append(collabEdit)
+                        users[checkInUsers(collabEdit, 'username')]['memberOf'].append(projects[editProjIndex]['name'])
+                        ## collab memberOf
+                        console.print(collabEdit, 'has been successfully added to task\'s collaborators', style='green')
+                    else:
+                        console.print('Already added! Please add another username', end=' ', style='red bold')
+                        console.print('or press enter to continue', style='yellow')
+            console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
             console.print('press enter to continue', style='yellow')
-            taskItemEdit = input()
+            collabEdit = input()
+        # console.print(projects, style='blue')
         console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
         editTaskName = input()
+        while editTaskName != '':
+            ediTaskIndex = taskIndex(editTaskName, 'title', editProjIndex)
+            console.print('Enter the task item that you want to edit', end=' ', style='magenta')
+            console.print('press enter to continue', style='yellow')
+            taskItemEdit = input()
+            while taskItemEdit != '':
+                if taskItemEdit == 'title' or taskItemEdit == 'description':
+                    console.print('Ok, Enter the text that you want to replace in', taskItemEdit, end=' ', style='magenta')
+                    projects[editProjIndex]['tasks'][ediTaskIndex][taskItemEdit] = input()
+                elif taskItemEdit == 'priority':
+                    console.print('press enter to continue', style='yellow')
+                    console.print('\t1. CRITICAL\n\t2. HIGH\n\t3. MEDIUM\n\t4. LOW', style='magenta')
+                    while True:
+                        priority = input()
+                        if priority == '1':
+                            projects[editProjIndex]['tasks'][ediTaskIndex]['priority'] = 'CRITICAL'
+                            break
+                        elif priority == '2':
+                            projects[editProjIndex]['tasks'][ediTaskIndex]['priority'] = 'HIGH'
+                            break
+                        elif priority == '3':
+                            projects[editProjIndex]['tasks'][ediTaskIndex]['priority'] = 'MEDIUM'
+                            break
+                        elif priority == '4':
+                            projects[editProjIndex]['tasks'][ediTaskIndex]['priority'] = 'LOW'
+                            break
+                        elif priority == '':
+                            break
+                        else:
+                            console.print('Please enter between 1 to 3', style='red bold')
+                elif taskItemEdit == 'status':
+                    console.print('press enter to continue', style='yellow')
+                    console.print('\t1. TODO\n\t2. DOING\n\t3. DONE\n\t4. ARCHIVED\n\t5. BACKLOG', style='magenta')
+                    while True:
+                        status = input()
+                        if status == '1':
+                            projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'TODO'
+                            break
+                        elif status == '2':
+                            projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'DOING'
+                            break
+                        elif status == '3':
+                            projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'DONE'
+                            break
+                        elif status == '4':
+                            projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'ARCHIVED'
+                            break
+                        elif status == '5':
+                            projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'BACKLOG'
+                            break
+                        elif status == '':
+                            break
+                        else:
+                            console.print('Please enter between 1 to 4', style='red bold')
+                elif taskItemEdit == 'comments':
+                    console.print('Enter the comment that you want to add', style='magenta')
+                    projects[editProjIndex]['tasks'][ediTaskIndex]['comments'].append(input())
+                elif taskItemEdit == '':
+                    break
+                else:
+                    console.print('This task does not have this item!', style='red bold')
+                console.print('Enter the task item that you want to edit', end=' ', style='magenta')
+                console.print('press enter to continue', style='yellow')
+                taskItemEdit = input()
+            console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
+            console.print('press enter to continue', style='yellow')
+            editTaskName = input()
+    console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
+    panelJob = input()
 
 
 
