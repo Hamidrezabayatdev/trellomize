@@ -194,11 +194,11 @@ def newProject():
                 console.print('or press enter to continue', style='yellow')
         collaborator = input()
     project['leader'] = users[inUser]['username']
-    console.print('Press \'1\' to add a new task to your project', end=' ', style='magenta')
+    console.print('Press any key to add a new task to your project', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
     while input() != '':
         project['tasks'].append(newTask())
-        console.print('Press \'1\' to add a new task to your project', end=' ', style='magenta')
+        console.print('Press any key to add a new task to your project', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
     return project
 def showLeaderProjects():
@@ -245,10 +245,10 @@ while panelJob != '':
         showLeaderProjects()
         console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
         editProjName = input()
+        # If editProjName in users[inUser]['leaderOf]
         editProjIndex = checkInProjects(editProjName, 'name')
         while editProjIndex == False and str(editProjIndex) != '0':
-            console.print('You can only edit the projects that you are the leader of them!', end=' ', style='red bold')
-            console.print('Projects that you are leader of them:', style='magenta')
+            console.print('You can only edit the projects that you are the leader of them!', style='red bold')
             showLeaderProjects()
             console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
             editProjName = input()
@@ -286,6 +286,11 @@ while panelJob != '':
         console.print('press enter to continue', style='yellow')
         editTaskName = input()
         while editTaskName != '':
+            while taskIndex(editTaskName, 'title', editProjIndex) == False  and str(taskIndex(editTaskName, 'title', editProjIndex)) != '0':
+                console.print('This task doesn\'t exist, Please enter an existing task name', end=' ', style='red bold')
+                console.print('press enter to continue', style='yellow')
+                editTaskName = input()
+                console.print('taskIndex func:', taskIndex(editTaskName, 'title', editProjIndex), end=' ', style='blue')
             ediTaskIndex = taskIndex(editTaskName, 'title', editProjIndex)
             console.print('Enter the task item that you want to edit', end=' ', style='magenta')
             console.print('press enter to continue', style='yellow')
@@ -352,6 +357,12 @@ while panelJob != '':
             console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
             console.print('press enter to continue', style='yellow')
             editTaskName = input()
+        console.print('Press any key to add a new task to your project', end=' ', style='magenta')
+        console.print('press enter to continue', style='yellow')
+        while input() != '':
+            projects[editProjIndex]['tasks'].append(newTask())
+            console.print('Press any key to add a new task to your project', end=' ', style='magenta')
+            console.print('press enter to continue', style='yellow')
     console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
     panelJob = input()
 
