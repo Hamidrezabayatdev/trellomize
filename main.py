@@ -2,6 +2,7 @@ from rich.console import Console
 console = Console()
 from datetime import datetime
 import json
+import re
 with open("users.json", 'r') as usersFR:
     users = json.load(usersFR)
 with open("projects.json", 'r') as projectsFR:
@@ -9,6 +10,15 @@ with open("projects.json", 'r') as projectsFR:
 
 inUser = 1000
 
+def checkEmail(email):
+ 
+    pat = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'    # pass the regular expression
+    # and the string into the fullmatch() method
+    if(re.match(pat,email)):
+        return True
+    else:
+        return False
+    
 def filesWrite():
     with open("users.json", 'w') as usersFW:
         json.dump(users, usersFW)
@@ -37,8 +47,14 @@ def signUp ():
         inpUsername = input()
     console.print('Email address: ', end='')
     inpEmail = input()
-    while checkInUsers(inpEmail, 'email') != False or str(checkInUsers(inpEmail, 'email')) == '0':
-        console.print('Email already exists, please enter another email...', style='red bold')
+    while True:
+        if checkEmail(inpEmail):
+            if checkInUsers(inpEmail, 'email') != False or str(checkInUsers(inpEmail, 'email')) == '0':
+                console.print('Email already exists, please enter another email...', style='red bold')
+            else:
+                break
+        else:
+            console.print('Incorrect email format, please enter another email...', style='red bold')
         inpEmail = input()
     console.print('Password: ', end='')
     inpPassword = input()
@@ -227,9 +243,10 @@ def editTask():
         console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
         editProjName = input()
         editProjIndex = checkInProjects(editProjName, 'name')
-    console.log('your projects specifications:', projects[editProjIndex])
+    console.print('your projects specifications:', projects[editProjIndex])
     console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
+    console.print('collaborators: ', projects[editProjIndex]['collaborators'])
     collabEdit = input()
     while collabEdit != '':
         if collabEdit in projects[editProjIndex]['collaborators']:
@@ -243,93 +260,88 @@ def editTask():
             if checkInUsers(collabEdit, 'username') == False and str(checkInUsers(collabEdit, 'username')) != '0':
                 console.print('This username doesn\'t exist! Please enter an existing username', style='red bold')
             else:
-                if collabEdit not in projects[editProjIndex]['collaborators']:
-                    projects[editProjIndex]['collaborators'].append(collabEdit)
-                    users[checkInUsers(collabEdit, 'username')]['memberOf'].append(projects[editProjIndex]['name'])
-                    ## collab memberOf
-                    console.print(collabEdit, 'has been successfully added to task\'s collaborators', style='green')
-                else:
-                    console.print('Already added! Please add another username', end=' ', style='red bold')
-                    console.print('or press enter to continue', style='yellow')
+                projects[editProjIndex]['collaborators'].append(collabEdit)
+                users[checkInUsers(collabEdit, 'username')]['memberOf'].append(projects[editProjIndex]['name'])
+                console.print(collabEdit, 'has been successfully added to task\'s collaborators', style='green')
         console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
         collabEdit = input()
     # console.print(projects, style='blue')
-    console.print('Press any key to add a new task to your project', end=' ', style='magenta')
+    console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
     while input() != '':
         projects[editProjIndex]['tasks'].append(newTask())
-        console.print('Press any key to add a new task to your project', end=' ', style='magenta')
+        console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
     console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
     editTaskName = input()
     while editTaskName != '':
-        while taskIndex(editTaskName, 'title', editProjIndex) == False  and str(taskIndex(editTaskName, 'title', editProjIndex)) != '0':
+        while taskIndex(editTaskName, 'title', editProjIndex) == False and str(taskIndex(editTaskName, 'title', editProjIndex)) != '0':
             console.print('This task doesn\'t exist, Please enter an existing task name', end=' ', style='red bold')
             console.print('press enter to continue', style='yellow')
             editTaskName = input()
             if editTaskName == '':
                 break
-            console.print('taskIndex func:', taskIndex(editTaskName, 'title', editProjIndex), end=' ', style='blue')
+            # console.print('taskIndex func:', taskIndex(editTaskName, 'title', editProjIndex), end=' ', style='blue')
         if editTaskName == '':
                 break
-        ediTaskIndex = taskIndex(editTaskName, 'title', editProjIndex)
+        editTaskIndex = taskIndex(editTaskName, 'title', editProjIndex)
         console.print('Enter the task item that you want to edit', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
         taskItemEdit = input()
         while taskItemEdit != '':
             if taskItemEdit == 'title' or taskItemEdit == 'description':
                 console.print('Ok, Enter the text that you want to replace in', taskItemEdit, end=' ', style='magenta')
-                projects[editProjIndex]['tasks'][ediTaskIndex][taskItemEdit] = input()
+                projects[editProjIndex]['tasks'][editTaskIndex][taskItemEdit] = input()
             elif taskItemEdit == 'priority':
                 console.print('press enter to continue', style='yellow')
                 console.print('\t1. CRITICAL\n\t2. HIGH\n\t3. MEDIUM\n\t4. LOW', style='magenta')
                 while True:
                     priority = input()
                     if priority == '1':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['priority'] = 'CRITICAL'
+                        projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'CRITICAL'
                         break
                     elif priority == '2':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['priority'] = 'HIGH'
+                        projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'HIGH'
                         break
                     elif priority == '3':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['priority'] = 'MEDIUM'
+                        projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'MEDIUM'
                         break
                     elif priority == '4':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['priority'] = 'LOW'
+                        projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'LOW'
                         break
                     elif priority == '':
                         break
                     else:
-                        console.print('Please enter between 1 to 3', style='red bold')
+                        console.print('Please enter between 1 to 4', style='red bold')
             elif taskItemEdit == 'status':
                 console.print('press enter to continue', style='yellow')
                 console.print('\t1. TODO\n\t2. DOING\n\t3. DONE\n\t4. ARCHIVED\n\t5. BACKLOG', style='magenta')
                 while True:
                     status = input()
                     if status == '1':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'TODO'
+                        projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'TODO'
                         break
                     elif status == '2':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'DOING'
+                        projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'DOING'
                         break
                     elif status == '3':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'DONE'
+                        projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'DONE'
                         break
                     elif status == '4':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'ARCHIVED'
+                        projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'ARCHIVED'
                         break
                     elif status == '5':
-                        projects[editProjIndex]['tasks'][ediTaskIndex]['status'] = 'BACKLOG'
+                        projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'BACKLOG'
                         break
                     elif status == '':
                         break
                     else:
-                        console.print('Please enter between 1 to 4', style='red bold')
+                        console.print('Please enter between 1 to 5', style='red bold')
             elif taskItemEdit == 'comments':
                 console.print('Enter the comment that you want to add', style='magenta')
-                projects[editProjIndex]['tasks'][ediTaskIndex]['comments'].append(input())
+                projects[editProjIndex]['tasks'][editTaskIndex]['comments'].append(input())
             elif taskItemEdit == '':
                 break
             else:
@@ -339,6 +351,8 @@ def editTask():
             taskItemEdit = input()
         console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
+        for taskObj in projects[editProjIndex]['tasks']:
+            console.log(taskObj['title'], end=' ', style='magenta')
         editTaskName = input()
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
