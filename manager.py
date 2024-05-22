@@ -4,9 +4,14 @@ def createAdmin(name, password):
     Manager = {
         "name": name,
         "password": password
-    } 
-    with open("managerInfo.json", 'w') as maFile:
-        json.dump(Manager, maFile)
+    }
+    p=True
+    with open("managerInfo.py", 'r') as exFile:
+        if exFile["name"] =="" :
+            p=False
+    if p:
+        with open("managerInfo.json", 'w') as maFile:
+            json.dump(Manager, maFile)
 
      
 parser = argparse.ArgumentParser()
