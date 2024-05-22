@@ -112,11 +112,12 @@ def EnterAsManager():
         console.print("Confirm that you are the manager:", style="magenta")
         console.print("Enter your username:", end="")
         enteredUsername = input()
-        console.print("\nEnter your username:", end="")
+        console.print("\nEnter your password:", end="")
         enteredPass=input()
-        with open("managerInfo.json", 'r') as jj:
-            if enteredUsername != jj["name"] or enteredPass != jj['password']:
-                checkingIfuserIsManager = False
+        with open("managerInfo.json", 'r') as h:
+            jj=json.load(h)
+        if enteredUsername != jj["name"] or enteredPass != jj['password']:
+            checkingIfuserIsManager = False
         return        
     validating() 
     while checkingIfuserIsManager== False :
@@ -409,6 +410,24 @@ while True:
         console.print("\t1. Login \n\t2. sign up", style='magenta')
     elif signInType =="3":
         EnterAsManager()
+        console.print("Here are active members of this system:", style="magenta")
+        for i in users:
+            if i["isActive"]==True:
+               console.print(i)
+        console.print("Enter the name of who ever you'd like to deactivate:", end="  ", style="magenta")
+        console.print("press enter to continue", style="yellow")
+        command = input()
+        while command != "":
+            users[usernameCheck(command)]["isActive"]=False
+            filesWrite()
+            console.print("Here are active members of this system:", style="magenta")
+            for i in users:
+                if i["isActive"]==True:
+                    console.print(i)
+            console.print("Enter the name of who ever you'd like to deactivate:", end="  ", style="magenta")
+            console.print("press enter to continue", style="yellow")
+            command=input()
+            
         break
     else:
         console.print('Please enter 1 or 2', style='red bold')

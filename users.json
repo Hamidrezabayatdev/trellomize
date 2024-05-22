@@ -1,1 +1,1 @@
-[{"email": "qdqdqwd@gmail.com", "username": "hamidreza", "password": "hamidpass", "isActive": true, "leaderOf": ["first", "check"], "memberOf": [""]}, {"email": "mamad@yahoo.com", "username": "mamad", "password": "mamadpass", "isActive": true, "leaderOf": [], "memberOf": ["first"]}]
+[{"email": "qdqdqwd@gmail.com", "username": "hamidreza", "password": "hamidpass", "isActive": false, "leaderOf": ["first", "check"], "memberOf": [""]}, {"email": "mamad@yahoo.com", "username": "mamad", "password": "mamadpass", "isActive": true, "leaderOf": [], "memberOf": ["first"]}]
