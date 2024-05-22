@@ -77,7 +77,7 @@ def login():
         if usernameCheck(username) != False or str(usernameCheck(username)) == '0':
             break
         else:
-            console.print('Username does not exist, please enter another usename...', style='red bold')
+            console.print('Username does not exist, please enter another username...', style='red bold')
     console.print('Password: ', end='')
     while True:
         password = input()
