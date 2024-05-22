@@ -10,7 +10,7 @@ def createAdmin(name, password):
 
      
 parser = argparse.ArgumentParser()
-parser.add_argument("creat-admin")
+parser.add_argument("create-admin")
 parser.add_argument("--username")
 parser.add_argument("--password")
 args= parser.parse_args()
