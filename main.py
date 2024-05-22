@@ -231,14 +231,21 @@ def taskIndex(val, checkType, projectIndex):
             return i
     return False
 
-def editTask():
+def editProject():
     showLeaderProjects()
     console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
     editProjName = input()
     # If editProjName in users[inUser]['leaderOf]
+    while True:
+        if editProjName in users[inUser]['leaderOf']:
+            break
+        else:
+            console.print('You can only edit the projects that you are the leader of them!', style='red bold')
+            console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
+            editProjName = input()
     editProjIndex = checkInProjects(editProjName, 'name')
     while editProjIndex == False and str(editProjIndex) != '0':
-        console.print('You can only edit the projects that you are the leader of them!', style='red bold')
+        console.print('Project not found', style='red bold')
         showLeaderProjects()
         console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
         editProjName = input()
@@ -246,7 +253,7 @@ def editTask():
     console.print('your projects specifications:', projects[editProjIndex])
     console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
-    console.print('collaborators: ', projects[editProjIndex]['collaborators'])
+    console.print('collaborators: ', projects[editProjIndex]['collaborators'], end=' ')
     collabEdit = input()
     while collabEdit != '':
         if collabEdit in projects[editProjIndex]['collaborators']:
@@ -262,9 +269,11 @@ def editTask():
             else:
                 projects[editProjIndex]['collaborators'].append(collabEdit)
                 users[checkInUsers(collabEdit, 'username')]['memberOf'].append(projects[editProjIndex]['name'])
+                # debug: console.print('checkIn: ', checkInUsers(collabEdit, 'username'), projects[editProjIndex]['name'], style='blue', end=' ')
                 console.print(collabEdit, 'has been successfully added to task\'s collaborators', style='green')
         console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
+        console.print('collaborators: ', projects[editProjIndex]['collaborators'], end=' ')
         collabEdit = input()
     # console.print(projects, style='blue')
     console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
@@ -275,11 +284,17 @@ def editTask():
         console.print('press enter to continue', style='yellow')
     console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
+    console.print('Existing tasks: ')
+    for i in projects[editProjIndex]['tasks']:
+        console.print(i['title'], end=', ')
     editTaskName = input()
     while editTaskName != '':
         while taskIndex(editTaskName, 'title', editProjIndex) == False and str(taskIndex(editTaskName, 'title', editProjIndex)) != '0':
             console.print('This task doesn\'t exist, Please enter an existing task name', end=' ', style='red bold')
             console.print('press enter to continue', style='yellow')
+            console.print('Existing tasks: ')
+            for i in projects[editProjIndex]['tasks']:
+                console.print(i['title'], end=', ')
             editTaskName = input()
             if editTaskName == '':
                 break
@@ -289,6 +304,7 @@ def editTask():
         editTaskIndex = taskIndex(editTaskName, 'title', editProjIndex)
         console.print('Enter the task item that you want to edit', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
+        console.print('Valid choices: title, description, comments, priority, status', end=' ', style='magenta')
         taskItemEdit = input()
         while taskItemEdit != '':
             if taskItemEdit == 'title' or taskItemEdit == 'description':
@@ -348,6 +364,7 @@ def editTask():
                 console.print('This task does not have this item!', style='red bold')
             console.print('Enter the task item that you want to edit', end=' ', style='magenta')
             console.print('press enter to continue', style='yellow')
+            console.print('Valid choices: title, description, comments, priority, status', end=' ', style='magenta')
             taskItemEdit = input()
         console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
@@ -382,7 +399,7 @@ while panelJob != '':
         showLeaderProjects()
         showMemberProjects()
     elif panelJob == '3':
-        editTask()
+        editProject()
     console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
     panelJob = input()
 
