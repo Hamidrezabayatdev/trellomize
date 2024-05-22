@@ -7,7 +7,7 @@ def createAdmin(name, password):
     }
     p=True
     with open("managerInfo.py", 'r') as exFile:
-        if exFile["name"] =="" :
+        if exFile["name"] !="" :
             p=False
     if p:
         with open("managerInfo.json", 'w') as maFile:
