@@ -106,6 +106,25 @@ def login():
             break
         else:
             console.print('Password does not match, please enter another password...', style='red bold')
+def EnterAsManager():
+    checkingIfuserIsManager = True
+    def validating():
+        console.print("Confirm that you are the manager:", style="magenta")
+        console.print("Enter your username:", end="")
+        enteredUsername = input()
+        console.print("\nEnter your username:", end="")
+        enteredPass=input()
+        with open("managerInfo.json", 'r') as jj:
+            if enteredUsername != jj["name"] or enteredPass != jj['password']:
+                checkingIfuserIsManager = False
+        return        
+    validating() 
+    while checkingIfuserIsManager== False :
+        validating()        
+    global inUser
+    inUser = -25
+    #-25 represents manager's id. it's been picked randomly :)
+    
 
 def newTask():
     task = {
@@ -378,7 +397,7 @@ def editProject():
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
-console.print("\t1. Login \n\t2. sign up", style='magenta')
+console.print("\t1. Login \n\t2. sign up \n\t3.Enter as manager", style='magenta')
 while True:
     signInType = input()
     if signInType == '1':
@@ -388,6 +407,9 @@ while True:
         signUp()
         # console.print(users)
         console.print("\t1. Login \n\t2. sign up", style='magenta')
+    elif signInType =="3":
+        EnterAsManager()
+        break
     else:
         console.print('Please enter 1 or 2', style='red bold')
 console.print('Here is your panel', style='magenta')
