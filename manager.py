@@ -5,6 +5,9 @@ def createAdmin(name, password):
         "name": name,
         "password": password
     } 
+    with open("managerInfo.json", 'w') as maFile:
+        json.dump(Manager, maFile)
+
      
 parser = argparse.ArgumentParser()
 parser.add_argument("creat-admin")
