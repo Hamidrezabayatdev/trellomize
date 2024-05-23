@@ -4,7 +4,7 @@ from datetime import datetime
 import json
 import re
 import time
-import argon2
+import bcrypt
 # convert the time in seconds since the epoch to a readable format
 # local_time = time.ctime(seconds)
 with open("users.json", 'r') as usersFR:
@@ -13,6 +13,14 @@ with open("projects.json", 'r') as projectsFR:
     projects = json.load(projectsFR)
 
 inUser = 1000
+
+def get_hashed_password(plain_text_password):
+
+    return bcrypt.hashpw(plain_text_password, bcrypt.gensalt())
+
+def check_password(plain_text_password, hashed_password):
+
+    return bcrypt.checkpw(plain_text_password, hashed_password)
 
 def checkEmail(email):
  
@@ -62,7 +70,7 @@ def signUp ():
         inpEmail = input()
     console.print('Password: ', end='')
     inpPassword = input()
-    inpHashedPassword = argon2.PasswordHasher().hash(inpPassword.encode('utf-8'))
+    
     #push in data
 
     checkForValidSignup = True
@@ -73,7 +81,7 @@ def signUp ():
     user = {
         'email' : inpEmail,
         'username' : inpUsername,
-        'password' : inpHashedPassword,
+        'password' : get_hashed_password(inpPassword),
         # 'time' : creationTime,
         'isActive' : True,
         'leaderOf' : [],
@@ -102,8 +110,8 @@ def login():
     console.print('Password: ', end='')
     while True:
         password = input()
-        hashedpassword = argon2.PasswordHasher().hash(password.encode("utf-8"))
-        if hashedpassword == users[usernameCheck(username)]['password']:
+        
+        if check_password(password, users[usernameCheck(username)]['password']):
             global inUser
             inUser = usernameCheck(username)
             break
@@ -111,18 +119,18 @@ def login():
             console.print('Password does not match, please enter another password...', style='red bold')
 def EnterAsManager():
     checkingIfuserIsManager = True
+    
     def validating():
         console.print("Confirm that you are the manager:", style="magenta")
         console.print("Enter your username:", end="")
         enteredUsername = input()
         console.print("\nEnter your password:", end="")
         enteredPass=input()
-        hashedEnteredPass = argon2.PasswordHasher().hash(enteredPass.encode("utf-8"))
         with open("managerInfo.json", 'r') as h:
             jj=json.load(h)
-        if enteredUsername != jj["name"] or hashedEnteredPass != jj['password']:
-            checkingIfuserIsManager = False
-        return        
+            if enteredUsername != jj["name"] or check_password(enteredPass,jj['password'])==False :
+                checkingIfuserIsManager = False
+        
     validating() 
     while checkingIfuserIsManager== False :
         validating()        

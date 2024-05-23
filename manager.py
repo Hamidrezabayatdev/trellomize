@@ -1,17 +1,20 @@
 import argparse
 import json
 import os
-import argon2
+import bcrypt
+def get_hashed_password(plain_text_password):
+
+    return bcrypt.hashpw(plain_text_password, bcrypt.gensalt())
+
 def createAdmin(name, password):
-    passBytes = password.encode('utf-8')
-    hashed = argon2.PasswordHasher().hash(passBytes)
     Manager = {
         "name": name,
-        "password": hashed
+        "password": get_hashed_password(password)
     }
     p=True
     with open("managerInfo.json", 'r') as exFile:
-        if os.path.getsize("managerInfo.json") !=0 :
+        managerInfodict = json.load(exFile)
+        if managerInfodict['name']!="" or managerInfodict['password']!='' :
             p=False
     if p:
         with open("managerInfo.json", 'w') as maFile:
