@@ -4,6 +4,7 @@ from datetime import datetime
 import json
 import re
 import time
+import argon2
 # convert the time in seconds since the epoch to a readable format
 # local_time = time.ctime(seconds)
 with open("users.json", 'r') as usersFR:
@@ -61,6 +62,7 @@ def signUp ():
         inpEmail = input()
     console.print('Password: ', end='')
     inpPassword = input()
+    inpHashedPassword = argon2.PasswordHasher().hash(inpPassword.encode('utf-8'))
     #push in data
 
     checkForValidSignup = True
@@ -71,7 +73,7 @@ def signUp ():
     user = {
         'email' : inpEmail,
         'username' : inpUsername,
-        'password' : inpPassword,
+        'password' : inpHashedPassword,
         # 'time' : creationTime,
         'isActive' : True,
         'leaderOf' : [],
@@ -100,7 +102,8 @@ def login():
     console.print('Password: ', end='')
     while True:
         password = input()
-        if password == users[usernameCheck(username)]['password']:
+        hashedpassword = argon2.PasswordHasher().hash(password.encode("utf-8"))
+        if hashedpassword == users[usernameCheck(username)]['password']:
             global inUser
             inUser = usernameCheck(username)
             break
@@ -114,9 +117,10 @@ def EnterAsManager():
         enteredUsername = input()
         console.print("\nEnter your password:", end="")
         enteredPass=input()
+        hashedEnteredPass = argon2.PasswordHasher().hash(enteredPass.encode("utf-8"))
         with open("managerInfo.json", 'r') as h:
             jj=json.load(h)
-        if enteredUsername != jj["name"] or enteredPass != jj['password']:
+        if enteredUsername != jj["name"] or hashedEnteredPass != jj['password']:
             checkingIfuserIsManager = False
         return        
     validating() 
