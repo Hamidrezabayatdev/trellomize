@@ -24,6 +24,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument("create-admin")
 parser.add_argument("--username")
 parser.add_argument("--password")
+#parser.add_argument("purge-data")
 args= parser.parse_args()
 
 createAdmin(args.username, args.password )
+#if args.purge:
+    #with open("users.json", "w") as Ufile:
+        #Ufile.truncate()
+    #with open("projects.json", "w") as Pfile:
+        #Pfile.truncate()        
+    
