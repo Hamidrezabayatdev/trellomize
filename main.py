@@ -411,7 +411,7 @@ while True:
     elif signInType == '2':
         signUp()
         # console.print(users)
-        console.print("\t1. Login \n\t2. sign up", style='magenta')
+        console.print("\t1. Login \n\t2. sign up \n\t3.Enter as manager", style='magenta')
     elif signInType =="3":
         EnterAsManager()
         console.print("Here are active members of this system:", style="magenta")
