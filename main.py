@@ -118,9 +118,10 @@ def login():
         else:
             console.print('Password does not match, please enter another password...', style='red bold')
 def EnterAsManager():
-    checkingIfuserIsManager = True
-    
+
     def validating():
+        global checkingIfuserIsManager  
+        checkingIfuserIsManager=True
         console.print("Confirm that you are the manager:", style="magenta")
         console.print("Enter your username:", end="")
         enteredUsername = input()
@@ -132,7 +133,8 @@ def EnterAsManager():
                 checkingIfuserIsManager = False
         
     validating() 
-    while checkingIfuserIsManager== False :
+    while checkingIfuserIsManager == False :
+        console.print("Wrong username/password! Try Again!", style="red bold")
         validating()        
     global inUser
     inUser = -25
@@ -411,7 +413,7 @@ def editProject():
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
 while True:
-    console.print("\t1. Login \n\t2. sign up \n\t3.Enter as manager\n\t4. exit", style='magenta')
+    console.print("\t1. Login \n\t2. sign up \n\t3. Enter as manager\n\t4. exit", style='magenta')
     signInType = input()
     if signInType == '1':
         login()
