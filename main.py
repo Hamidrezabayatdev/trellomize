@@ -402,16 +402,29 @@ def editProject():
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
-console.print("\t1. Login \n\t2. sign up \n\t3.Enter as manager", style='magenta')
 while True:
+    console.print("\t1. Login \n\t2. sign up \n\t3.Enter as manager\n\t4. exit", style='magenta')
     signInType = input()
     if signInType == '1':
         login()
-        break
+        console.print('Here is your panel', style='magenta')
+        console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
+        panelJob = input()
+        while panelJob != '':
+            if panelJob == '1':
+                project = newProject()
+                projects.append(project)
+                filesWrite()
+            elif panelJob == '2':
+                showLeaderProjects()
+                showMemberProjects()
+            elif panelJob == '3':
+                editProject()
+            console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
+            panelJob = input()
     elif signInType == '2':
         signUp()
         # console.print(users)
-        console.print("\t1. Login \n\t2. sign up \n\t3.Enter as manager", style='magenta')
     elif signInType =="3":
         EnterAsManager()
         console.print("Here are active members of this system:", style="magenta")
@@ -431,25 +444,11 @@ while True:
             console.print("Enter the name of who ever you'd like to deactivate:", end="  ", style="magenta")
             console.print("press enter to continue", style="yellow")
             command=input()
-            
+    elif signInType == '4':
         break
     else:
-        console.print('Please enter 1 or 2', style='red bold')
-console.print('Here is your panel', style='magenta')
-console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
-panelJob = input()
-while panelJob != '':
-    if panelJob == '1':
-        project = newProject()
-        projects.append(project)
-        filesWrite()
-    elif panelJob == '2':
-        showLeaderProjects()
-        showMemberProjects()
-    elif panelJob == '3':
-        editProject()
-    console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
-    panelJob = input()
+        console.print('Please enter 1, 2, 3 or 4', style='red bold')
+
 
 
 
