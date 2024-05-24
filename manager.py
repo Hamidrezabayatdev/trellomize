@@ -36,7 +36,14 @@ args= parser.parse_args()
 if sys.argv[1]=="create-admin" :
     createAdmin(args.username, args.password )
 elif sys.argv[1]=="purge-data":
-    PurgeData()
+    print("all datas will be deleted! (including information regarding users, projects, tasks and etc)... Do you wish to proceed?")
+    print("(enter 1 for YES and any other key for NO)")
+    managerchoice = input()
+    if managerchoice == '1':
+        PurgeData()
+    else:
+        pass
+        
 
 
     
