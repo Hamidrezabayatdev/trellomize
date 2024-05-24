@@ -5,6 +5,7 @@ import json
 import re
 import time
 import bcrypt
+import uuid
 # convert the time in seconds since the epoch to a readable format
 # local_time = time.ctime(seconds)
 with open("users.json", 'r') as usersFR:
@@ -143,7 +144,11 @@ def EnterAsManager():
     inUser = -25
     #-25 represents manager's id. it's been picked randomly :)
     
-
+def checkIDuniquness(myid):
+    for i in projects:
+        if i["id"]==myid:
+            return False
+    return True
 def newTask():
     task = {
         'id' : '',
@@ -162,6 +167,7 @@ def newTask():
     task['title'] = input()
     console.print('Task description: ', end='')
     task['description'] = input()
+    task['id']=uuid.uuid4().int
     # assigness left here
     #time&date and endtime&enddate
     console.print('Choose task status', end=' ')
@@ -225,6 +231,13 @@ def newProject():
         'tasks' : []
     }
     console.print('Alright!\nPlease enter expected values... ', style='magenta')
+    console.print('Project ID: ', end='', style='')
+    enteredID=input()
+    while checkIDuniquness(enteredID)==False:
+        console.print("this ID is used for another project existing in the system! try anoother one!", style="red bold")
+        enteredID=input()
+    project['id']=enteredID
+            
     console.print('Project name: ', end='', style='')
     project['name'] = input()
     users[inUser]['leaderOf'].append(project['name'])
