@@ -16,12 +16,14 @@ with open("projects.json", 'r') as projectsFR:
 inUser = 1000
 
 def get_hashed_password(plain_text_password):
-
-    return bcrypt.hashpw(plain_text_password, bcrypt.gensalt())
+    bytes = plain_text_password.encode('utf-8') 
+    return str(bcrypt.hashpw(bytes, bcrypt.gensalt()))
 
 def check_password(plain_text_password, hashed_password):
-
-    return bcrypt.checkpw(plain_text_password, hashed_password)
+    bytes = plain_text_password.encode('utf-8')
+    hashed_bytes = hashed_password.encode('utf-8')
+    hash = bcrypt.hashpw(hashed_bytes, bcrypt.gensalt())
+    return str(bcrypt.checkpw(bytes, hash))
 
 def checkEmail(email):
  
