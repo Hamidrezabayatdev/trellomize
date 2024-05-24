@@ -111,12 +111,15 @@ def login():
     while True:
         password = input()
         
-        if check_password(password, users[usernameCheck(username)]['password']):
+        if check_password(password, users[usernameCheck(username)]['password']) and users[usernameCheck(username)]["isActive"]==True:
             global inUser
             inUser = usernameCheck(username)
             break
         else:
-            console.print('Password does not match, please enter another password...', style='red bold')
+            if check_password(password, users[usernameCheck(username)]['password'])==False:
+                console.print('Password does not match, please enter another password...', style='red bold')
+            elif users[usernameCheck(username)]["isActive"]==False:
+                console.print("Your account has been suspended by the manager! You can't sign in!", style="red bold")
 def EnterAsManager():
 
     def validating():
