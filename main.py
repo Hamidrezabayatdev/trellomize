@@ -271,13 +271,15 @@ def newProject():
         console.print('press enter to continue', style='yellow')
     return project
 def showLeaderProjects():
-    console.print('Projects that you are leader of them:', style='magenta')
-    for projs in users[inUser]['leaderOf']:
-        console.log('\t', projs)
+    if len(users[inUser]['leaderOf'])!=0:
+        console.print('Projects that you are leader of them:', style='magenta')
+        for projs in users[inUser]['leaderOf']:
+            console.log('\t', projs)
 def showMemberProjects():
-    console.print('Projects that you are member of them:', style='magenta')
-    for projs in users[inUser]['memberOf']:
-        console.log('\t', projs)
+    if len(users[inUser]["memberOf"])!=0:
+        console.print('Projects that you are an ordinary member of them:', style='magenta')
+        for projs in users[inUser]['memberOf']:
+            console.log('\t', projs)
 def taskIndex(val, checkType, projectIndex):
     for i in range(len(projects[projectIndex]['tasks'])):
         if projects[projectIndex]['tasks'][i][checkType] == val:
@@ -333,6 +335,7 @@ def editProject():
     console.print('press enter to continue', style='yellow')
     while input() != '':
         projects[editProjIndex]['tasks'].append(newTask())
+        filesWrite()
         console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
     console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
