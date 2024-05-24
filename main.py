@@ -286,63 +286,7 @@ def taskIndex(val, checkType, projectIndex):
             return i
     return False
 
-def editProject():
-    showLeaderProjects()
-    console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
-    editProjName = input()
-    # If editProjName in users[inUser]['leaderOf]
-    while True:
-        if editProjName in users[inUser]['leaderOf']:
-            break
-        else:
-            console.print('You can only edit the projects that you are the leader of them!', style='red bold')
-            console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
-            editProjName = input()
-    editProjIndex = checkInProjects(editProjName, 'name')
-    while editProjIndex == False and str(editProjIndex) != '0':
-        console.print('Project not found', style='red bold')
-        showLeaderProjects()
-        console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
-        editProjName = input()
-        editProjIndex = checkInProjects(editProjName, 'name')
-    console.print('your projects specifications:', projects[editProjIndex])
-    console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
-    console.print('press enter to continue', style='yellow')
-    console.print('collaborators: ', projects[editProjIndex]['collaborators'], end=' ')
-    collabEdit = input()
-    while collabEdit != '':
-        if collabEdit in projects[editProjIndex]['collaborators']:
-            if collabEdit == projects[editProjIndex]['leader']:
-                console.print('You can not remove the project leader from collaborators!', style='red bold')
-            else:
-                projects[editProjIndex]['collaborators'].remove(collabEdit)
-                users[checkInUsers(collabEdit, 'username')]['memberOf'].remove(projects[editProjIndex]['name'])
-                console.print(collabEdit, 'has been successfully removed from this task\'s collaborators', style='green')
-        else:
-            if checkInUsers(collabEdit, 'username') == False and str(checkInUsers(collabEdit, 'username')) != '0':
-                console.print('This username doesn\'t exist! Please enter an existing username', style='red bold')
-            else:
-                projects[editProjIndex]['collaborators'].append(collabEdit)
-                users[checkInUsers(collabEdit, 'username')]['memberOf'].append(projects[editProjIndex]['name'])
-                # debug: console.print('checkIn: ', checkInUsers(collabEdit, 'username'), projects[editProjIndex]['name'], style='blue', end=' ')
-                console.print(collabEdit, 'has been successfully added to task\'s collaborators', style='green')
-        console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
-        console.print('press enter to continue', style='yellow')
-        console.print('collaborators: ', projects[editProjIndex]['collaborators'], end=' ')
-        collabEdit = input()
-    # console.print(projects, style='blue')
-    console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
-    console.print('press enter to continue', style='yellow')
-    while input() != '':
-        projects[editProjIndex]['tasks'].append(newTask())
-        filesWrite()
-        console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
-        console.print('press enter to continue', style='yellow')
-    console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
-    console.print('press enter to continue', style='yellow')
-    console.print('Existing tasks: ')
-    for i in projects[editProjIndex]['tasks']:
-        console.print(i['title'], end=', ')
+def editTaskFunc(editProjIndex):
     editTaskName = input()
     while editTaskName != '':
         while taskIndex(editTaskName, 'title', editProjIndex) == False and str(taskIndex(editTaskName, 'title', editProjIndex)) != '0':
@@ -427,6 +371,65 @@ def editProject():
         for taskObj in projects[editProjIndex]['tasks']:
             console.log(taskObj['title'], end=' ', style='magenta')
         editTaskName = input()
+
+def editProject():
+    showLeaderProjects()
+    console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
+    editProjName = input()
+    # If editProjName in users[inUser]['leaderOf]
+    while True:
+        if editProjName in users[inUser]['leaderOf']:
+            break
+        else:
+            console.print('You can only edit the projects that you are the leader of them!', style='red bold')
+            console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
+            editProjName = input()
+    editProjIndex = checkInProjects(editProjName, 'name')
+    while editProjIndex == False and str(editProjIndex) != '0':
+        console.print('Project not found', style='red bold')
+        showLeaderProjects()
+        console.print('Enter the name of the project that you want to edit:', end=' ', style='magenta')
+        editProjName = input()
+        editProjIndex = checkInProjects(editProjName, 'name')
+    console.print('your projects specifications:', projects[editProjIndex])
+    console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
+    console.print('press enter to continue', style='yellow')
+    console.print('collaborators: ', projects[editProjIndex]['collaborators'], end=' ')
+    collabEdit = input()
+    while collabEdit != '':
+        if collabEdit in projects[editProjIndex]['collaborators']:
+            if collabEdit == projects[editProjIndex]['leader']:
+                console.print('You can not remove the project leader from collaborators!', style='red bold')
+            else:
+                projects[editProjIndex]['collaborators'].remove(collabEdit)
+                users[checkInUsers(collabEdit, 'username')]['memberOf'].remove(projects[editProjIndex]['name'])
+                console.print(collabEdit, 'has been successfully removed from this task\'s collaborators', style='green')
+        else:
+            if checkInUsers(collabEdit, 'username') == False and str(checkInUsers(collabEdit, 'username')) != '0':
+                console.print('This username doesn\'t exist! Please enter an existing username', style='red bold')
+            else:
+                projects[editProjIndex]['collaborators'].append(collabEdit)
+                users[checkInUsers(collabEdit, 'username')]['memberOf'].append(projects[editProjIndex]['name'])
+                # debug: console.print('checkIn: ', checkInUsers(collabEdit, 'username'), projects[editProjIndex]['name'], style='blue', end=' ')
+                console.print(collabEdit, 'has been successfully added to task\'s collaborators', style='green')
+        console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
+        console.print('press enter to continue', style='yellow')
+        console.print('collaborators: ', projects[editProjIndex]['collaborators'], end=' ')
+        collabEdit = input()
+    # console.print(projects, style='blue')
+    console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
+    console.print('press enter to continue', style='yellow')
+    while input() != '':
+        projects[editProjIndex]['tasks'].append(newTask())
+        filesWrite()
+        console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
+        console.print('press enter to continue', style='yellow')
+    console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
+    console.print('press enter to continue', style='yellow')
+    console.print('Existing tasks: ')
+    for i in projects[editProjIndex]['tasks']:
+        console.print(i['title'], end=', ')
+    editTaskFunc(editProjIndex)
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
