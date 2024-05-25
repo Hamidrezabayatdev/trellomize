@@ -95,7 +95,7 @@ def signUp ():
     user = {
         'email' : inpEmail,
         'username' : inpUsername,
-        'password' : get_hashed_password(inpPassword),
+        'password' : inpPassword,
         # 'time' : creationTime,
         'isActive' : True,
         'leaderOf' : [],
@@ -125,14 +125,14 @@ def login():
     while True:
         password = input()
         
-        if check_password(password, users[usernameCheck(username)]['password']) and users[usernameCheck(username)]["isActive"]==True:
+        if password == users[usernameCheck(username)]['password'] and users[usernameCheck(username)]["isActive"]==True:
             global inUser
             inUser = usernameCheck(username)
             break
         else:
-            if check_password(password, users[usernameCheck(username)]['password'])==False:
+            if password != users[usernameCheck(username)]['password']:
                 console.print('Password does not match, please enter another password...', style='red bold')
-            elif users[usernameCheck(username)]["isActive"]==False:
+            elif users[usernameCheck(username)]["isActive"] == False:
                 console.print("Your account has been suspended by the manager! You can't sign in!", style="red bold")
 def EnterAsManager():
 
@@ -146,7 +146,7 @@ def EnterAsManager():
         enteredPass=input()
         with open("managerInfo.json", 'r') as h:
             jj=json.load(h)
-            if enteredUsername != jj["name"] or check_password(enteredPass,jj['password'])==False :
+            if enteredUsername != jj["name"] or enteredPass != jj['password'] :
                 checkingIfuserIsManager = False
         
     validating() 
