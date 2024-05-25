@@ -4,3 +4,9 @@
 01:37:44,579 root INFO user logged in (entered to his panel)
 01:41:22,303 root INFO user created a new project
 01:43:42,23 root INFO user logged in (entered to his panel)
+01:46:40,839 root INFO user logged in (entered to his panel)
+01:55:34,96 root INFO user logged in (entered to his panel)
+01:56:00,822 root INFO user changed the title of task in a project
+01:56:16,17 root INFO user added a comment to the comment section of a task of a project 
+01:57:02,395 root INFO user changed the priority of a task of a project
+01:57:07,844 root INFO user changed the status of a task of a project
