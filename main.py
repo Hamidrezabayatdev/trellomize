@@ -311,7 +311,13 @@ def editTaskFunc(editProjIndex):
         while taskItemEdit != '':
             if taskItemEdit == 'title' or taskItemEdit == 'description':
                 console.print('Ok, Enter the text that you want to replace in', taskItemEdit, end=' ', style='magenta')
-                projects[editProjIndex]['tasks'][editTaskIndex][taskItemEdit] = input()
+                newDescription = input()
+                projects[editProjIndex]['tasks'][editTaskIndex][taskItemEdit] = newDescription
+                if taskItemEdit == 'title':
+                    historyMessage = "the title of task number " + str(editTaskIndex+1) + " of project "+ projects[editProjIndex]['name'] + " has been replaced with "+ '('+newDescription+')'
+                else:
+                    historyMessage = "the description of task number " + str(editTaskIndex+1) + " of project "+ projects[editProjIndex]['name'] + " has been replaced with "+ '('+newDescription+')'
+                projects[editProjIndex]['tasks'][editTaskIndex]["history"].append(historyMessage)
             elif taskItemEdit == 'priority':
                 console.print('press enter to continue', style='yellow')
                 console.print('\t1. CRITICAL\n\t2. HIGH\n\t3. MEDIUM\n\t4. LOW', style='magenta')
@@ -319,15 +325,23 @@ def editTaskFunc(editProjIndex):
                     priority = input()
                     if priority == '1':
                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'CRITICAL'
+                        historyMessage = "The priority of task number "+ str(editTaskIndex+1) + " of project "+ projects[editProjIndex]['name']+ " has been changed into 'CRITICAL'"
+                        projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
                         break
                     elif priority == '2':
                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'HIGH'
+                        historyMessage = "The priority of task number "+ str(editTaskIndex+1) + " of project "+ projects[editProjIndex]['name']+ " has been changed into 'HIGH'"
+                        projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
                         break
                     elif priority == '3':
                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'MEDIUM'
+                        historyMessage = "The priority of task number "+ str(editTaskIndex+1) + " of project "+ projects[editProjIndex]['name']+ " has been changed into 'MEDIUM'"
+                        projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
                         break
                     elif priority == '4':
                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'LOW'
+                        historyMessage = "The priority of task number "+ str(editTaskIndex+1) + " of project "+ projects[editProjIndex]['name']+ " has been changed into 'LOW'"
+                        projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
                         break
                     elif priority == '':
                         break
@@ -340,18 +354,28 @@ def editTaskFunc(editProjIndex):
                     status = input()
                     if status == '1':
                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'TODO'
+                        historyMessage = "The status of task number "+ str(editTaskIndex+1)+ " of projrect "+ projects[editProjIndex]['name']+ " has been changed into 'TODO'"
+                        projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
                         break
                     elif status == '2':
                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'DOING'
+                        historyMessage = "The status of task number "+ str(editTaskIndex+1)+ " of projrect "+ projects[editProjIndex]['name']+ " has been changed into 'DOING'"
+                        projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
                         break
                     elif status == '3':
                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'DONE'
+                        historyMessage = "The status of task number "+ str(editTaskIndex+1)+ " of projrect "+ projects[editProjIndex]['name']+ " has been changed into 'DONE'"
+                        projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
                         break
                     elif status == '4':
                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'ARCHIVED'
+                        historyMessage = "The status of task number "+ str(editTaskIndex+1)+ " of projrect "+ projects[editProjIndex]['name']+ " has been changed into 'ARCHIVED'"
+                        projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
                         break
                     elif status == '5':
                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'BACKLOG'
+                        historyMessage = "The status of task number "+ str(editTaskIndex+1)+ " of projrect "+ projects[editProjIndex]['name']+ " has been changed into 'BACKLOG'"
+                        projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
                         break
                     elif status == '':
                         break
@@ -359,7 +383,11 @@ def editTaskFunc(editProjIndex):
                         console.print('Please enter between 1 to 5', style='red bold')
             elif taskItemEdit == 'comments':
                 console.print('Enter the comment that you want to add', style='magenta')
-                projects[editProjIndex]['tasks'][editTaskIndex]['comments'].append(input())
+                commentedTxt = input()
+                projects[editProjIndex]['tasks'][editTaskIndex]['comments'].append(commentedTxt)
+                historyMessage = "the comment: "+ '('+commentedTxt+')'+" added to the task number "+ str(editTaskIndex+1) +" of project "+ projects[editProjIndex]['name']+" comment section."
+                projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
+                
             elif taskItemEdit == '':
                 break
             else:
