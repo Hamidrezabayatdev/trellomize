@@ -6,8 +6,19 @@ import re
 import time
 import bcrypt
 import uuid
+import logging
 # convert the time in seconds since the epoch to a readable format
 # local_time = time.ctime(seconds)
+
+#logging :
+logging.basicConfig(filename="user_actions.log",
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.INFO)
+
+
+
 with open("users.json", 'r') as usersFR:
     users = json.load(usersFR)
 with open("projects.json", 'r') as projectsFR:
@@ -315,9 +326,12 @@ def editTaskFunc(editProjIndex):
                 projects[editProjIndex]['tasks'][editTaskIndex][taskItemEdit] = newDescription
                 if taskItemEdit == 'title':
                     historyMessage = "the title of task number " + str(editTaskIndex+1) + " of project "+ projects[editProjIndex]['name'] + " has been replaced with "+ '('+newDescription+')'
+                    logging.info("user changed the title of task in a project")
                 else:
                     historyMessage = "the description of task number " + str(editTaskIndex+1) + " of project "+ projects[editProjIndex]['name'] + " has been replaced with "+ '('+newDescription+')'
+                    logging.info("user changed the description of task in a project")
                 projects[editProjIndex]['tasks'][editTaskIndex]["history"].append(historyMessage)
+                
             elif taskItemEdit == 'priority':
                 console.print('press enter to continue', style='yellow')
                 console.print('\t1. CRITICAL\n\t2. HIGH\n\t3. MEDIUM\n\t4. LOW', style='magenta')
@@ -327,21 +341,25 @@ def editTaskFunc(editProjIndex):
                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'CRITICAL'
                         historyMessage = "The priority of task number "+ str(editTaskIndex+1) + " of project "+ projects[editProjIndex]['name']+ " has been changed into 'CRITICAL'"
                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
+                        logging.info("user changed the priority of a task of a project")
                         break
                     elif priority == '2':
                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'HIGH'
                         historyMessage = "The priority of task number "+ str(editTaskIndex+1) + " of project "+ projects[editProjIndex]['name']+ " has been changed into 'HIGH'"
                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
+                        logging.info("user changed the priority of a task of a project")
                         break
                     elif priority == '3':
                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'MEDIUM'
                         historyMessage = "The priority of task number "+ str(editTaskIndex+1) + " of project "+ projects[editProjIndex]['name']+ " has been changed into 'MEDIUM'"
                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
+                        logging.info("user changed the priority of a task of a project")
                         break
                     elif priority == '4':
                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'LOW'
                         historyMessage = "The priority of task number "+ str(editTaskIndex+1) + " of project "+ projects[editProjIndex]['name']+ " has been changed into 'LOW'"
                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
+                        logging.info("user changed the priority of a task of a project")
                         break
                     elif priority == '':
                         break
@@ -356,26 +374,31 @@ def editTaskFunc(editProjIndex):
                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'TODO'
                         historyMessage = "The status of task number "+ str(editTaskIndex+1)+ " of projrect "+ projects[editProjIndex]['name']+ " has been changed into 'TODO'"
                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
+                        logging.info("user changed the status of a task of a project")
                         break
                     elif status == '2':
                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'DOING'
                         historyMessage = "The status of task number "+ str(editTaskIndex+1)+ " of projrect "+ projects[editProjIndex]['name']+ " has been changed into 'DOING'"
                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
+                        logging.info("user changed the status of a task of a project")
                         break
                     elif status == '3':
                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'DONE'
                         historyMessage = "The status of task number "+ str(editTaskIndex+1)+ " of projrect "+ projects[editProjIndex]['name']+ " has been changed into 'DONE'"
                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
+                        logging.info("user changed the status of a task of a project")
                         break
                     elif status == '4':
                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'ARCHIVED'
                         historyMessage = "The status of task number "+ str(editTaskIndex+1)+ " of projrect "+ projects[editProjIndex]['name']+ " has been changed into 'ARCHIVED'"
                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
+                        logging.info("user changed the status of a task of a project")
                         break
                     elif status == '5':
                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'BACKLOG'
                         historyMessage = "The status of task number "+ str(editTaskIndex+1)+ " of projrect "+ projects[editProjIndex]['name']+ " has been changed into 'BACKLOG'"
                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
+                        logging.info("user changed the status of a task of a project")
                         break
                     elif status == '':
                         break
@@ -387,6 +410,7 @@ def editTaskFunc(editProjIndex):
                 projects[editProjIndex]['tasks'][editTaskIndex]['comments'].append(commentedTxt)
                 historyMessage = "the comment: "+ '('+commentedTxt+')'+" added to the task number "+ str(editTaskIndex+1) +" of project "+ projects[editProjIndex]['name']+" comment section."
                 projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
+                logging.info("user added a comment to the comment section of a task of a project ")
                 
             elif taskItemEdit == '':
                 break
@@ -434,6 +458,7 @@ def editProject():
                 projects[editProjIndex]['collaborators'].remove(collabEdit)
                 users[checkInUsers(collabEdit, 'username')]['memberOf'].remove(projects[editProjIndex]['name'])
                 console.print(collabEdit, 'has been successfully removed from this task\'s collaborators', style='green')
+                logging.info("user removed a collabrator from a project")
         else:
             if checkInUsers(collabEdit, 'username') == False and str(checkInUsers(collabEdit, 'username')) != '0':
                 console.print('This username doesn\'t exist! Please enter an existing username', style='red bold')
@@ -451,6 +476,7 @@ def editProject():
     console.print('press enter to continue', style='yellow')
     while input() != '':
         projects[editProjIndex]['tasks'].append(newTask())
+        logging.info("user added a task to a project")
         filesWrite()
         console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
@@ -469,6 +495,7 @@ while True:
     signInType = input()
     if signInType == '1':
         login()
+        logging.info("user logged in (entered to his panel)")
         console.print('Here is your panel', style='magenta')
         console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
         panelJob = input()
@@ -477,18 +504,22 @@ while True:
                 project = newProject()
                 projects.append(project)
                 filesWrite()
+                logging.info("user created a new project")
             elif panelJob == '2':
                 showLeaderProjects()
                 showMemberProjects()
             elif panelJob == '3':
                 editProject()
+                
             console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
             panelJob = input()
     elif signInType == '2':
         signUp()
+        logging.info("user created a new account")
         # console.print(users)
     elif signInType =="3":
         EnterAsManager()
+        logging.info("user entered as manager")
         console.print("Here are active members of this system:", style="magenta")
         for i in users:
             if i["isActive"]==True:
@@ -499,6 +530,7 @@ while True:
         while command != "":
             users[usernameCheck(command)]["isActive"]=False
             filesWrite()
+            logging.info("user deactivated a member as manager")
             console.print("Here are active members of this system:", style="magenta")
             for i in users:
                 if i["isActive"]==True:
