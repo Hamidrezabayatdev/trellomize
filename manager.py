@@ -9,7 +9,7 @@ def get_hashed_password(plain_text_password):
 def createAdmin(name, password):
     Manager = {
         "name": name,
-        "password": get_hashed_password(password)
+        "password": password
     }
     p=True
     with open("managerInfo.json", 'r') as exFile:

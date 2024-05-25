@@ -1,6 +1,6 @@
 from rich.console import Console
 console = Console()
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import re
 import time
@@ -35,6 +35,13 @@ def check_password(plain_text_password, hashed_password):
     hashed_bytes = hashed_password.encode('utf-8')
     hash = bcrypt.hashpw(hashed_bytes, bcrypt.gensalt())
     return str(bcrypt.checkpw(bytes, hash))
+
+def timeValidate(dt_string):
+        try:
+            time.strptime(dt_string, "%d-%m-%Y %H:%M")
+        except ValueError:
+            return False
+        return True
 
 def checkEmail(email):
  
@@ -168,7 +175,6 @@ def newTask():
         'title' : '',
         'description' : '',
         'time' : '',
-        'date' : '',
         'assigness' : [],
         'priority' : 'LOW',
         'status' : 'BACKLOG',
@@ -233,6 +239,17 @@ def newTask():
             console.print('Comment added; If you want to add another comment, please type it...', end=' ', style='green')
             console.print('press enter to continue', style='yellow')
             comment = input()
+    tomorrow = datetime.now() + timedelta(1)
+    task['time'] = tomorrow.strftime('%d-%m-%Y %H:%M')
+    console.print('If you want to edit task\'s ending time, type it in this format (DAY-MONTH-YEAR H:M)', style='magenta')
+    console.print('Press enter to continue with default value (tommorow)', style='yellow')
+    editTime = input()
+    while timeValidate(editTime) == False and editTime != '':
+        console.print('Please enter in this format (DAY-MONTH-YEAR H:M)', style='red bold')
+        editTime = input()
+    if editTime != '':
+        task['time'] = editTime
+        console.print('Task has been set', style='green')
     console.print('Task has been successfully added', style='green')
     return task
 def newProject():
@@ -411,7 +428,17 @@ def editTaskFunc(editProjIndex):
                 historyMessage = "the comment: "+ '('+commentedTxt+')'+" added to the task number "+ str(editTaskIndex+1) +" of project "+ projects[editProjIndex]['name']+" comment section."
                 projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
                 logging.info("user added a comment to the comment section of a task of a project ")
-                
+            elif taskItemEdit == 'time':
+                console.print("Type the expiration time in this format (D-M-Y H:M)",end=' ', style='magenta')
+                console.print("press enter to continue with default value", style='yellow')
+                editTime = input()
+                while timeValidate(editTime) == False and editTime != '':
+                    console.print('Please enter in this format (DAY-MONTH-YEAR H:M)', style='red bold')
+                    editTime = input()
+                if editTime != '':
+                    projects[editProjIndex]['tasks'][editTaskIndex]['time'] = editTime
+                    historyMessage = "the expiration time of the task has be set to: " + editTime
+                    projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
             elif taskItemEdit == '':
                 break
             else:
@@ -485,6 +512,7 @@ def editProject():
     console.print('Existing tasks: ')
     for i in projects[editProjIndex]['tasks']:
         console.print(i['title'], end=', ')
+    console.print()
     editTaskFunc(editProjIndex)
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
