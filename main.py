@@ -70,6 +70,9 @@ def checkInProjects(val, checkType):
             return i
     return False
 
+# def editAsigness(asigness):
+
+
 
 def signUp ():
     console.print('Please enter needed values to continue...', style='magenta')
@@ -169,13 +172,13 @@ def checkIDuniquness(myid):
         if i["id"]==myid:
             return False
     return True
-def newTask():
+def newTask(collaborators):
     task = {
         'id' : '',
         'title' : '',
         'description' : '',
         'time' : '',
-        'assigness' : [],
+        'assigness' : [users[inUser]['username']],
         'priority' : 'LOW',
         'status' : 'BACKLOG',
         'history' : [],
@@ -228,17 +231,28 @@ def newTask():
             break
         else:
             console.print('Please enter between 1 to 3', style='red bold')
-    console.print('If you want to add comments, please type here...', end=' ', style='magenta')
+    console.print('If you want to assign this task to a collaborator, please type their name', end=' ', style='magenta')
+    console.print('press enter to continue', style='yellow')
+    assignName = input()
+    while assignName != '':
+        if usernameCheck(assignName) != False and str(usernameCheck(assignName)) != '0':
+            console.print('Username does not exist, please enter another usename...', style='red bold')
+            assignName = input()
+        elif assignName not in collaborators:
+            console.print('This user is not in the project\'s collaborators', style='red bold')
+        task['assigness'].append(assignName)
+        console.print("Task has been successfully assigned to", assignName, style='green')
+        console.print('If you want to assign this task to another collaborator, please type their name', end=' ', style='magenta')
+        console.print('press enter to continue', style='yellow')
+        assignName = input()
+    console.print('If you want to add comments, please type them here...', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
     comment = input()
-    while True:
-        if comment == '':
-            break
-        else:
-            task['comments'].append(comment)
-            console.print('Comment added; If you want to add another comment, please type it...', end=' ', style='green')
-            console.print('press enter to continue', style='yellow')
-            comment = input()
+    while comment == '':
+        task['comments'].append(comment)
+        console.print('Comment added; If you want to add another comment, please type it...', end=' ', style='green')
+        console.print('press enter to continue', style='yellow')
+        comment = input()
     tomorrow = datetime.now() + timedelta(1)
     task['time'] = tomorrow.strftime('%d-%m-%Y %H:%M')
     console.print('If you want to edit task\'s ending time, type it in this format (DAY-MONTH-YEAR H:M)', style='magenta')
@@ -267,7 +281,6 @@ def newProject():
         console.print("this ID is used for another project existing in the system! try anoother one!", style="red bold")
         enteredID=input()
     project['id']=enteredID
-            
     console.print('Project name: ', end='', style='')
     project['name'] = input()
     users[inUser]['leaderOf'].append(project['name'])
@@ -296,7 +309,7 @@ def newProject():
     console.print('Press any key to add a new task to your project', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
     while input() != '':
-        project['tasks'].append(newTask())
+        project['tasks'].append(newTask(project['collaborators']))
         console.print('Press any key to add a new task to your project', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
     return project
@@ -315,6 +328,140 @@ def taskIndex(val, checkType, projectIndex):
         if projects[projectIndex]['tasks'][i][checkType] == val:
             return i
     return False
+
+
+
+def editTasknew(editProjIndex, editTaskIndex):
+    console.print("edit new ID:", projects[editProjIndex]['tasks'][editTaskIndex]['id'])
+    task = {
+        'id' : projects[editProjIndex]['tasks'][editTaskIndex]['id'],
+        'title' : projects[editProjIndex]['tasks'][editTaskIndex]['title'],
+        'description' : projects[editProjIndex]['tasks'][editTaskIndex]['description'],
+        'time' : projects[editProjIndex]['tasks'][editTaskIndex]['time'],
+        'assigness' : projects[editProjIndex]['tasks'][editTaskIndex]['assigness'],
+        'priority' : projects[editProjIndex]['tasks'][editTaskIndex]['priority'],
+        'status' : projects[editProjIndex]['tasks'][editTaskIndex]['status'],
+        'history' : projects[editProjIndex]['tasks'][editTaskIndex]['history'],
+        'comments' : projects[editProjIndex]['tasks'][editTaskIndex]['comments']
+    }
+
+    console.print('Enter the task item that you want to edit', end=' ', style='magenta')
+    console.print('press enter to continue', style='yellow')
+    console.print('Valid choices: title, description, comments, priority, status, time', style='magenta')
+    taskItemEdit = input()
+    while taskItemEdit != '':
+        if taskItemEdit == 'title' or taskItemEdit == 'description':
+            console.print('Ok, Enter the text that you want to replace in', taskItemEdit, style='magenta')
+            newDescription = input()
+            task[taskItemEdit] = newDescription
+            if taskItemEdit == 'title':
+                historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the title of task has been replaced with " + '('+newDescription+')'
+                logging.info("user changed the title of task in a project")
+            else:
+                historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the description of task has been replaced with " + '('+newDescription+')'
+                logging.info("user changed the description of task in a project")
+            task["history"].append(historyMessage)
+        elif taskItemEdit == 'priority':
+            console.print('press enter to continue', style='yellow')
+            console.print('\t1. CRITICAL\n\t2. HIGH\n\t3. MEDIUM\n\t4. LOW', style='magenta')
+            while True:
+                priority = input()
+                if priority == '1':
+                    task['priority'] = 'CRITICAL'
+                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'CRITICAL'"
+                    task['history'].append(historyMessage)
+                    logging.info("user changed the priority of a task of a project")
+                    break
+                elif priority == '2':
+                    task['priority'] = 'HIGH'
+                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'HIGH'"
+                    task['history'].append(historyMessage)
+                    logging.info("user changed the priority of a task of a project")
+                    break
+                elif priority == '3':
+                    task['priority'] = 'MEDIUM'
+                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'MEDIUM'"
+                    task['history'].append(historyMessage)
+                    logging.info("user changed the priority of a task of a project")
+                    break
+                elif priority == '4':
+                    task['priority'] = 'LOW'
+                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'LOW'"
+                    task['history'].append(historyMessage)
+                    logging.info("user changed the priority of a task of a project")
+                    break
+                elif priority == '':
+                    break
+                else:
+                    console.print('Please enter between 1 to 4', style='red bold')
+        elif taskItemEdit == 'status':
+                console.print('press enter to continue', style='yellow')
+                console.print('\t1. TODO\n\t2. DOING\n\t3. DONE\n\t4. ARCHIVED\n\t5. BACKLOG', style='magenta')
+                while True:
+                    status = input()
+                    if status == '1':
+                        task['status'] = 'TODO'
+                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'TODO'"
+                        task['history'].append(historyMessage)
+                        logging.info("user changed the status of a task of a project")
+                        break
+                    elif status == '2':
+                        task['status'] = 'DOING'
+                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'DOING'"
+                        task['history'].append(historyMessage)
+                        logging.info("user changed the status of a task of a project")
+                        break
+                    elif status == '3':
+                        task['status'] = 'DONE'
+                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'DONE'"
+                        task['history'].append(historyMessage)
+                        logging.info("user changed the status of a task of a project")
+                        break
+                    elif status == '4':
+                        task['status'] = 'ARCHIVED'
+                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'ARCHIVED'"
+                        task['history'].append(historyMessage)
+                        logging.info("user changed the status of a task of a project")
+                        break
+                    elif status == '5':
+                        task['status'] = 'BACKLOG'
+                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'BACKLOG'"
+                        task['history'].append(historyMessage)
+                        logging.info("user changed the status of a task of a project")
+                        break
+                    elif status == '':
+                        break
+                    else:
+                        console.print('Please enter between 1 to 5', style='red bold')
+        elif taskItemEdit == 'comments':
+            console.print('Enter the comment that you want to add', style='magenta')
+            commentedTxt = input()
+            task['comments'].append(commentedTxt)
+            historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the comment: "+ '('+commentedTxt+')'+"has been added to the task"
+            task['history'].append(historyMessage)
+            logging.info("user added a comment to the comment section of a task of a project ")
+        elif taskItemEdit == 'time':
+            console.print("Type the expiration time in this format (D-M-Y H:M)",end=' ', style='magenta')
+            console.print("press enter to continue", style='yellow')
+            editTime = input()
+            while timeValidate(editTime) == False and editTime != '':
+                console.print('Please enter in this format (DAY-MONTH-YEAR H:M)', style='red bold')
+                editTime = input()
+            if editTime != '':
+                task['time'] = editTime
+                historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the expiration time of the task has be set to: " + editTime
+                task['history'].append(historyMessage)
+        elif taskItemEdit == '':
+            break
+        else:
+            console.print('This task does not have this item!', style='red bold')
+        console.print('Enter the task item that you want to edit', end=' ', style='magenta')
+        console.print('press enter to continue', style='yellow')
+        console.print('Valid choices: title, description, comments, priority, status, time', style='magenta')
+        taskItemEdit = input()
+
+    return task
+
 
 def editTaskFunc(editProjIndex):
     editTaskName = input()
@@ -507,19 +654,21 @@ def editProject():
         filesWrite()
         console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
-    console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
-    console.print('press enter to continue', style='yellow')
-    console.print('Existing tasks: ')
-    for i in projects[editProjIndex]['tasks']:
-        console.print(i['title'], end=', ')
-    console.print()
-    editTaskFunc(editProjIndex)
+    console.print("Project updated!", style="green")
+    # console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
+    # console.print('press enter to continue', style='yellow')
+    # console.print('Existing tasks: ')
+    # for i in projects[editProjIndex]['tasks']:
+    #     console.print(i['title'], end=', ')
+    # console.print()
+    # editTaskFunc(editProjIndex)
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
 # -------------- main code starts from here ---------------------
 while True:
-    console.print("\t1. Login \n\t2. sign up \n\t3. Enter as manager\n\t4. exit", style='magenta')
+    console.print("\t1. Login \n\t2. sign up \n\t3. Enter as manager", style='magenta')
+    console.print("press enter to exit", style="yellow")
     signInType = input()
     if signInType == '1':
         login()
@@ -544,25 +693,25 @@ while True:
                 showMemberProjects()
                 console.print("If you want to edit a task in these project, enter the project name:", end=' ', style="magenta")
                 console.print("press enter to continue", style="yellow")
-                forTaskProj = input()
-                while forTaskProj != '':
-                    if forTaskProj in users[inUser]['leaderOf'] or forTaskProj in users[inUser]['memberOf']:
+                editProjName = input()
+                while editProjName != '':
+                    if editProjName in users[inUser]['leaderOf'] or editProjName in users[inUser]['memberOf']:
                         break
                     else:
                         console.print('You can only edit the projects that you are a member of them!', style='red bold')
                         console.print('enter the project name', end=' ', style='magenta')
                         console.print("press enter to continue", style="yellow")
-                        forTaskProj = input()
-                if forTaskProj != '':
-                    editProjIndex = checkInProjects(forTaskProj, 'name')
+                        editProjName = input()
+                if editProjName != '':
+                    editProjIndex = checkInProjects(editProjName, 'name')
                     while editProjIndex == False and str(editProjIndex) != '0':
                         console.print('Project not found', style='red bold')
                         showLeaderProjects()
                         showMemberProjects()
                         console.print("If you want to edit a task in these project, enter the project name:", end=' ', style="magenta")
                         console.print("press enter to continue", style="yellow")
-                        forTaskProj = input()
-                        editProjIndex = checkInProjects(forTaskProj, 'name')
+                        editProjName = input()
+                        editProjIndex = checkInProjects(editProjName, 'name')
                     console.print('Tasks which are assigned to you:', style='magenta')
                     for task in projects[editProjIndex]['tasks']:
                         if users[inUser]['username'] in task['assigness']:
@@ -570,7 +719,41 @@ while True:
                     console.print()
                     console.print('Enter the task name that you want to edit', end=' ', style='magenta')
                     console.print('press enter to continue', style='yellow')
-                    editTaskFunc(editProjIndex)
+                    editTaskName = input()
+                    if editTaskName != '':
+                        while taskIndex(editTaskName, 'title', editProjIndex) == False and str(taskIndex(editTaskName, 'title', editProjIndex)) != '0':
+                            console.print('This task doesn\'t exist or is not assigned to you!', style='red bold')
+                            for task in projects[editProjIndex]['tasks']:
+                                if users[inUser]['username'] in task['assigness']:
+                                    console.print(task['title'], end=', ')
+                            console.print()
+                            console.print('Enter the task name that you want to edit', end=' ', style='magenta')
+                            console.print('press enter to continue', style='yellow')
+                            editTaskName = input()
+                            if editTaskName == '':
+                                break
+                    editTaskIndex = taskIndex(editTaskName, 'title', editProjIndex)
+                    # new task asigness
+                    # new task asigness
+                    console.print('Task asigness:', projects[editProjIndex]['collaborators'], style='magenta')
+                    console.print('If you want to assign this task to a collaborator/remove a collaborator from asigness, please type their name', end=' ', style='magenta')
+                    console.print('press enter to continue', style='yellow')
+                    assignName = input()
+                    while assignName != '':
+                        if usernameCheck(assignName) != False and str(usernameCheck(assignName)) != '0':
+                            console.print('Username does not exist, please enter another usename...', style='red bold')
+                            assignName = input()
+                        elif assignName not in projects[editProjIndex]['collaborators']:
+                            console.print('This user is not in the project\'s collaborators', style='red bold')
+                        elif assignName in projects[editProjIndex]['tasks'][editTaskIndex]['asigness']:
+                            projects[editProjIndex]['tasks'][editTaskIndex]['asigness'].remove(assignName)
+                        task['assigness'].append(assignName)
+                        console.print("Task has been successfully assigned to", assignName, style='green')
+                        console.print('If you want to assign this task to another collaborator, please type their name', end=' ', style='magenta')
+                        console.print('press enter to continue', style='yellow')
+                        assignName = input()
+                    # new task asigness
+                    projects[editProjIndex]['tasks'][editTaskIndex] = editTasknew(editProjIndex, editTaskIndex)
             else:
                 console.print('Please enter 1, 2, 3 or 4', style='red bold')
             console.print('Here is your panel', end=' ', style='magenta')
@@ -607,25 +790,25 @@ while True:
     #     showMemberProjects()
     #     console.print("If you want to edit a task in these project, enter the project name:", end=' ', style="magenta")
     #     console.print("press enter to continue", style="yellow")
-    #     forTaskProj = input()
-    #     while forTaskProj != '':
-    #         if forTaskProj in users[inUser]['leaderOf'] or forTaskProj in users[inUser]['memberOf']:
+    #     editProjName = input()
+    #     while editProjName != '':
+    #         if editProjName in users[inUser]['leaderOf'] or editProjName in users[inUser]['memberOf']:
     #             break
     #         else:
     #             console.print('You can only edit the projects that you are a member of them!', style='red bold')
     #             console.print('enter the project name', end=' ', style='magenta')
     #             console.print("press enter to continue", style="yellow")
-    #             forTaskProj = input()
-    #     if forTaskProj != '':
-    #         editProjIndex = checkInProjects(forTaskProj, 'name')
+    #             editProjName = input()
+    #     if editProjName != '':
+    #         editProjIndex = checkInProjects(editProjName, 'name')
     #         while editProjIndex == False and str(editProjIndex) != '0':
     #             console.print('Project not found', style='red bold')
     #             showLeaderProjects()
     #             showMemberProjects()
     #             console.print("If you want to edit a task in these project, enter the project name:", end=' ', style="magenta")
     #             console.print("press enter to continue", style="yellow")
-    #             forTaskProj = input()
-    #             editProjIndex = checkInProjects(forTaskProj, 'name')
+    #             editProjName = input()
+    #             editProjIndex = checkInProjects(editProjName, 'name')
     #         console.print('Tasks which are assigned to you:', style='magenta')
     #         for task in projects[editProjIndex]['tasks']:
     #             if users[inUser] in task['assigness']:
@@ -633,10 +816,10 @@ while True:
     #         console.print('Enter the task name that you want to edit', end=' ', style='magenta')
     #         console.print('press enter to continue', style='yellow')
     #         editTaskFunc(editProjIndex)
-    elif signInType == '4':
+    elif signInType == '':
         break
     else:
-        console.print('Please enter from 1 to 4', style='red bold')
+        console.print('Please enter 1, 2 or 3', style='red bold')
 
 
 

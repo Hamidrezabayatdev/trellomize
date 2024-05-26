@@ -22,3 +22,15 @@
 20:12:37,186 root INFO user logged in (entered to his panel)
 20:13:16,208 root INFO user changed the title of task in a project
 20:13:24,178 root INFO user changed the status of a task of a project
+20:42:44,92 root INFO user logged in (entered to his panel)
+20:45:28,55 root INFO user logged in (entered to his panel)
+20:48:13,874 root INFO user logged in (entered to his panel)
+21:34:47,809 root INFO user logged in (entered to his panel)
+21:38:42,623 root INFO user logged in (entered to his panel)
+21:44:02,775 root INFO user changed the title of task in a project
+21:51:58,982 root INFO user logged in (entered to his panel)
+21:53:27,618 root INFO user removed a collabrator from a project
+21:54:21,930 root INFO user added a task to a project
+21:56:13,598 root INFO user logged in (entered to his panel)
+21:56:31,35 root INFO user added a task to a project
+22:18:35,863 root INFO user logged in (entered to his panel)
