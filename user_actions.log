@@ -10,3 +10,15 @@
 01:56:16,17 root INFO user added a comment to the comment section of a task of a project 
 01:57:02,395 root INFO user changed the priority of a task of a project
 01:57:07,844 root INFO user changed the status of a task of a project
+19:36:44,445 root INFO user created a new account
+19:36:51,798 root INFO user logged in (entered to his panel)
+19:38:03,60 root INFO user logged in (entered to his panel)
+20:06:07,482 root INFO user logged in (entered to his panel)
+20:08:44,415 root INFO user logged in (entered to his panel)
+20:09:07,450 root INFO user logged in (entered to his panel)
+20:10:46,338 root INFO user logged in (entered to his panel)
+20:11:13,184 root INFO user logged in (entered to his panel)
+20:11:46,305 root INFO user logged in (entered to his panel)
+20:12:37,186 root INFO user logged in (entered to his panel)
+20:13:16,208 root INFO user changed the title of task in a project
+20:13:24,178 root INFO user changed the status of a task of a project

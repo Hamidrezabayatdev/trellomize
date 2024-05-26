@@ -524,8 +524,9 @@ while True:
     if signInType == '1':
         login()
         logging.info("user logged in (entered to his panel)")
-        console.print('Here is your panel', style='magenta')
-        console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
+        console.print('Here is your panel', end=' ', style='magenta')
+        console.print("press enter to continue", style="yellow")
+        console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects\n\t4. edit a task', style='magenta')
         panelJob = input()
         while panelJob != '':
             if panelJob == '1':
@@ -538,11 +539,43 @@ while True:
                 showMemberProjects()
             elif panelJob == '3':
                 editProject()
+            elif panelJob == '4':
+                showLeaderProjects()
+                showMemberProjects()
+                console.print("If you want to edit a task in these project, enter the project name:", end=' ', style="magenta")
+                console.print("press enter to continue", style="yellow")
+                forTaskProj = input()
+                while forTaskProj != '':
+                    if forTaskProj in users[inUser]['leaderOf'] or forTaskProj in users[inUser]['memberOf']:
+                        break
+                    else:
+                        console.print('You can only edit the projects that you are a member of them!', style='red bold')
+                        console.print('enter the project name', end=' ', style='magenta')
+                        console.print("press enter to continue", style="yellow")
+                        forTaskProj = input()
+                if forTaskProj != '':
+                    editProjIndex = checkInProjects(forTaskProj, 'name')
+                    while editProjIndex == False and str(editProjIndex) != '0':
+                        console.print('Project not found', style='red bold')
+                        showLeaderProjects()
+                        showMemberProjects()
+                        console.print("If you want to edit a task in these project, enter the project name:", end=' ', style="magenta")
+                        console.print("press enter to continue", style="yellow")
+                        forTaskProj = input()
+                        editProjIndex = checkInProjects(forTaskProj, 'name')
+                    console.print('Tasks which are assigned to you:', style='magenta')
+                    for task in projects[editProjIndex]['tasks']:
+                        if users[inUser]['username'] in task['assigness']:
+                            console.print(task['title'], end=', ')
+                    console.print()
+                    console.print('Enter the task name that you want to edit', end=' ', style='magenta')
+                    console.print('press enter to continue', style='yellow')
+                    editTaskFunc(editProjIndex)
             else:
                 console.print('Please enter 1, 2, 3 or 4', style='red bold')
             console.print('Here is your panel', end=' ', style='magenta')
-            console.print("press enter to continue", style="yellow")
-            console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects', style='magenta')
+            console.print("press enter to continue log out", style="yellow")
+            console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects\n\t4. edit a task', style='magenta')
             panelJob = input()
     elif signInType == '2':
         signUp()
@@ -566,13 +599,44 @@ while True:
             for i in users:
                 if i["isActive"]==True:
                     console.print(i)
-            console.print("Enter the name of who ever you'd like to deactivate:", end="  ", style="magenta")
+            console.print("Enter the name of who ever you'd like to deactivate:", end=" ", style="magenta")
             console.print("press enter to continue", style="yellow")
             command=input()
+    # elif signInType == '4':
+    #     showLeaderProjects()
+    #     showMemberProjects()
+    #     console.print("If you want to edit a task in these project, enter the project name:", end=' ', style="magenta")
+    #     console.print("press enter to continue", style="yellow")
+    #     forTaskProj = input()
+    #     while forTaskProj != '':
+    #         if forTaskProj in users[inUser]['leaderOf'] or forTaskProj in users[inUser]['memberOf']:
+    #             break
+    #         else:
+    #             console.print('You can only edit the projects that you are a member of them!', style='red bold')
+    #             console.print('enter the project name', end=' ', style='magenta')
+    #             console.print("press enter to continue", style="yellow")
+    #             forTaskProj = input()
+    #     if forTaskProj != '':
+    #         editProjIndex = checkInProjects(forTaskProj, 'name')
+    #         while editProjIndex == False and str(editProjIndex) != '0':
+    #             console.print('Project not found', style='red bold')
+    #             showLeaderProjects()
+    #             showMemberProjects()
+    #             console.print("If you want to edit a task in these project, enter the project name:", end=' ', style="magenta")
+    #             console.print("press enter to continue", style="yellow")
+    #             forTaskProj = input()
+    #             editProjIndex = checkInProjects(forTaskProj, 'name')
+    #         console.print('Tasks which are assigned to you:', style='magenta')
+    #         for task in projects[editProjIndex]['tasks']:
+    #             if users[inUser] in task['assigness']:
+    #                 console.print(task['name'], end=' ', style='magenta')
+    #         console.print('Enter the task name that you want to edit', end=' ', style='magenta')
+    #         console.print('press enter to continue', style='yellow')
+    #         editTaskFunc(editProjIndex)
     elif signInType == '4':
         break
     else:
-        console.print('Please enter 1, 2, 3 or 4', style='red bold')
+        console.print('Please enter from 1 to 4', style='red bold')
 
 
 
