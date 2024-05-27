@@ -100,3 +100,24 @@
 19:35:11,411 root INFO user created a new project
 19:46:13,811 root INFO user entered as manager
 19:46:19,764 root INFO user deactivated pouria as the manager
+19:47:23,2 root INFO user entered as manager
+19:47:40,305 root INFO user deactivated hamidreza as the manager
+19:55:31,772 root INFO user entered as manager
+19:55:35,940 root INFO user activated hamidreza as the manager
+19:56:43,890 root INFO user entered as manager
+19:56:46,866 root INFO user deactivated hamidreza as the manager
+19:56:57,837 root INFO user deactivated saeed as the manager
+19:57:00,641 root INFO user activated saeed as the manager
+20:13:09,630 root INFO User logged in to account saeed
+20:13:49,127 root INFO User logged in to account soroush
+20:14:27,992 root INFO User logged in to account saeed
+20:16:29,584 root INFO User logged in to account saeed
+20:17:27,930 root INFO User logged in to account saeed
+20:19:12,657 root INFO User logged in to account saeed
+20:20:10,576 root INFO User logged in to account saeed
+20:21:03,204 root INFO User logged in to account saeed
+20:24:58,128 root INFO User logged in to account saeed
+20:27:01,338 root INFO User logged in to account saeed
+20:27:35,443 root INFO User logged in to account saeed
+20:29:31,664 root INFO User logged in to account saeed
+20:30:17,379 root INFO User logged in to account saeed

@@ -2,6 +2,7 @@ from rich.console import Console
 console = Console()
 from rich.table import Table
 from datetime import datetime, timedelta
+from rich.progress import track
 import json
 import re
 import time
@@ -93,6 +94,7 @@ def checkInProjects(val, checkType):
 def signUp ():
     console.print('Please enter needed values to continue...', style='magenta')
     console.print('Username: ', end='')
+    
     inpUsername = input()
     while checkInUsers(inpUsername, 'username') != False or str(checkInUsers(inpUsername, 'username')) == '0':
         console.print('Username already exists, please enter another username...', style='red bold')
@@ -160,6 +162,8 @@ def login():
                 console.print('Password does not match, please enter another password...', style='red bold')
             elif users[usernameCheck(username)]["isActive"] == False:
                 console.print("Your account has been suspended by the manager! You can't sign in!", style="red bold")
+                return False
+    return True
 def EnterAsManager():
 
     def validating():
@@ -520,6 +524,7 @@ def editAtask():
                 console.print('If you want to assign this task to a collaborator/remove a collaborator from assigness, please type their name', end=' ', style='magenta')
                 console.print('press enter to continue', style='yellow')
                 assignName = input()
+        else:
             task = projects[editProjIndex]['tasks'][editTaskIndex]
             table = Table(title=task['title'])
             table.add_column('key', justify='center', style='bold blue')
@@ -532,8 +537,12 @@ def editAtask():
             table.add_row('comments', ' '.join(task['comments']))
             console.print(table)
             console.print("Task history: ")
-            for history in task['history']:
-                console.print(history)
+            for i in track(range(len(task['history'])), description="History shown"):
+                console.print()
+                console.print('------------------------------------------')
+                console.print(task['history'][i])
+                console.print('------------------------------------------')
+                time.sleep(1.5)
         if users[inUser]['username'] in projects[editProjIndex]['tasks'][editTaskIndex]['assigness']:
             projects[editProjIndex]['tasks'][editTaskIndex] = editTasknew(editProjIndex, editTaskIndex)
 
@@ -831,7 +840,9 @@ while True:
     console.print("press enter to exit", style="yellow")
     signInType = input()
     if signInType == '1':
-        login()
+        t = login()
+        while not t:
+            t = login()
         console.print('Here is your panel', end=' ', style='magenta')
         console.print("press enter to log out", style="yellow")
         console.print('\t1. new project\n\t2. show existing projects and tasks\n\t3. edit your projects\n\t4. see/edit a task', style='magenta')
@@ -865,7 +876,9 @@ while True:
         table = Table(title="Users")
         table.add_column('user', justify='center', style='blue')
         table.add_column('activity status', justify='center')
+        usersManage = []
         for i in users:
+            usersManage.append(i['username'])
             if i['isActive']:
                 status = 'Active'
             else:
@@ -885,12 +898,16 @@ while True:
             filesWrite()
             logging.info(loggingMessage)
             console.print("Here are active members of this system:", style="magenta")
+            table = Table(title="Users")
+            table.add_column('user', justify='center', style='blue')
+            table.add_column('activity status', justify='center')
             for i in users:
                 if i['isActive']:
                     status = 'Active'
                 else:
                     status = 'Deactive'
-            table.add_row(i['username'], status)
+                table.add_row(i['username'], status)
+            console.print(table)
             console.print("Enter the name of who ever you'd like to deactivate:", end=" ", style="magenta")
             console.print("press enter to continue", style="yellow")
             command=input()
