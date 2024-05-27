@@ -45,3 +45,8 @@
 15:28:44,310 root INFO user changed the priority of a task of a project
 15:28:57,829 root INFO user changed the status of a task of a project
 16:14:36,812 root INFO User logged in to account Batman
+16:41:20,683 root INFO User logged in to account after
+16:41:35,926 root INFO after removed hamidreza from project timer
+16:41:39,61 root INFO after removed poori from project timer
+16:44:34,84 root INFO User logged in to account after
+16:48:35,293 root INFO after added a new task to the project timer

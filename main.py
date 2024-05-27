@@ -85,7 +85,7 @@ def checkInProjects(val, checkType):
             return i
     return False
 
-# def editAsigness(asigness):
+# def editAsigness(assigness):
 
 
 
@@ -216,9 +216,10 @@ def newTask(collaborators):
     StatusEnumValues = [e.value for e in TaskStatus]
     while True:
         status = input()
-        if int(status) in StatusEnumValues:
+        if status == '':
+            break
+        elif int(status) in StatusEnumValues:
             task['status']= TaskStatus(int(status)).name
-        elif status == '':
             break
         else:
             console.print('Please enter between 1 to 4', style='red bold')
@@ -228,10 +229,10 @@ def newTask(collaborators):
     PriorityEnumValues = [e.value for e in TaskPriority]
     while True:
         priority = input()
-        if int(priority) in PriorityEnumValues:
-            task['priority'] = TaskPriority(int(priority)).name
+        if priority == '':
             break
-        elif priority == '':
+        elif int(priority) in PriorityEnumValues:
+            task['priority'] = TaskPriority(int(priority)).name
             break
         else:
             console.print('Please enter between 1 to 3', style='red bold')
@@ -241,7 +242,6 @@ def newTask(collaborators):
     while assignName != '':
         if usernameCheck(assignName) == False or str(usernameCheck(assignName)) == '0':
             console.print('Username does not exist, please enter another usename...', style='red bold')
-            assignName = input()
         elif assignName not in collaborators:
             console.print('This user is not in the project\'s collaborators', style='red bold')
         else:
@@ -268,7 +268,7 @@ def newTask(collaborators):
         editTime = input()
     if editTime != '':
         task['time'] = editTime
-        console.print('Task has been set', style='green')
+        console.print('Task time has been set', style='green')
     console.print('Task has been successfully added', style='green')
     return task
 def newProject():
@@ -314,7 +314,7 @@ def newProject():
     console.print('Press any key to add a new task to your project', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
     while input() != '':
-        project['tasks'].append(newTask(project['collaborators']))
+        project['tasks'].append(newTask(projects[editProjIndex]['collaborators']))
         console.print('Press any key to add a new task to your project', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
     return project
@@ -337,7 +337,7 @@ def taskIndex(val, checkType, projectIndex):
 
 
 def editTasknew(editProjIndex, editTaskIndex):
-    console.print("edit new ID:", projects[editProjIndex]['tasks'][editTaskIndex]['id'])
+    # console.print("edit new ID:", projects[editProjIndex]['tasks'][editTaskIndex]['id'])
     task = {
         'id' : projects[editProjIndex]['tasks'][editTaskIndex]['id'],
         'title' : projects[editProjIndex]['tasks'][editTaskIndex]['title'],
@@ -621,7 +621,7 @@ def editProject():
     console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
     while input() != '':
-        projects[editProjIndex]['tasks'].append(newTask())
+        projects[editProjIndex]['tasks'].append(newTask(projects[editProjIndex]['collaborators']))
         loggingMessage = users[inUser]['username']+ " added a new task to the project "+ projects[editProjIndex]['name']
         logging.info(loggingMessage)
         filesWrite()
@@ -705,11 +705,11 @@ while True:
                             if editTaskName == '':
                                 break
                     editTaskIndex = taskIndex(editTaskName, 'title', editProjIndex)
-                    # new task asigness
-                    # new task asigness
+                    # new task assigness
+                    # new task assigness
                     if users[inUser]['username'] == projects[editProjIndex]['leader']:
-                        console.print('Task asigness:', projects[editProjIndex]['collaborators'], style='magenta')
-                        console.print('If you want to assign this task to a collaborator/remove a collaborator from asigness, please type their name', end=' ', style='magenta')
+                        console.print('Task assigness:', projects[editProjIndex]['collaborators'], style='magenta')
+                        console.print('If you want to assign this task to a collaborator/remove a collaborator from assigness, please type their name', end=' ', style='magenta')
                         console.print('press enter to continue', style='yellow')
                         assignName = input()
                         while assignName != '':
@@ -718,16 +718,16 @@ while True:
                                 assignName = input()
                             elif assignName not in projects[editProjIndex]['collaborators']:
                                 console.print('This user is not in the project\'s collaborators', style='red bold')
-                            elif assignName in projects[editProjIndex]['tasks'][editTaskIndex]['asigness']:
-                                projects[editProjIndex]['tasks'][editTaskIndex]['asigness'].remove(assignName)
+                            elif assignName in projects[editProjIndex]['tasks'][editTaskIndex]['assigness']:
+                                projects[editProjIndex]['tasks'][editTaskIndex]['assigness'].remove(assignName)
                                 console.print(assignName, 'has been successfully removed', style='green')
                             else:
                                 task['assigness'].append(assignName)
                                 console.print("Task has been successfully assigned to", assignName, style='green')
-                            console.print('If you want to assign this task to a collaborator/remove a collaborator from asigness, please type their name', end=' ', style='magenta')
+                            console.print('If you want to assign this task to a collaborator/remove a collaborator from assigness, please type their name', end=' ', style='magenta')
                             console.print('press enter to continue', style='yellow')
                             assignName = input()
-                    # new task asigness
+                    # new task assigness
                     projects[editProjIndex]['tasks'][editTaskIndex] = editTasknew(editProjIndex, editTaskIndex)
             else:
                 console.print('Please enter 1, 2, 3 or 4', style='red bold')
