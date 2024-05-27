@@ -235,7 +235,7 @@ def newTask(collaborators):
     console.print('press enter to continue', style='yellow')
     assignName = input()
     while assignName != '':
-        if usernameCheck(assignName) != False and str(usernameCheck(assignName)) != '0':
+        if usernameCheck(assignName) == False or str(usernameCheck(assignName)) == '0':
             console.print('Username does not exist, please enter another usename...', style='red bold')
             assignName = input()
         elif assignName not in collaborators:
@@ -249,7 +249,7 @@ def newTask(collaborators):
     console.print('If you want to add comments, please type them here...', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
     comment = input()
-    while comment == '':
+    while comment != '':
         task['comments'].append(comment)
         console.print('Comment added; If you want to add another comment, please type it...', end=' ', style='green')
         console.print('press enter to continue', style='yellow')
@@ -356,10 +356,10 @@ def editTasknew(editProjIndex, editTaskIndex):
             newDescription = input()
             task[taskItemEdit] = newDescription
             if taskItemEdit == 'title':
-                historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the title of task has been replaced with " + '('+newDescription+')'
+                historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the title of task has been replaced with " + '('+newDescription+') by '+ users[inUser]['username']
                 logging.info("user changed the title of task in a project")
             else:
-                historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the description of task has been replaced with " + '('+newDescription+')'
+                historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the description of task has been replaced with " + '('+newDescription+') by '+ users[inUser]['username']
                 logging.info("user changed the description of task in a project")
             task["history"].append(historyMessage)
         elif taskItemEdit == 'priority':
@@ -368,20 +368,20 @@ def editTasknew(editProjIndex, editTaskIndex):
             while True:
                 priority = input()
                 if priority == '1':
-                    task['priority'] = 'CRITICAL'
-                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'CRITICAL'"
+                    task['priority'] = 'CRITICAL' 
+                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'CRITICAL' by "+ users[inUser]['username'] 
                     task['history'].append(historyMessage)
                     logging.info("user changed the priority of a task of a project")
                     break
                 elif priority == '2':
                     task['priority'] = 'HIGH'
-                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'HIGH'"
+                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'HIGH' by "+ users[inUser]['username']
                     task['history'].append(historyMessage)
                     logging.info("user changed the priority of a task of a project")
                     break
                 elif priority == '3':
                     task['priority'] = 'MEDIUM'
-                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'MEDIUM'"
+                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'MEDIUM' by "+ users[inUser]['username']
                     task['history'].append(historyMessage)
                     logging.info("user changed the priority of a task of a project")
                     break
@@ -402,31 +402,31 @@ def editTasknew(editProjIndex, editTaskIndex):
                     status = input()
                     if status == '1':
                         task['status'] = 'TODO'
-                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'TODO'"
+                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'TODO' by "+ users[inUser]['username']
                         task['history'].append(historyMessage)
                         logging.info("user changed the status of a task of a project")
                         break
                     elif status == '2':
                         task['status'] = 'DOING'
-                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'DOING'"
+                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'DOING' by "+ users[inUser]['username']
                         task['history'].append(historyMessage)
                         logging.info("user changed the status of a task of a project")
                         break
                     elif status == '3':
                         task['status'] = 'DONE'
-                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'DONE'"
+                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'DONE' by "+ users[inUser]['username']
                         task['history'].append(historyMessage)
                         logging.info("user changed the status of a task of a project")
                         break
                     elif status == '4':
                         task['status'] = 'ARCHIVED'
-                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'ARCHIVED'"
+                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'ARCHIVED' by "+ users[inUser]['username']
                         task['history'].append(historyMessage)
                         logging.info("user changed the status of a task of a project")
                         break
                     elif status == '5':
                         task['status'] = 'BACKLOG'
-                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'BACKLOG'"
+                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'BACKLOG' by "+ users[inUser]['username']
                         task['history'].append(historyMessage)
                         logging.info("user changed the status of a task of a project")
                         break
@@ -438,7 +438,7 @@ def editTasknew(editProjIndex, editTaskIndex):
             console.print('Enter the comment that you want to add', style='magenta')
             commentedTxt = input()
             task['comments'].append(commentedTxt)
-            historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the comment: "+ '('+commentedTxt+')'+"has been added to the task"
+            historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the comment: "+ '('+commentedTxt+')'+"has been added to the task by "+ users[inUser]['username']
             task['history'].append(historyMessage)
             logging.info("user added a comment to the comment section of a task of a project ")
         elif taskItemEdit == 'time':
@@ -450,7 +450,7 @@ def editTasknew(editProjIndex, editTaskIndex):
                 editTime = input()
             if editTime != '':
                 task['time'] = editTime
-                historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the expiration time of the task has be set to: " + editTime
+                historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the expiration time of the task has be set to: " + editTime+" by "+ users[inUser]['username']
                 task['history'].append(historyMessage)
         elif taskItemEdit == '':
             break
