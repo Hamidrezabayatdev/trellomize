@@ -7,6 +7,7 @@ import time
 import bcrypt
 import uuid
 import logging
+from enum import Enum
 # convert the time in seconds since the epoch to a readable format
 # local_time = time.ctime(seconds)
 
@@ -17,6 +18,20 @@ logging.basicConfig(filename="user_actions.log",
                     datefmt='%H:%M:%S',
                     level=logging.INFO)
 
+#enumeration class for task status:
+class TaskStatus(Enum):
+    TODO = 1
+    DOING = 2
+    DONE = 3
+    ARCHIVED = 4
+    BACKLOG = 5   
+
+#enumeration class for task priority:
+class TaskPriority(Enum):
+    CRITICAL = 1
+    HIGH = 2
+    MEDIUM = 3
+    LOW = 4
 
 
 with open("users.json", 'r') as usersFR:
@@ -195,20 +210,12 @@ def newTask(collaborators):
     console.print('Choose task status', end=' ')
     console.print('(press enter if you want to continue with default value (BACKLOG))', style='yellow')
     console.print('\t1. TODO\n\t2. DOING\n\t3. DONE\n\t4. ARCHIVED', style='magenta')
+
+    StatusEnumValues = [e.value for e in TaskStatus]
     while True:
         status = input()
-        if status == '1':
-            task['status'] = 'TODO'
-            break
-        elif status == '2':
-            task['status'] = 'DOING'
-            break
-        elif status == '3':
-            task['status'] = 'DONE'
-            break
-        elif status == '4':
-            task['status'] = 'ARCHIVED'
-            break
+        if int(status) in StatusEnumValues:
+            task['status']= TaskStatus(int(status)).name
         elif status == '':
             break
         else:
@@ -216,16 +223,11 @@ def newTask(collaborators):
     console.print('Task priority: ', end='')
     console.print('press enter if you want to continue with default value(LOW)', style='yellow')
     console.print('\t1. CRITICAL\n\t2. HIGH\n\t3. MEDIUM', style='magenta')
+    PriorityEnumValues = [e.value for e in TaskPriority]
     while True:
         priority = input()
-        if priority == '1':
-            task['priority'] = 'CRITICAL'
-            break
-        elif priority == '2':
-            task['priority'] = 'HIGH'
-            break
-        elif priority == '3':
-            task['priority'] = 'MEDIUM'
+        if int(priority) in PriorityEnumValues:
+            task['priority'] = TaskPriority(int(priority)).name
             break
         elif priority == '':
             break
@@ -365,29 +367,12 @@ def editTasknew(editProjIndex, editTaskIndex):
         elif taskItemEdit == 'priority':
             console.print('press enter to continue', style='yellow')
             console.print('\t1. CRITICAL\n\t2. HIGH\n\t3. MEDIUM\n\t4. LOW', style='magenta')
+            PriorityEnumValues = [e.value for e in TaskPriority]
             while True:
                 priority = input()
-                if priority == '1':
-                    task['priority'] = 'CRITICAL' 
-                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'CRITICAL' by "+ users[inUser]['username'] 
-                    task['history'].append(historyMessage)
-                    logging.info("user changed the priority of a task of a project")
-                    break
-                elif priority == '2':
-                    task['priority'] = 'HIGH'
-                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'HIGH' by "+ users[inUser]['username']
-                    task['history'].append(historyMessage)
-                    logging.info("user changed the priority of a task of a project")
-                    break
-                elif priority == '3':
-                    task['priority'] = 'MEDIUM'
-                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'MEDIUM' by "+ users[inUser]['username']
-                    task['history'].append(historyMessage)
-                    logging.info("user changed the priority of a task of a project")
-                    break
-                elif priority == '4':
-                    task['priority'] = 'LOW'
-                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'LOW'"
+                if int(priority) in PriorityEnumValues:
+                    task['priority'] = TaskPriority(int(priority)).name 
+                    historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into "+task['priority']+" by "+ users[inUser]['username'] 
                     task['history'].append(historyMessage)
                     logging.info("user changed the priority of a task of a project")
                     break
@@ -398,35 +383,13 @@ def editTasknew(editProjIndex, editTaskIndex):
         elif taskItemEdit == 'status':
                 console.print('press enter to continue', style='yellow')
                 console.print('\t1. TODO\n\t2. DOING\n\t3. DONE\n\t4. ARCHIVED\n\t5. BACKLOG', style='magenta')
+                StatusEnumValues = [e.value for e in TaskStatus]
+
                 while True:
                     status = input()
-                    if status == '1':
-                        task['status'] = 'TODO'
-                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'TODO' by "+ users[inUser]['username']
-                        task['history'].append(historyMessage)
-                        logging.info("user changed the status of a task of a project")
-                        break
-                    elif status == '2':
-                        task['status'] = 'DOING'
-                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'DOING' by "+ users[inUser]['username']
-                        task['history'].append(historyMessage)
-                        logging.info("user changed the status of a task of a project")
-                        break
-                    elif status == '3':
-                        task['status'] = 'DONE'
-                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'DONE' by "+ users[inUser]['username']
-                        task['history'].append(historyMessage)
-                        logging.info("user changed the status of a task of a project")
-                        break
-                    elif status == '4':
-                        task['status'] = 'ARCHIVED'
-                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'ARCHIVED' by "+ users[inUser]['username']
-                        task['history'].append(historyMessage)
-                        logging.info("user changed the status of a task of a project")
-                        break
-                    elif status == '5':
-                        task['status'] = 'BACKLOG'
-                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'BACKLOG' by "+ users[inUser]['username']
+                    if int(status) in StatusEnumValues:
+                        task['status'] = TaskStatus(int(status)).name
+                        historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into "+task['status']+" by "+ users[inUser]['username']
                         task['history'].append(historyMessage)
                         logging.info("user changed the status of a task of a project")
                         break
@@ -736,7 +699,7 @@ while True:
                     editTaskIndex = taskIndex(editTaskName, 'title', editProjIndex)
                     # new task asigness
                     # new task asigness
-                    if users[inUser]['name'] == projects[editProjIndex]['leader']:
+                    if users[inUser]['username'] == projects[editProjIndex]['leader']:
                         console.print('Task asigness:', projects[editProjIndex]['collaborators'], style='magenta')
                         console.print('If you want to assign this task to a collaborator/remove a collaborator from asigness, please type their name', end=' ', style='magenta')
                         console.print('press enter to continue', style='yellow')
