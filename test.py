@@ -1,6 +1,5 @@
 import unittest
 import main
-import bcrypt
 
 class TestMyProgram(unittest.TestCase):
     def test_getHashedPassfunc(self):
