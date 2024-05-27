@@ -98,3 +98,5 @@
 19:18:24,997 root INFO pouria added a comment to task number 1 of project tatal
 19:30:02,160 root INFO User logged in to account pouria
 19:35:11,411 root INFO user created a new project
+19:46:13,811 root INFO user entered as manager
+19:46:19,764 root INFO user deactivated pouria as the manager

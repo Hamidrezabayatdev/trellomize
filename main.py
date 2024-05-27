@@ -862,21 +862,35 @@ while True:
         EnterAsManager()
         logging.info("user entered as manager")
         console.print("Here are active members of this system:", style="magenta")
+        table = Table(title="Users")
+        table.add_column('user', justify='center', style='blue')
+        table.add_column('activity status', justify='center')
         for i in users:
-            if i["isActive"]==True:
-               console.print(i)
-        console.print("Enter the name of who ever you'd like to deactivate:", end="  ", style="magenta")
+            if i['isActive']:
+                status = 'Active'
+            else:
+                status = 'Deactive'
+            table.add_row(i['username'], status)
+        console.print(table)
+        console.print("Enter the name of who ever you'd like to active/deactivate:", end="  ", style="magenta")
         console.print("press enter to continue", style="yellow")
         command = input()
         while command != "":
-            users[usernameCheck(command)]["isActive"]=False
+            if users[usernameCheck(command)]["isActive"] == False:
+                users[usernameCheck(command)]["isActive"] = True
+                loggingMessage = "user activated "+ command+" as the manager"
+            else:
+                users[usernameCheck(command)]["isActive"] = False
+                loggingMessage = "user deactivated "+ command+" as the manager"
             filesWrite()
-            loggingMessage = "user deactivated "+ command+" as the manager"
             logging.info(loggingMessage)
             console.print("Here are active members of this system:", style="magenta")
             for i in users:
-                if i["isActive"]==True:
-                    console.print(i)
+                if i['isActive']:
+                    status = 'Active'
+                else:
+                    status = 'Deactive'
+            table.add_row(i['username'], status)
             console.print("Enter the name of who ever you'd like to deactivate:", end=" ", style="magenta")
             console.print("press enter to continue", style="yellow")
             command=input()
