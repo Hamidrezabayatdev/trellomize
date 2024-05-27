@@ -72,9 +72,9 @@ def checkEmail(email):
     
 def filesWrite():
     with open("users.json", 'w') as usersFW:
-        json.dump(users, usersFW)
+        json.dump(users, usersFW ,indent=4)
     with open("projects.json", 'w') as projectsFW:
-        json.dump(projects, projectsFW)
+        json.dump(projects, projectsFW, indent=4)
 
 def checkInUsers(val, checkType):
     for i in range(len(users)):
