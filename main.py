@@ -10,6 +10,7 @@ import bcrypt
 import uuid
 import logging
 from enum import Enum
+import base64
 # convert the time in seconds since the epoch to a readable format
 # local_time = time.ctime(seconds)
 
@@ -43,15 +44,15 @@ with open("projects.json", 'r') as projectsFR:
 
 inUser = 1000
 
-def get_hashed_password(plain_text_password):
-    bytes = plain_text_password.encode('utf-8') 
-    return str(bcrypt.hashpw(bytes, bcrypt.gensalt()))
+def get_hashed_password(password):
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt) 
+    encoded_hashed_password = base64.b64encode(hashed_password).decode('utf-8')
+    return encoded_hashed_password
 
-def check_password(plain_text_password, hashed_password):
-    bytes = plain_text_password.encode('utf-8')
-    hashed_bytes = hashed_password.encode('utf-8')
-    hash = bcrypt.hashpw(hashed_bytes, bcrypt.gensalt())
-    return str(bcrypt.checkpw(bytes, hash))
+def check_password(password, encoded_hashed_password):
+    hashed_password = base64.b64decode(encoded_hashed_password)
+    return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
 def timeValidate(dt_string):
         try:
@@ -121,7 +122,7 @@ def signUp ():
     user = {
         'email' : inpEmail,
         'username' : inpUsername,
-        'password' : inpPassword,
+        'password' : get_hashed_password(inpPassword),
         # 'time' : creationTime,
         'isActive' : True,
         'leaderOf' : [],
@@ -151,7 +152,7 @@ def login():
     while True:
         password = input()
         
-        if password == users[usernameCheck(username)]['password'] and users[usernameCheck(username)]["isActive"]==True:
+        if check_password(password, users[usernameCheck(username)]['password']) and users[usernameCheck(username)]["isActive"]==True:
             global inUser
             inUser = usernameCheck(username)
             loggingMessage = "User logged in to account "+ username
