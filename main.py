@@ -153,6 +153,8 @@ def login():
         if password == users[usernameCheck(username)]['password'] and users[usernameCheck(username)]["isActive"]==True:
             global inUser
             inUser = usernameCheck(username)
+            loggingMessage = "User logged in to account "+ username
+            logging.info(loggingMessage) 
             break
         else:
             if password != users[usernameCheck(username)]['password']:
@@ -359,10 +361,12 @@ def editTasknew(editProjIndex, editTaskIndex):
             task[taskItemEdit] = newDescription
             if taskItemEdit == 'title':
                 historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the title of task has been replaced with " + '('+newDescription+') by '+ users[inUser]['username']
-                logging.info("user changed the title of task in a project")
+                loggingMessage = users[inUser]['username']+" changed the title of task number "+ str(editTaskIndex+1)+ " of Project "+ projects[editProjIndex]['name'] 
+                logging.info(loggingMessage)
             else:
                 historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the description of task has been replaced with " + '('+newDescription+') by '+ users[inUser]['username']
-                logging.info("user changed the description of task in a project")
+                loggingMessage = users[inUser]['username']+" changed the description of task number "+ str(editTaskIndex+1)+ " of Project "+ projects[editProjIndex]['name']
+                logging.info(loggingMessage)
             task["history"].append(historyMessage)
         elif taskItemEdit == 'priority':
             console.print('press enter to continue', style='yellow')
@@ -374,7 +378,8 @@ def editTasknew(editProjIndex, editTaskIndex):
                     task['priority'] = TaskPriority(int(priority)).name 
                     historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into "+task['priority']+" by "+ users[inUser]['username'] 
                     task['history'].append(historyMessage)
-                    logging.info("user changed the priority of a task of a project")
+                    loggingMessage = users[inUser]['username'] + " changed the priority of task number "+ str(editProjIndex+1)+ " of project "+projects[editProjIndex]['name'] +" to "+task['priority']
+                    logging.info(loggingMessage)
                     break
                 elif priority == '':
                     break
@@ -391,7 +396,8 @@ def editTasknew(editProjIndex, editTaskIndex):
                         task['status'] = TaskStatus(int(status)).name
                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into "+task['status']+" by "+ users[inUser]['username']
                         task['history'].append(historyMessage)
-                        logging.info("user changed the status of a task of a project")
+                        loggingMessage = users[inUser]['username'] + " changed the Status of task number "+ str(editProjIndex+1)+ " of project "+projects[editProjIndex]['name'] +" to "+task['status']
+                        logging.info(loggingMessage)
                         break
                     elif status == '':
                         break
@@ -403,7 +409,8 @@ def editTasknew(editProjIndex, editTaskIndex):
             task['comments'].append(commentedTxt)
             historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the comment: "+ '('+commentedTxt+')'+"has been added to the task by "+ users[inUser]['username']
             task['history'].append(historyMessage)
-            logging.info("user added a comment to the comment section of a task of a project ")
+            loggingMessage = users[inUser]['username'] + " added a comment to task number "+ str(editProjIndex+1)+ " of project "+projects[editProjIndex]['name'] 
+            logging.info(loggingMessage)
         elif taskItemEdit == 'time':
             console.print("Type the expiration time in this format (D-M-Y H:M)",end=' ', style='magenta')
             console.print("press enter to continue", style='yellow')
@@ -593,10 +600,11 @@ def editProject():
             if collabEdit == projects[editProjIndex]['leader']:
                 console.print('You can not remove the project leader from collaborators!', style='red bold')
             else:
+                loggingMessage = users[inUser]['username'] + " removed "+ collabEdit + " from project "+ projects[editProjIndex]['name']
                 projects[editProjIndex]['collaborators'].remove(collabEdit)
                 users[checkInUsers(collabEdit, 'username')]['memberOf'].remove(projects[editProjIndex]['name'])
                 console.print(collabEdit, 'has been successfully removed from this task\'s collaborators', style='green')
-                logging.info("user removed a collabrator from a project")
+                logging.info(loggingMessage)
         else:
             if checkInUsers(collabEdit, 'username') == False and str(checkInUsers(collabEdit, 'username')) != '0':
                 console.print('This username doesn\'t exist! Please enter an existing username', style='red bold')
@@ -614,7 +622,8 @@ def editProject():
     console.print('press enter to continue', style='yellow')
     while input() != '':
         projects[editProjIndex]['tasks'].append(newTask())
-        logging.info("user added a task to a project")
+        loggingMessage = users[inUser]['username']+ " added a new task to the project "+ projects[editProjIndex]['name']
+        logging.info(loggingMessage)
         filesWrite()
         console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
@@ -636,7 +645,6 @@ while True:
     signInType = input()
     if signInType == '1':
         login()
-        logging.info("user logged in (entered to his panel)")
         console.print('Here is your panel', end=' ', style='magenta')
         console.print("press enter to continue", style="yellow")
         console.print('\t1. new project\n\t2. show existing projects\n\t3. edit your projects\n\t4. edit a task', style='magenta')
@@ -744,7 +752,8 @@ while True:
         while command != "":
             users[usernameCheck(command)]["isActive"]=False
             filesWrite()
-            logging.info("user deactivated a member as manager")
+            loggingMessage = "user deactivated "+ command+" as the manager"
+            logging.info(loggingMessage)
             console.print("Here are active members of this system:", style="magenta")
             for i in users:
                 if i["isActive"]==True:
