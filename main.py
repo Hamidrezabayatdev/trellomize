@@ -124,7 +124,8 @@ def signUp ():
     user = {
         'email' : inpEmail,
         'username' : inpUsername,
-        'password' : get_hashed_password(inpPassword),
+        #'password' : get_hashed_password(inpPassword),
+        'password' : inpPassword,
         # 'time' : creationTime,
         'isActive' : True,
         'leaderOf' : [],
@@ -154,7 +155,8 @@ def login():
     while True:
         password = input()
         
-        if check_password(password, users[usernameCheck(username)]['password']) and users[usernameCheck(username)]["isActive"]==True:
+        #if check_password(password, users[usernameCheck(username)]['password']) and users[usernameCheck(username)]["isActive"]==True:
+        if password==users[usernameCheck(username)]['password'] and users[usernameCheck(username)]["isActive"]==True:
             global inUser
             inUser = usernameCheck(username)
             loggingMessage = "User logged in to account "+ username
@@ -527,25 +529,26 @@ def editAtask():
                 console.print('If you want to assign this task to a collaborator/remove a collaborator from assigness, please type their name', end=' ', style='magenta')
                 console.print('press enter to continue', style='yellow')
                 assignName = input()
-        else:
-            task = projects[editProjIndex]['tasks'][editTaskIndex]
-            table = Table(title=task['title'])
-            table.add_column('key', justify='center', style='bold blue')
-            table.add_column('value', justify='center')
-            table.add_row('title', task['title'])
-            table.add_row('description', task['description'])
-            table.add_row('priority', task['time'])
-            table.add_row('status', task['status'])
-            # table.add_row('history', ' '.join(task['history']))
-            table.add_row('comments', ' '.join(task['comments']))
-            console.print(table)
-            console.print("Task history: ")
-            for i in track(range(len(task['history'])), description="History shown"):
-                console.print()
-                console.print('------------------------------------------')
-                console.print(task['history'][i])
-                console.print('------------------------------------------')
-                time.sleep(1.5)
+        
+        task = projects[editProjIndex]['tasks'][editTaskIndex]
+        table = Table(title=task['title'])
+        table.add_column('', justify='center', style='bold blue')
+        table.add_column('', justify='center')
+        table.add_row('title', task['title'])
+        table.add_row('description', task['description'])
+        table.add_row('priority', task['priority'])
+        table.add_row('deadline', task['time'])
+        table.add_row('status', task['status'])
+        # table.add_row('history', ' '.join(task['history']))
+        table.add_row('comments', ' '.join(task['comments']))
+        console.print(table)
+        console.print("Task history: ")
+        for i in track(range(len(task['history'])), description="History shown"):
+            console.print()
+            console.print('------------------------------------------')
+            console.print(task['history'][i])
+            console.print('------------------------------------------')
+            time.sleep(1.5)
         if users[inUser]['username'] in projects[editProjIndex]['tasks'][editTaskIndex]['assigness']:
             projects[editProjIndex]['tasks'][editTaskIndex] = editTasknew(editProjIndex, editTaskIndex)
 

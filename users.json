@@ -1,1 +1,22 @@
-[]
+[
+    {
+        "email": "timpo@gmail.com",
+        "username": "Pouria",
+        "password": "mishou",
+        "isActive": true,
+        "leaderOf": [
+            "Pro#1"
+        ],
+        "memberOf": []
+    },
+    {
+        "email": "hamidbt@gmail.com",
+        "username": "hamidreza",
+        "password": "pourijoon",
+        "isActive": true,
+        "leaderOf": [],
+        "memberOf": [
+            "Pro#1"
+        ]
+    }
+]

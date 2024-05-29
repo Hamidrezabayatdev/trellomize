@@ -13,3 +13,17 @@
 2024-05-29 11:40:18, manager.py WARNING The output of (createAdmin) function was: A manager already exists! you can't create a new one.
 2024-05-29 11:40:18, manager.py INFO These arguments were passed to the (createAdmin) function : Batman , martha
 2024-05-29 11:40:53, main.py INFO user entered as manager
+2024-05-29 11:49:24, 54 manager.py WARNING The output of (createAdmin) function was: A manager already exists! you can't create a new one.
+2024-05-29 11:49:24, 54 manager.py INFO These arguments were passed to the (createAdmin) function : Batman , martha
+2024-05-29 12:36:03, main.py INFO user created a new account
+2024-05-29 12:36:47, main.py INFO user created a new account
+2024-05-29 12:36:58, main.py INFO User logged in to account Pouria
+2024-05-29 12:38:45, main.py INFO user created a new project
+2024-05-29 12:41:18, main.py INFO Pouria changed the priority of task number 1 of project Pro#1 to LOW
+2024-05-29 12:41:32, main.py INFO Pouria changed the Status of task number 1 of project Pro#1 to BACKLOG
+2024-05-29 16:46:15, main.py INFO User logged in to account Pouria
+2024-05-29 16:54:05, main.py INFO User logged in to account hamidreza
+2024-05-29 16:56:15, main.py INFO User logged in to account hamidreza
+2024-05-29 16:59:17, main.py INFO User logged in to account Pouria
+2024-05-29 17:00:24, main.py INFO User logged in to account hamidreza
+2024-05-29 17:01:36, main.py INFO User logged in to account hamidreza
