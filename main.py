@@ -163,6 +163,7 @@ def signUp ():
     global users
     users.append(user)
     filesWrite()
+    
 
 def usernameCheck (usernameC):
     global users
