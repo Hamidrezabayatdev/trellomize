@@ -29,3 +29,8 @@
 2024-05-29 17:01:36, main.py INFO User logged in to account hamidreza
 2024-05-29 17:07:02, main.py INFO User logged in to account hamidreza
 2024-05-29 17:10:49, main.py INFO User logged in to account hamidreza
+2024-05-29 23:11:49, main.py INFO user created a new account
+2024-05-29 23:11:53, main.py INFO User logged in to account alireza
+2024-05-29 23:19:55, main.py INFO user created a new project
+2024-05-29 23:26:42, main.py INFO User logged in to account hamidreza
+2024-05-29 23:28:33, main.py INFO hamidreza changed the Status of task number 1 of project Pro#1 to DOING

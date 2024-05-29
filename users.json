@@ -7,7 +7,9 @@
         "leaderOf": [
             "Pro#1"
         ],
-        "memberOf": []
+        "memberOf": [
+            "sleep for good"
+        ]
     },
     {
         "email": "hamidbt@gmail.com",
@@ -16,7 +18,18 @@
         "isActive": true,
         "leaderOf": [],
         "memberOf": [
-            "Pro#1"
+            "Pro#1",
+            "sleep for good"
         ]
+    },
+    {
+        "email": "alireza00114@gmai.com",
+        "username": "alireza",
+        "password": "alipass",
+        "isActive": true,
+        "leaderOf": [
+            "sleep for good"
+        ],
+        "memberOf": []
     }
 ]

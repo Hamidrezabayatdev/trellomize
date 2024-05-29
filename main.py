@@ -543,13 +543,14 @@ def editAtask():
         # table.add_row('history', ' '.join(task['history']))
         table.add_row('comments', ' '.join(task['comments']))
         console.print(table)
-        console.print("Task history: ")
-        for i in track(range(len(task['history'])), description="History shown"):
-            console.print()
-            console.print('------------------------------------------')
-            console.print(task['history'][i])
-            console.print('------------------------------------------')
-            time.sleep(1.5)
+        if len(task['history'] != 0):
+            console.print("Task history: ")
+            for i in track(range(len(task['history'])), description="History shown"):
+                console.print()
+                console.print('------------------------------------------')
+                console.print(task['history'][i])
+                console.print('------------------------------------------')
+                time.sleep(1.5)
         if users[inUser]['username'] in projects[editProjIndex]['tasks'][editTaskIndex]['assigness']:
             projects[editProjIndex]['tasks'][editTaskIndex] = editTasknew(editProjIndex, editTaskIndex)
 
@@ -610,6 +611,7 @@ def showProjects():
             table.add_column('BACKLOG', justify='center')
             for i in range(maxlen):
                 table.add_row(TODO[i], DOING[i], DONE[i], ARCHIVED[i], BACKLOG[i])
+            console.print("\n----------------------------------------------")
             console.print(table)
             TODO = []
             DOING = []
@@ -617,144 +619,12 @@ def showProjects():
             ARCHIVED = []
             BACKLOG = []
             lens = []
-        console.print("\n\nEnter the project name that you want to see it\'s tasks", style='magenta')
+            console.print("\n----------------------------------------------")
+        showLeaderProjects()
+        showMemberProjects()
+        console.print("Enter the project name that you want to see it\'s tasks", style='magenta')
+        console.print('press enter to continue', style='yellow')
         projName = input()
-# def editTaskFunc(editProjIndex):
-#     editTaskName = input()
-#     while editTaskName != '':
-#         while taskIndex(editTaskName, 'title', editProjIndex) == False and str(taskIndex(editTaskName, 'title', editProjIndex)) != '0':
-#             console.print('This task doesn\'t exist, Please enter an existing task name', end=' ', style='red bold')
-#             console.print('press enter to continue', style='yellow')
-#             console.print('Existing tasks: ')
-#             for i in projects[editProjIndex]['tasks']:
-#                 console.print(i['title'], end=', ')
-#             editTaskName = input()
-#             if editTaskName == '':
-#                 break
-#             # console.print('taskIndex func:', taskIndex(editTaskName, 'title', editProjIndex), end=' ', style='blue')
-#         if editTaskName == '':
-#                 break
-#         editTaskIndex = taskIndex(editTaskName, 'title', editProjIndex)
-#         console.print('Enter the task item that you want to edit', end=' ', style='magenta')
-#         console.print('press enter to continue', style='yellow')
-#         console.print('Valid choices: title, description, comments, priority, status, time', style='magenta')
-#         taskItemEdit = input()
-#         while taskItemEdit != '':
-#             if taskItemEdit == 'title' or taskItemEdit == 'description':
-#                 console.print('Ok, Enter the text that you want to replace in', taskItemEdit, style='magenta')
-#                 newDescription = input()
-#                 projects[editProjIndex]['tasks'][editTaskIndex][taskItemEdit] = newDescription
-#                 if taskItemEdit == 'title':
-#                     historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the title of task has been replaced with " + '('+newDescription+')'
-#                     logger.info("user changed the title of task in a project")
-#                 else:
-#                     historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the description of task has been replaced with " + '('+newDescription+')'
-#                     logger.info("user changed the description of task in a project")
-#                 projects[editProjIndex]['tasks'][editTaskIndex]["history"].append(historyMessage)
-                
-#             elif taskItemEdit == 'priority':
-#                 console.print('press enter to continue', style='yellow')
-#                 console.print('\t1. CRITICAL\n\t2. HIGH\n\t3. MEDIUM\n\t4. LOW', style='magenta')
-#                 while True:
-#                     priority = input()
-#                     if priority == '1':
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'CRITICAL'
-#                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'CRITICAL'"
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logger.info("user changed the priority of a task of a project")
-#                         break
-#                     elif priority == '2':
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'HIGH'
-#                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'HIGH'"
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logger.info("user changed the priority of a task of a project")
-#                         break
-#                     elif priority == '3':
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'MEDIUM'
-#                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'MEDIUM'"
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logger.info("user changed the priority of a task of a project")
-#                         break
-#                     elif priority == '4':
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'LOW'
-#                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'LOW'"
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logger.info("user changed the priority of a task of a project")
-#                         break
-#                     elif priority == '':
-#                         break
-#                     else:
-#                         console.print('Please enter between 1 to 4', style='red bold')
-#             elif taskItemEdit == 'status':
-#                 console.print('press enter to continue', style='yellow')
-#                 console.print('\t1. TODO\n\t2. DOING\n\t3. DONE\n\t4. ARCHIVED\n\t5. BACKLOG', style='magenta')
-#                 while True:
-#                     status = input()
-#                     if status == '1':
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'TODO'
-#                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'TODO'"
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logger.info("user changed the status of a task of a project")
-#                         break
-#                     elif status == '2':
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'DOING'
-#                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'DOING'"
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logger.info("user changed the status of a task of a project")
-#                         break
-#                     elif status == '3':
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'DONE'
-#                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'DONE'"
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logger.info("user changed the status of a task of a project")
-#                         break
-#                     elif status == '4':
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'ARCHIVED'
-#                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'ARCHIVED'"
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logger.info("user changed the status of a task of a project")
-#                         break
-#                     elif status == '5':
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'BACKLOG'
-#                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'BACKLOG'"
-#                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logger.info("user changed the status of a task of a project")
-#                         break
-#                     elif status == '':
-#                         break
-#                     else:
-#                         console.print('Please enter between 1 to 5', style='red bold')
-#             elif taskItemEdit == 'comments':
-#                 console.print('Enter the comment that you want to add', style='magenta')
-#                 commentedTxt = input()
-#                 projects[editProjIndex]['tasks'][editTaskIndex]['comments'].append(commentedTxt)
-#                 historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the comment: "+ '('+commentedTxt+')'+"has been added to the task"
-#                 projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                 logger.info("user added a comment to the comment section of a task of a project ")
-#             elif taskItemEdit == 'time':
-#                 console.print("Type the expiration time in this format (D-M-Y H:M)",end=' ', style='magenta')
-#                 console.print("press enter to continue", style='yellow')
-#                 editTime = input()
-#                 while timeValidate(editTime) == False and editTime != '':
-#                     console.print('Please enter in this format (DAY-MONTH-YEAR H:M)', style='red bold')
-#                     editTime = input()
-#                 if editTime != '':
-#                     projects[editProjIndex]['tasks'][editTaskIndex]['time'] = editTime
-#                     historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the expiration time of the task has be set to: " + editTime
-#                     projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#             elif taskItemEdit == '':
-#                 break
-#             else:
-#                 console.print('This task does not have this item!', style='red bold')
-#             console.print('Enter the task item that you want to edit', end=' ', style='magenta')
-#             console.print('press enter to continue', style='yellow')
-#             console.print('Valid choices: title, description, comments, priority, status, time', style='magenta')
-#             taskItemEdit = input()
-#         console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
-#         console.print('press enter to continue', style='yellow')
-#         for taskObj in projects[editProjIndex]['tasks']:
-#             console.log(taskObj['title'], end=', ', style='')
-#         editTaskName = input()
 
 def editProject():
     if len(users[inUser]['leaderOf']) == 0:
