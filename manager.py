@@ -2,9 +2,23 @@ import argparse
 import json
 import bcrypt
 import sys
-def get_hashed_password(plain_text_password):
+import logging
+import base64
+#logging:
+logger2 = logging.getLogger("manager.py")
 
-    return bcrypt.hashpw(plain_text_password, bcrypt.gensalt())
+logging.basicConfig(filename="user_actions.log",
+                    filemode='a',
+                    format='%(asctime)s, %(name)s %(levelname)s %(message)s',
+                    datefmt="%Y-%m-%d %H:%M:%S",
+                    level=logging.INFO)
+
+
+def get_hashed_password(password):
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt) 
+    encoded_hashed_password = base64.b64encode(hashed_password).decode('utf-8')
+    return encoded_hashed_password
 
 def createAdmin(name, password):
     Manager = {
@@ -19,8 +33,14 @@ def createAdmin(name, password):
     if p:
         with open("managerInfo.json", 'w') as maFile:
             json.dump(Manager, maFile)
+            loggingMessage = "Manager created!...Name: "+ Manager["name"]
+            logger2.info(loggingMessage)
+            
+        
     else:
+        loggingMessage = "The output of (createAdmin) function was: "+ "A manager already exists! you can't create a new one."
         print("A manager already exists! you can't create a new one.")
+        logger2.warning(loggingMessage)
 
 def PurgeData():
     with open("users.json", 'w') as usersToPurge:
@@ -35,6 +55,8 @@ args= parser.parse_args()
 
 if sys.argv[1]=="create-admin" :
     createAdmin(args.username, args.password )
+    loggingMessage = "These arguments were passed to the (createAdmin) function : "+ args.username +" , "+ args.password 
+    logger2.info(loggingMessage)
 elif sys.argv[1]=="purge-data":
     print("all datas will be deleted! (including information regarding users, projects, tasks and etc)... Do you wish to proceed?")
     print("(enter 1 for YES and any other key for NO)")

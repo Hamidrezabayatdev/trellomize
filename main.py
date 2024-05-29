@@ -15,10 +15,12 @@ import base64
 # local_time = time.ctime(seconds)
 
 #logging :
+logger = logging.getLogger("main.py")
+
 logging.basicConfig(filename="user_actions.log",
                     filemode='a',
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    datefmt='%H:%M:%S',
+                    format='%(asctime)s, %(name)s %(levelname)s %(message)s',
+                    datefmt="%Y-%m-%d %H:%M:%S",
                     level=logging.INFO)
 
 #enumeration class for task status:
@@ -156,7 +158,7 @@ def login():
             global inUser
             inUser = usernameCheck(username)
             loggingMessage = "User logged in to account "+ username
-            logging.info(loggingMessage) 
+            logger.info(loggingMessage) 
             break
         else:
             if password != users[usernameCheck(username)]['password']:
@@ -376,12 +378,12 @@ def editTasknew(editProjIndex, editTaskIndex):
             if taskItemEdit == 'title':
                 historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the title of task has been replaced with " + '('+newDescription+') by '+ users[inUser]['username']
                 loggingMessage = users[inUser]['username']+" changed the title of task number "+ str(editTaskIndex+1)+ " of Project "+ projects[editProjIndex]['name'] 
-                logging.info(loggingMessage)
+                logger.info(loggingMessage)
                 console.log("Title has been successfully changed", style='green bold')
             else:
                 historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the description of task has been replaced with " + '('+newDescription+') by '+ users[inUser]['username']
                 loggingMessage = users[inUser]['username']+" changed the description of task number "+ str(editTaskIndex+1)+ " of Project "+ projects[editProjIndex]['name']
-                logging.info(loggingMessage)
+                logger.info(loggingMessage)
                 console.log("Description has been successfully changed", style='green bold')
             task["history"].append(historyMessage)
         elif taskItemEdit == 'priority':
@@ -397,7 +399,7 @@ def editTasknew(editProjIndex, editTaskIndex):
                     historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into "+task['priority']+" by "+ users[inUser]['username'] 
                     task['history'].append(historyMessage)
                     loggingMessage = users[inUser]['username'] + " changed the priority of task number "+ str(editProjIndex+1)+ " of project "+projects[editProjIndex]['name'] +" to "+task['priority']
-                    logging.info(loggingMessage)
+                    logger.info(loggingMessage)
                     console.log("Priotity has been successfully changed", style='green bold')
                     break
                 else:
@@ -415,7 +417,7 @@ def editTasknew(editProjIndex, editTaskIndex):
                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into "+task['status']+" by "+ users[inUser]['username']
                         task['history'].append(historyMessage)
                         loggingMessage = users[inUser]['username'] + " changed the Status of task number "+ str(editProjIndex+1)+ " of project "+projects[editProjIndex]['name'] +" to "+task['status']
-                        logging.info(loggingMessage)
+                        logger.info(loggingMessage)
                         console.log("Status has been successfully changed", style='green bold')
                         break
                     else:
@@ -427,7 +429,7 @@ def editTasknew(editProjIndex, editTaskIndex):
             historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the comment: "+ '('+commentedTxt+')'+"has been added to the task by "+ users[inUser]['username']
             task['history'].append(historyMessage)
             loggingMessage = users[inUser]['username'] + " added a comment to task number "+ str(editProjIndex+1)+ " of project "+projects[editProjIndex]['name'] 
-            logging.info(loggingMessage)
+            logger.info(loggingMessage)
             console.log("Comment has been successfully added", style='green bold')
         elif taskItemEdit == 'time':
             console.print("Type the expiration time in this format (D-M-Y H:M)",end=' ', style='magenta')
@@ -640,10 +642,10 @@ def showProjects():
 #                 projects[editProjIndex]['tasks'][editTaskIndex][taskItemEdit] = newDescription
 #                 if taskItemEdit == 'title':
 #                     historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the title of task has been replaced with " + '('+newDescription+')'
-#                     logging.info("user changed the title of task in a project")
+#                     logger.info("user changed the title of task in a project")
 #                 else:
 #                     historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the description of task has been replaced with " + '('+newDescription+')'
-#                     logging.info("user changed the description of task in a project")
+#                     logger.info("user changed the description of task in a project")
 #                 projects[editProjIndex]['tasks'][editTaskIndex]["history"].append(historyMessage)
                 
 #             elif taskItemEdit == 'priority':
@@ -655,25 +657,25 @@ def showProjects():
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'CRITICAL'
 #                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'CRITICAL'"
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logging.info("user changed the priority of a task of a project")
+#                         logger.info("user changed the priority of a task of a project")
 #                         break
 #                     elif priority == '2':
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'HIGH'
 #                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'HIGH'"
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logging.info("user changed the priority of a task of a project")
+#                         logger.info("user changed the priority of a task of a project")
 #                         break
 #                     elif priority == '3':
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'MEDIUM'
 #                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'MEDIUM'"
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logging.info("user changed the priority of a task of a project")
+#                         logger.info("user changed the priority of a task of a project")
 #                         break
 #                     elif priority == '4':
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['priority'] = 'LOW'
 #                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the priority of task has been changed into 'LOW'"
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logging.info("user changed the priority of a task of a project")
+#                         logger.info("user changed the priority of a task of a project")
 #                         break
 #                     elif priority == '':
 #                         break
@@ -688,31 +690,31 @@ def showProjects():
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'TODO'
 #                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'TODO'"
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logging.info("user changed the status of a task of a project")
+#                         logger.info("user changed the status of a task of a project")
 #                         break
 #                     elif status == '2':
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'DOING'
 #                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'DOING'"
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logging.info("user changed the status of a task of a project")
+#                         logger.info("user changed the status of a task of a project")
 #                         break
 #                     elif status == '3':
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'DONE'
 #                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'DONE'"
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logging.info("user changed the status of a task of a project")
+#                         logger.info("user changed the status of a task of a project")
 #                         break
 #                     elif status == '4':
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'ARCHIVED'
 #                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'ARCHIVED'"
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logging.info("user changed the status of a task of a project")
+#                         logger.info("user changed the status of a task of a project")
 #                         break
 #                     elif status == '5':
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['status'] = 'BACKLOG'
 #                         historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the status of task has been changed into 'BACKLOG'"
 #                         projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                         logging.info("user changed the status of a task of a project")
+#                         logger.info("user changed the status of a task of a project")
 #                         break
 #                     elif status == '':
 #                         break
@@ -724,7 +726,7 @@ def showProjects():
 #                 projects[editProjIndex]['tasks'][editTaskIndex]['comments'].append(commentedTxt)
 #                 historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the comment: "+ '('+commentedTxt+')'+"has been added to the task"
 #                 projects[editProjIndex]['tasks'][editTaskIndex]['history'].append(historyMessage)
-#                 logging.info("user added a comment to the comment section of a task of a project ")
+#                 logger.info("user added a comment to the comment section of a task of a project ")
 #             elif taskItemEdit == 'time':
 #                 console.print("Type the expiration time in this format (D-M-Y H:M)",end=' ', style='magenta')
 #                 console.print("press enter to continue", style='yellow')
@@ -801,7 +803,7 @@ def editProject():
                     if collabEdit in projects[editProjIndex]['tasks'][i]['assigness']:
                         projects[editProjIndex]['tasks'][i]['assigness'].remove(collabEdit)
                 console.print(collabEdit, 'has been successfully removed from this task\'s collaborators', style='green')
-                logging.info(loggingMessage)
+                logger.info(loggingMessage)
         else:
             if checkInUsers(collabEdit, 'username') == False and str(checkInUsers(collabEdit, 'username')) != '0':
                 console.print('This username doesn\'t exist! Please enter an existing username', style='red bold')
@@ -820,7 +822,7 @@ def editProject():
     while input() != '':
         projects[editProjIndex]['tasks'].append(newTask(projects[editProjIndex]['collaborators']))
         loggingMessage = users[inUser]['username']+ " added a new task to the project "+ projects[editProjIndex]['name']
-        logging.info(loggingMessage)
+        logger.info(loggingMessage)
         filesWrite()
         console.print('Enter anything to add a new task to your project', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
@@ -853,7 +855,7 @@ while True:
                 project = newProject()
                 projects.append(project)
                 filesWrite()
-                logging.info("user created a new project")
+                logger.info("user created a new project")
             elif panelJob == '2':
                 showProjects()
             elif panelJob == '3':
@@ -868,11 +870,11 @@ while True:
             panelJob = input()
     elif signInType == '2':
         signUp()
-        logging.info("user created a new account")
+        logger.info("user created a new account")
         # console.print(users)
     elif signInType =="3":
         EnterAsManager()
-        logging.info("user entered as manager")
+        logger.info("user entered as manager")
         console.print("Here are active members of this system:", style="magenta")
         table = Table(title="Users")
         table.add_column('user', justify='center', style='blue')
@@ -897,7 +899,7 @@ while True:
                 users[usernameCheck(command)]["isActive"] = False
                 loggingMessage = "user deactivated "+ command+" as the manager"
             filesWrite()
-            logging.info(loggingMessage)
+            logger.info(loggingMessage)
             console.print("Here are active members of this system:", style="magenta")
             table = Table(title="Users")
             table.add_column('user', justify='center', style='blue')

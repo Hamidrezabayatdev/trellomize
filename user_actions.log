@@ -1,127 +1,15 @@
-01:01:33,923 root INFO user logged in (entered to his panel)
-01:02:49,70 root INFO user created a new project
-01:37:31,969 root INFO user created a new account
-01:37:44,579 root INFO user logged in (entered to his panel)
-01:41:22,303 root INFO user created a new project
-01:43:42,23 root INFO user logged in (entered to his panel)
-01:46:40,839 root INFO user logged in (entered to his panel)
-01:55:34,96 root INFO user logged in (entered to his panel)
-01:56:00,822 root INFO user changed the title of task in a project
-01:56:16,17 root INFO user added a comment to the comment section of a task of a project 
-01:57:02,395 root INFO user changed the priority of a task of a project
-01:57:07,844 root INFO user changed the status of a task of a project
-19:36:44,445 root INFO user created a new account
-19:36:51,798 root INFO user logged in (entered to his panel)
-19:38:03,60 root INFO user logged in (entered to his panel)
-20:06:07,482 root INFO user logged in (entered to his panel)
-20:08:44,415 root INFO user logged in (entered to his panel)
-20:09:07,450 root INFO user logged in (entered to his panel)
-20:10:46,338 root INFO user logged in (entered to his panel)
-20:11:13,184 root INFO user logged in (entered to his panel)
-20:11:46,305 root INFO user logged in (entered to his panel)
-20:12:37,186 root INFO user logged in (entered to his panel)
-20:13:16,208 root INFO user changed the title of task in a project
-20:13:24,178 root INFO user changed the status of a task of a project
-20:42:44,92 root INFO user logged in (entered to his panel)
-20:45:28,55 root INFO user logged in (entered to his panel)
-20:48:13,874 root INFO user logged in (entered to his panel)
-21:34:47,809 root INFO user logged in (entered to his panel)
-21:38:42,623 root INFO user logged in (entered to his panel)
-21:44:02,775 root INFO user changed the title of task in a project
-21:51:58,982 root INFO user logged in (entered to his panel)
-21:53:27,618 root INFO user removed a collabrator from a project
-21:54:21,930 root INFO user added a task to a project
-21:56:13,598 root INFO user logged in (entered to his panel)
-21:56:31,35 root INFO user added a task to a project
-22:18:35,863 root INFO user logged in (entered to his panel)
-13:54:02,243 root INFO user created a new account
-13:54:17,915 root INFO user logged in (entered to his panel)
-14:18:38,26 root INFO user logged in (entered to his panel)
-14:20:29,658 root INFO user created a new project
-14:26:43,101 root INFO user logged in (entered to his panel)
-14:28:37,379 root INFO user logged in (entered to his panel)
-15:24:32,878 root INFO user logged in (entered to his panel)
-15:28:09,931 root INFO user logged in (entered to his panel)
-15:28:44,310 root INFO user changed the priority of a task of a project
-15:28:57,829 root INFO user changed the status of a task of a project
-16:14:36,812 root INFO User logged in to account Batman
-16:41:20,683 root INFO User logged in to account after
-16:41:35,926 root INFO after removed hamidreza from project timer
-16:41:39,61 root INFO after removed poori from project timer
-16:44:34,84 root INFO User logged in to account after
-16:48:35,293 root INFO after added a new task to the project timer
-16:52:34,948 root INFO user entered as manager
-16:53:07,914 root INFO user created a new account
-16:53:22,484 root INFO user created a new account
-16:53:50,300 root INFO user created a new account
-16:54:35,932 root INFO user created a new account
-16:55:44,228 root INFO User logged in to account pouria
-16:58:51,196 root INFO User logged in to account pouria
-17:01:45,284 root INFO User logged in to account pouria
-17:05:01,143 root INFO User logged in to account pouria
-17:12:07,785 root INFO User logged in to account pouria
-17:13:36,285 root INFO User logged in to account pouria
-17:15:54,118 root INFO User logged in to account pouria
-17:21:18,589 root INFO User logged in to account pouria
-17:24:41,790 root INFO User logged in to account pouria
-17:27:29,313 root INFO User logged in to account pouria
-17:30:08,984 root INFO user created a new project
-17:31:49,711 root INFO User logged in to account saeed
-17:33:26,558 root INFO User logged in to account soroush
-17:33:42,844 root INFO soroush changed the title of task number 1 of Project tatal
-18:18:45,555 root INFO User logged in to account pouria
-18:20:55,471 root INFO pouria added a new task to the project tatal
-18:21:20,959 root INFO User logged in to account pouria
-18:22:05,186 root INFO pouria added a new task to the project tatal
-18:22:21,460 root INFO pouria added a new task to the project tatal
-18:25:04,283 root INFO User logged in to account pouria
-18:26:05,97 root INFO User logged in to account pouria
-18:26:42,210 root INFO User logged in to account pouria
-18:28:33,568 root INFO User logged in to account pouria
-18:29:43,240 root INFO User logged in to account pouria
-18:31:57,887 root INFO User logged in to account pouria
-18:38:44,66 root INFO User logged in to account pouria
-18:42:08,645 root INFO User logged in to account pouria
-18:42:44,453 root INFO User logged in to account pouria
-18:43:11,763 root INFO User logged in to account pouria
-18:47:02,555 root INFO User logged in to account pouria
-18:47:33,430 root INFO pouria removed soroush from project tatal
-18:49:13,106 root INFO User logged in to account pouria
-18:50:01,881 root INFO User logged in to account pouria
-18:52:07,51 root INFO User logged in to account pouria
-18:53:08,983 root INFO User logged in to account pouria
-19:08:02,311 root INFO User logged in to account pouria
-19:10:08,364 root INFO User logged in to account pouria
-19:14:51,916 root INFO User logged in to account pouria
-19:15:58,317 root INFO pouria removed soroush from project tatal
-19:17:04,637 root INFO pouria changed the title of task number 1 of Project tatal
-19:18:24,997 root INFO pouria added a comment to task number 1 of project tatal
-19:30:02,160 root INFO User logged in to account pouria
-19:35:11,411 root INFO user created a new project
-19:46:13,811 root INFO user entered as manager
-19:46:19,764 root INFO user deactivated pouria as the manager
-19:47:23,2 root INFO user entered as manager
-19:47:40,305 root INFO user deactivated hamidreza as the manager
-19:55:31,772 root INFO user entered as manager
-19:55:35,940 root INFO user activated hamidreza as the manager
-19:56:43,890 root INFO user entered as manager
-19:56:46,866 root INFO user deactivated hamidreza as the manager
-19:56:57,837 root INFO user deactivated saeed as the manager
-19:57:00,641 root INFO user activated saeed as the manager
-20:13:09,630 root INFO User logged in to account saeed
-20:13:49,127 root INFO User logged in to account soroush
-20:14:27,992 root INFO User logged in to account saeed
-20:16:29,584 root INFO User logged in to account saeed
-20:17:27,930 root INFO User logged in to account saeed
-20:19:12,657 root INFO User logged in to account saeed
-20:20:10,576 root INFO User logged in to account saeed
-20:21:03,204 root INFO User logged in to account saeed
-20:24:58,128 root INFO User logged in to account saeed
-20:27:01,338 root INFO User logged in to account saeed
-20:27:35,443 root INFO User logged in to account saeed
-20:29:31,664 root INFO User logged in to account saeed
-20:30:17,379 root INFO User logged in to account saeed
-20:49:40,951 root INFO user created a new account
-20:54:15,147 root INFO User logged in to account november
-20:56:58,251 root INFO User logged in to account november
-20:57:58,835 root INFO User logged in to account november
+2024-05-29 10:50:24, root INFO Manager created!...Name: Kazem
+2024-05-29 10:50:24, root INFO These arguments were passed to the (createAdmin) function : Kazem , IUSTforever
+2024-05-29 10:53:38, root WARNING The output of (createAdmin) function was: A manager already exists! you can't create a new one.
+2024-05-29 10:53:38, root INFO These arguments were passed to the (createAdmin) function : Batman , martha
+2024-05-29 11:05:10, root WARNING The output of (createAdmin) function was: A manager already exists! you can't create a new one.
+2024-05-29 11:05:10, __main__ INFO These arguments were passed to the (createAdmin) function : Batman , martha
+2024-05-29 11:14:02, __main__ WARNING The output of (createAdmin) function was: A manager already exists! you can't create a new one.
+2024-05-29 11:14:02, __main__ INFO These arguments were passed to the (createAdmin) function : Batman , martha
+2024-05-29 11:14:43, __main__ INFO user entered as manager
+2024-05-29 11:32:11, __main__ WARNING The output of (createAdmin) function was: A manager already exists! you can't create a new one.
+2024-05-29 11:32:11, __main__ INFO These arguments were passed to the (createAdmin) function : Batman , martha
+2024-05-29 11:32:59, __main__ INFO user entered as manager
+2024-05-29 11:40:18, manager.py WARNING The output of (createAdmin) function was: A manager already exists! you can't create a new one.
+2024-05-29 11:40:18, manager.py INFO These arguments were passed to the (createAdmin) function : Batman , martha
+2024-05-29 11:40:53, main.py INFO user entered as manager
