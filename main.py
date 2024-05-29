@@ -531,6 +531,7 @@ def editAtask():
                 assignName = input()
         
         task = projects[editProjIndex]['tasks'][editTaskIndex]
+        #table = Table(show_header=False)
         table = Table(title=task['title'])
         table.add_column('', justify='center', style='bold blue')
         table.add_column('', justify='center')
