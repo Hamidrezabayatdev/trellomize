@@ -1,3 +1,4 @@
+import os
 from rich.console import Console
 console = Console()
 from rich.table import Table
@@ -38,6 +39,11 @@ class TaskPriority(Enum):
     MEDIUM = 3
     LOW = 4
 
+#cls func:
+def clear_terminal(seconds=1):
+    time.sleep(seconds)
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
 
 with open("users.json", 'r') as usersFR:
     users = json.load(usersFR)
@@ -150,7 +156,8 @@ def login():
         if usernameCheck(username) != False or str(usernameCheck(username)) == '0':
             break
         else:
-            console.print('Username does not exist, please enter another usename...', style='red bold')
+            console.print('Username does not exist, please enter another username...', style='red bold')
+            clear_terminal(3)
     console.print('Password: ', end='')
     while True:
         password = input()
@@ -165,8 +172,11 @@ def login():
         else:
             if password != users[usernameCheck(username)]['password']:
                 console.print('Password does not match, please enter another password...', style='red bold')
+                clear_terminal(3)
             elif users[usernameCheck(username)]["isActive"] == False:
                 console.print("Your account has been suspended by the manager! You can't sign in!", style="red bold")
+                clear_terminal(3)
+                
                 return False
     return True
 def EnterAsManager():
@@ -187,6 +197,7 @@ def EnterAsManager():
     validating() 
     while checkingIfuserIsManager == False :
         console.print("Wrong username/password! Try Again!", style="red bold")
+        clear_terminal(3)
         validating()        
     global inUser
     inUser = -25
@@ -846,10 +857,13 @@ while True:
     console.print("\t1. Login \n\t2. sign up \n\t3. Enter as manager", style='magenta')
     console.print("press enter to exit", style="yellow")
     signInType = input()
+    clear_terminal()
     if signInType == '1':
+        
         t = login()
         while not t:
             t = login()
+        clear_terminal()
         console.print('Here is your panel', end=' ', style='magenta')
         console.print("press enter to log out", style="yellow")
         console.print('\t1. new project\n\t2. show existing projects and tasks\n\t3. edit your projects\n\t4. see/edit a task', style='magenta')
@@ -879,6 +893,7 @@ while True:
     elif signInType =="3":
         EnterAsManager()
         logger.info("user entered as manager")
+        clear_terminal()
         console.print("Here are active members of this system:", style="magenta")
         table = Table(title="Users")
         table.add_column('user', justify='center', style='blue')
@@ -953,6 +968,8 @@ while True:
         break
     else:
         console.print('Please enter 1, 2 or 3', style='red bold')
+        clear_terminal(2)
+        
 
 
 
