@@ -101,15 +101,24 @@ def checkInProjects(val, checkType):
 
 
 def signUp ():
-    console.print('Please enter needed values to continue...', style='magenta')
-    console.print('Username: ', end='')
-    
+    console.print('Username:', end=' ')
+    console.print('press enter to return to main manu', style='yellow')
     inpUsername = input()
+    if inpUsername == '':
+        clear_terminal()
+        return
     while checkInUsers(inpUsername, 'username') != False or str(checkInUsers(inpUsername, 'username')) == '0':
         console.print('Username already exists, please enter another username...', style='red bold')
         inpUsername = input()
-    console.print('Email address: ', end='')
+        if inpUsername == '':
+            clear_terminal()
+            return
+    console.print('Email address:', end=' ')
+    console.print('press enter to return to main manu', style='yellow')
     inpEmail = input()
+    if inpEmail == '':
+        clear_terminal()
+        return
     while True:
         if checkEmail(inpEmail):
             if checkInUsers(inpEmail, 'email') != False or str(checkInUsers(inpEmail, 'email')) == '0':
@@ -119,8 +128,15 @@ def signUp ():
         else:
             console.print('Incorrect email format, please enter another email...', style='red bold')
         inpEmail = input()
-    console.print('Password: ', end='')
+        if inpEmail == '':
+            clear_terminal()
+            return
+    console.print('Password:', end=' ')
+    console.print('press enter to return to main manu', style='yellow')
     inpPassword = input()
+    if inpPassword == '':
+        clear_terminal()
+        return
     
     #push in data
 
@@ -149,21 +165,28 @@ def usernameCheck (usernameC):
     return False
 
 def login():
-    console.print('Please enter expected values...', style='magenta')
-    console.print('Username: ', end='')
+    console.print('Please enter expected values', style='magenta')
+    console.print('Username: ', end=' ')
+    console.print('press enter to return to start over', style='yellow')
     while True:
         username = input()
-        if usernameCheck(username) != False or str(usernameCheck(username)) == '0':
+        if username == '':
+            clear_terminal()
+            return
+        elif usernameCheck(username) != False or str(usernameCheck(username)) == '0':
             break
         else:
             console.print('Username does not exist, please enter another username...', style='red bold')
-            clear_terminal(3)
-    console.print('Password: ', end='')
+            clear_terminal(2)
+    console.print('Password: ', end=' ')
+    console.print('press enter to return to start over', style='yellow')
     while True:
         password = input()
-        
+        if password == '':
+            clear_terminal()
+            return
         #if check_password(password, users[usernameCheck(username)]['password']) and users[usernameCheck(username)]["isActive"]==True:
-        if password==users[usernameCheck(username)]['password'] and users[usernameCheck(username)]["isActive"]==True:
+        elif password==users[usernameCheck(username)]['password'] and users[usernameCheck(username)]["isActive"]==True:
             global inUser
             inUser = usernameCheck(username)
             loggingMessage = "User logged in to account "+ username
@@ -172,10 +195,10 @@ def login():
         else:
             if password != users[usernameCheck(username)]['password']:
                 console.print('Password does not match, please enter another password...', style='red bold')
-                clear_terminal(3)
+                clear_terminal(2)
             elif users[usernameCheck(username)]["isActive"] == False:
                 console.print("Your account has been suspended by the manager! You can't sign in!", style="red bold")
-                clear_terminal(3)
+                clear_terminal(2)
                 
                 return False
     return True
@@ -197,7 +220,7 @@ def EnterAsManager():
     validating() 
     while checkingIfuserIsManager == False :
         console.print("Wrong username/password! Try Again!", style="red bold")
-        clear_terminal(3)
+        clear_terminal(2)
         validating()        
     global inUser
     inUser = -25
@@ -803,42 +826,11 @@ while True:
             console.print("Enter the name of who ever you'd like to deactivate:", end=" ", style="magenta")
             console.print("press enter to continue", style="yellow")
             command=input()
-    # elif signInType == '4':
-    #     showLeaderProjects()
-    #     showMemberProjects()
-    #     console.print("If you want to edit a task in these project, enter the project name:", end=' ', style="magenta")
-    #     console.print("press enter to continue", style="yellow")
-    #     editProjName = input()
-    #     while editProjName != '':
-    #         if editProjName in users[inUser]['leaderOf'] or editProjName in users[inUser]['memberOf']:
-    #             break
-    #         else:
-    #             console.print('You can only edit the projects that you are a member of them!', style='red bold')
-    #             console.print('enter the project name', end=' ', style='magenta')
-    #             console.print("press enter to continue", style="yellow")
-    #             editProjName = input()
-    #     if editProjName != '':
-    #         editProjIndex = checkInProjects(editProjName, 'name')
-    #         while editProjIndex == False and str(editProjIndex) != '0':
-    #             console.print('Project not found', style='red bold')
-    #             showLeaderProjects()
-    #             showMemberProjects()
-    #             console.print("If you want to edit a task in these project, enter the project name:", end=' ', style="magenta")
-    #             console.print("press enter to continue", style="yellow")
-    #             editProjName = input()
-    #             editProjIndex = checkInProjects(editProjName, 'name')
-    #         console.print('Tasks which are assigned to you:', style='magenta')
-    #         for task in projects[editProjIndex]['tasks']:
-    #             if users[inUser] in task['assigness']:
-    #                 console.print(task['name'], end=' ', style='magenta')
-    #         console.print('Enter the task name that you want to edit', end=' ', style='magenta')
-    #         console.print('press enter to continue', style='yellow')
-    #         editTaskFunc(editProjIndex)
     elif signInType == '':
         break
     else:
         console.print('Please enter 1, 2 or 3', style='red bold')
-        clear_terminal(2)
+        clear_terminal(1)
         
 
 

@@ -31,5 +31,13 @@
             "sleep for good"
         ],
         "memberOf": []
+    },
+    {
+        "email": "omii@gmai.com",
+        "username": "ommi",
+        "password": "ommipass",
+        "isActive": true,
+        "leaderOf": [],
+        "memberOf": []
     }
 ]
