@@ -3,14 +3,15 @@
         "email": "timpo@gmail.com",
         "username": "Pouria",
         "password": "mishou",
-        "isActive": true,
+        "isActive": false,
         "leaderOf": [
             "Pro#1",
             "pro2",
             "Saving Gotham"
         ],
         "memberOf": [
-            "sleep for good"
+            "sleep for good",
+            "new tat"
         ]
     },
     {
@@ -18,7 +19,9 @@
         "username": "hamidreza",
         "password": "pourijoon",
         "isActive": true,
-        "leaderOf": [],
+        "leaderOf": [
+            "new tat"
+        ],
         "memberOf": [
             "Pro#1",
             "sleep for good",
@@ -35,7 +38,8 @@
             "sleep for good"
         ],
         "memberOf": [
-            "pro2"
+            "pro2",
+            "new tat"
         ]
     },
     {
