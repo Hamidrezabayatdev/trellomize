@@ -105,23 +105,23 @@ def filesWrite():
     with open("projects.json", 'w') as projectsFW:
         json.dump(projects, projectsFW, indent=4)
 
-def checkInUsers(val, checkType):
+def checkInUsers(val, checkType,Users=users):
     '''
     Takes a value and a key to check in users
     Returns user's index in users json file - False for not found
     '''
-    for i in range(len(users)):
-        if users[i][checkType] == val:
+    for i in range(len(Users)):
+        if Users[i][checkType] == val:
             return i
     return False
 
-def checkInProjects(val, checkType):
+def checkInProjects(val, checkType,Projects=projects):
     '''
     Takes a value and a key to check in projects
     Returns project's index in projects json file - False for not found
     '''
-    for i in range(len(projects)):
-        if projects[i][checkType] == val:
+    for i in range(len(Projects)):
+        if Projects[i][checkType] == val:
             return i
     return False
 
