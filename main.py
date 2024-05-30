@@ -41,6 +41,9 @@ class TaskPriority(Enum):
 
 #cls func:
 def clear_terminal(seconds=0.01):
+    '''
+    takes seconds and clears terminal after that
+    '''
     time.sleep(seconds)
     os.system('cls' if os.name == 'nt' else 'clear')
     
@@ -53,24 +56,39 @@ with open("projects.json", 'r') as projectsFR:
 inUser = 1000
 
 def get_hashed_password(password):
+    '''
+    Takes password
+    Returns hashed password
+    '''
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt) 
     encoded_hashed_password = base64.b64encode(hashed_password).decode('utf-8')
     return encoded_hashed_password
 
 def check_password(password, encoded_hashed_password):
+    '''
+    Takes password
+    Returns True if hash check was true
+    '''
     hashed_password = base64.b64decode(encoded_hashed_password)
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
 def timeValidate(dt_string):
-        try:
-            time.strptime(dt_string, "%d-%m-%Y %H:%M")
-        except ValueError:
-            return False
-        return True
+    '''
+    Takes a string for time
+    Returns True if time format was right
+    '''
+    try:
+        time.strptime(dt_string, "%d-%m-%Y %H:%M")
+    except ValueError:
+        return False
+    return True
 
 def checkEmail(email):
- 
+    '''
+    Takes email string
+    Returns True if email format was right
+    '''
     pat = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'    # pass the regular expression
     # and the string into the fullmatch() method
     if(re.match(pat,email)):
@@ -79,18 +97,29 @@ def checkEmail(email):
         return False
     
 def filesWrite():
+    '''
+    Dumps datas to json files
+    '''
     with open("users.json", 'w') as usersFW:
         json.dump(users, usersFW ,indent=4)
     with open("projects.json", 'w') as projectsFW:
         json.dump(projects, projectsFW, indent=4)
 
 def checkInUsers(val, checkType):
+    '''
+    Takes a value and a key to check in users
+    Returns user's index in users json file - False for not found
+    '''
     for i in range(len(users)):
         if users[i][checkType] == val:
             return i
     return False
 
 def checkInProjects(val, checkType):
+    '''
+    Takes a value and a key to check in projects
+    Returns project's index in projects json file - False for not found
+    '''
     for i in range(len(projects)):
         if projects[i][checkType] == val:
             return i
@@ -101,6 +130,9 @@ def checkInProjects(val, checkType):
 
 
 def signUp ():
+    '''
+    Sign up an account
+    '''
     console.print('(you can press enter to return to main manu)', style='yellow')
     console.print('Username:', end=' ')
     
@@ -166,6 +198,10 @@ def signUp ():
     
 
 def usernameCheck (usernameC):
+    '''
+    Takes a username string
+    Returns return user's index in users json file if existed - False for not found
+    '''
     global users
     for i in range(len(users)):
         if users[i]['username'] == usernameC:
@@ -173,7 +209,9 @@ def usernameCheck (usernameC):
     return False
 
 def login():
-    
+    '''
+    login an account
+    '''
     console.print('Please enter expected values', style='magenta')
     console.print('(or press enter to return and start over)', style='yellow')
     console.print('Username: ', end=' ')
@@ -217,8 +255,13 @@ def login():
                 return False
     return True
 def EnterAsManager():
-
+    '''
+    login as a manager
+    '''
     def validating():
+        '''
+        validates if a user is manager
+        '''
         global checkingIfuserIsManager  
         checkingIfuserIsManager=True
         console.print("Confirm that you are the manager:", style="magenta")
@@ -241,11 +284,19 @@ def EnterAsManager():
     #-25 represents manager's id. it's been picked randomly :)
     
 def checkIDuniquness(myid):
+    '''
+    Takes an ID
+    Returns False if ID was repeated in projects - True if ID was unique
+    '''
     for i in projects:
         if i["id"]==myid:
             return False
     return True
 def newTask(collaborators):
+    '''
+    Takes project's collaborators
+    Returns created task
+    '''
     task = {
         'id' : '',
         'title' : '',
@@ -344,9 +395,12 @@ def newTask(collaborators):
         clear_terminal(1.2)
     console.print('Task has been successfully added', style='green')
     clear_terminal(1.2)
-    
     return task
 def newProject():
+    '''
+    makes a new project
+    Returns project list
+    '''
     project = {
         'id' : '',
         'name' : '',
@@ -406,16 +460,26 @@ def newProject():
         console.print('press enter to continue', style='yellow')
     return project
 def showLeaderProjects():
+    '''
+    shows projects that the member is their leader
+    '''
     if len(users[inUser]['leaderOf'])!=0:
         console.print('Projects that you are leader of them:', style='magenta')
         for projs in users[inUser]['leaderOf']:
             console.log('\t', projs)
 def showMemberProjects():
+    '''
+    shows projects that the member is their ordinary member
+    '''
     if len(users[inUser]["memberOf"])!=0:
         console.print('Projects that you are an ordinary member of them:', style='magenta')
         for projs in users[inUser]['memberOf']:
             console.log('\t', projs)
 def taskIndex(val, checkType, projectIndex):
+    '''
+    Takes a value and a key to check in tasks
+    Returns task's index in tasks list - False if task was not found
+    '''
     for i in range(len(projects[projectIndex]['tasks'])):
         if projects[projectIndex]['tasks'][i][checkType] == val:
             return i
@@ -424,6 +488,10 @@ def taskIndex(val, checkType, projectIndex):
 
 
 def editTasknew(editProjIndex, editTaskIndex):
+    '''
+    Takes project index and task index
+    Returns edited task
+    '''
     # console.print("edit new ID:", projects[editProjIndex]['tasks'][editTaskIndex]['id'])
     if len(projects[editProjIndex]['tasks']) == 0:
         console.print("This project has no tasks!", style="red bold")
@@ -544,6 +612,9 @@ def editTasknew(editProjIndex, editTaskIndex):
     return task
 
 def editAtask():
+    '''
+    shows a proper menu to edit a task
+    '''
     showLeaderProjects()
     showMemberProjects()
     if len(users[inUser]['leaderOf']) == 0 and len(users[inUser]['memberOf']) == 0:
@@ -660,6 +731,9 @@ def editAtask():
 
 
 def showProjects():
+    '''
+    shows projects and tasks properly to user
+    '''
     if len(users[inUser]['leaderOf']) == 0 and len(users[inUser]['memberOf']) == 0:
         console.print("You are not a collaborator of any project!", style='red bold')
         clear_terminal(1.5)
@@ -733,6 +807,9 @@ def showProjects():
         clear_terminal()
 
 def editProject():
+    '''
+    edits a project and saves it
+    '''
     if len(users[inUser]['leaderOf']) == 0:
         console.print("You have no projects!", style='red bold')
         clear_terminal(1.2)
