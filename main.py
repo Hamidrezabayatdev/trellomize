@@ -235,14 +235,15 @@ def login():
         if password == '':
             clear_terminal()
             return
-        #if check_password(password, users[usernameCheck(username)]['password']) and users[usernameCheck(username)]["isActive"]==True:
-        elif password==users[usernameCheck(username)]['password'] and users[usernameCheck(username)]["isActive"]==True:
+        # elif check_password(password, users[usernameCheck(username)]['password']) and users[usernameCheck(username)]["isActive"]==True:
+        elif password == users[usernameCheck(username)]['password'] and users[usernameCheck(username)]["isActive"]==True:
             global inUser
             inUser = usernameCheck(username)
             loggingMessage = "User logged in to account "+ username
             logger.info(loggingMessage) 
             break
         else:
+            # if not check_password(password, users[usernameCheck(username)]['password']):
             if password != users[usernameCheck(username)]['password']:
                 console.print('Password does not match, please enter another password...', style='red bold')
                 clear_terminal(1)
