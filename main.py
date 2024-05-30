@@ -245,7 +245,7 @@ def login():
         else:
             if password != users[usernameCheck(username)]['password']:
                 console.print('Password does not match, please enter another password...', style='red bold')
-                clear_terminal(2)
+                clear_terminal(1)
                 console.print('Password: ', end=' ')
                 
             elif users[usernameCheck(username)]["isActive"] == False:
@@ -374,7 +374,8 @@ def newTask(collaborators):
     console.print('press enter to continue', style='yellow')
     comment = input()
     while comment != '':
-        task['comments'].append(comment)
+        commentList = [(datetime.now()).strftime('%d-%m-%Y %H:%M'), users[inUser]['username'], comment]
+        task['comments'].append(commentList)
         console.print('Comment added; If you want to add another comment, please type it...', end=' ', style='green')
         console.print('press enter to continue', style='yellow')
         comment = input()
@@ -576,7 +577,8 @@ def editTasknew(editProjIndex, editTaskIndex):
             console.print('Enter the comment that you want to add', style='magenta')
             commentedTxt = input()
             clear_terminal()
-            task['comments'].append(commentedTxt)
+            comment = [(datetime.now()).strftime('%d-%m-%Y %H:%M'), users[inUser]['username'], commentedTxt]
+            task['comments'].append(comment)
             historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the comment: "+ '('+commentedTxt+')'+"has been added to the task by "+ users[inUser]['username']
             task['history'].append(historyMessage)
             loggingMessage = users[inUser]['username'] + " added a comment to task number "+ str(editProjIndex+1)+ " of project "+projects[editProjIndex]['name'] 
@@ -608,6 +610,7 @@ def editTasknew(editProjIndex, editTaskIndex):
         console.print('Valid choices: title, description, comments, priority, status, time', style='magenta')
         taskItemEdit = input()
         clear_terminal()
+    filesWrite()
 
     return task
 
@@ -713,8 +716,16 @@ def editAtask():
         table.add_row('deadline', task['time'])
         table.add_row('status', task['status'])
         # table.add_row('history', ' '.join(task['history']))
-        table.add_row('comments', ' , '.join(task['comments']))
+        commentTable = Table(title='comments')
+        commentTable.add_column('time', justify='center', style='yellow')
+        commentTable.add_column('user', justify='center')
+        commentTable.add_column('comment', justify='center')
         console.print(table)
+        for i in range(len(task['comments'])):
+            commentTable.add_row(task['comments'][i][0], task['comments'][i][1], task['comments'][i][2])
+        time.sleep(5)
+        console.print(commentTable)
+        time.sleep(3)
         if len(task['history']) != 0:
             console.print("Task history: ")
             for i in track(range(len(task['history'])), description="History shown"):
@@ -898,6 +909,7 @@ def editProject():
         console.print('press enter to continue', style='yellow')
     clear_terminal()
     console.print("Project updated!", style="green")
+    filesWrite()
     clear_terminal(1.5)
     # console.print('If you want to edit an existing task, type it\'s name', end=' ', style='magenta')
     # console.print('press enter to continue', style='yellow')
