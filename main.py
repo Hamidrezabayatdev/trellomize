@@ -613,7 +613,7 @@ def editTasknew(editProjIndex, editTaskIndex):
             break
         else:
             clear_terminal()
-            console.print('This task does not have this item!', style='red bold')
+            console.print('Please enter between 1 to 6', style='red bold')
             clear_terminal(1.2)
         console.print('Enter the task item that you want to edit', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
