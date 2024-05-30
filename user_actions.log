@@ -72,3 +72,61 @@
 2024-05-30 23:39:15, main.py INFO User logged in to account hamidreza
 2024-05-30 23:40:37, main.py INFO User logged in to account hamidreza
 2024-05-30 23:41:15, main.py INFO hamidreza changed the Status of task number 1 of project Pro#1 to DOING
+2024-05-30 23:44:30, main.py INFO user entered as manager
+2024-05-30 23:44:35, main.py INFO user deactivated hamidreza as the manager
+2024-05-30 23:45:02, main.py INFO user activated hamidreza as the manager
+2024-05-30 23:46:07, main.py INFO user deactivated Proria as the manager
+2024-05-30 23:46:19, main.py INFO user activated pee as the manager
+2024-05-30 23:46:24, main.py INFO user deactivated gfwfewf as the manager
+2024-05-30 23:46:26, main.py INFO user activated wfewfe as the manager
+2024-05-30 23:46:30, main.py INFO user deactivated fwfwefe as the manager
+2024-05-30 23:46:42, main.py INFO user activated fewfewf as the manager
+2024-05-30 23:46:42, main.py INFO user deactivated wefewf as the manager
+2024-05-30 23:46:43, main.py INFO user activated thteghwr as the manager
+2024-05-30 23:49:27, main.py INFO user entered as manager
+2024-05-30 23:50:56, main.py INFO user entered as manager
+2024-05-30 23:52:23, main.py INFO user entered as manager
+2024-05-30 23:53:07, main.py INFO user entered as manager
+2024-05-30 23:53:34, main.py INFO user entered as manager
+2024-05-30 23:53:39, main.py INFO user deactivated Pouria as the manager
+2024-05-30 23:53:44, main.py INFO user deactivated hamidreza as the manager
+2024-05-30 23:54:08, main.py INFO user created a new account
+2024-05-30 23:55:19, main.py INFO user entered as manager
+2024-05-30 23:55:23, main.py INFO user activated hamidreza as the manager
+2024-05-30 23:55:34, main.py INFO User logged in to account hamidreza
+2024-05-31 00:00:05, main.py INFO user created a new project
+2024-05-31 00:00:23, main.py INFO User logged in to account alireza
+2024-05-31 00:05:03, main.py INFO User logged in to account alireza
+2024-05-31 00:07:18, main.py INFO User logged in to account alireza
+2024-05-31 00:09:42, main.py INFO User logged in to account alireza
+2024-05-31 00:09:50, main.py INFO User logged in to account alireza
+2024-05-31 00:10:22, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:10:28, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:10:33, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:10:44, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:12:21, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:12:22, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:12:23, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:12:24, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:12:24, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:12:47, main.py INFO User logged in to account alireza
+2024-05-31 00:13:13, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:13:18, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:13:22, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:18:50, main.py INFO User logged in to account alireza
+2024-05-31 00:20:01, main.py INFO User logged in to account alireza
+2024-05-31 00:21:06, main.py INFO User logged in to account alireza
+2024-05-31 00:21:36, main.py INFO alireza changed the title of task number 2 of Project sleep for good
+2024-05-31 00:21:47, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:21:53, main.py INFO alireza added a comment to task number 2 of project sleep for good
+2024-05-31 00:22:46, main.py INFO alireza changed the Status of task number 2 of project sleep for good to ARCHIVED
+2024-05-31 00:24:17, main.py INFO User logged in to account alireza
+2024-05-31 00:25:01, main.py INFO alireza changed the title of task number 2 of Project sleep for good
+2024-05-31 00:25:53, main.py INFO User logged in to account alireza
+2024-05-31 00:26:37, main.py INFO alireza changed the description of task number 2 of Project sleep for good
+2024-05-31 00:26:58, main.py INFO User logged in to account alireza
+2024-05-31 00:28:03, main.py INFO User logged in to account alireza
+2024-05-31 00:28:32, main.py INFO alireza added a comment to task number 3 of project pro2
+2024-05-31 00:28:43, main.py INFO User logged in to account alireza
+2024-05-31 00:30:22, main.py INFO User logged in to account alireza
+2024-05-31 00:31:00, main.py INFO alireza changed the Status of task number 2 of project sleep for good to TODO
