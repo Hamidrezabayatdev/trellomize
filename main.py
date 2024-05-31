@@ -327,6 +327,9 @@ def newTask(collaborators):
         status = input()
         if status == '':
             break
+        elif not status.isdigit():
+            console.print('Please enter between 1 to 4', style='red bold')
+            clear_terminal(1.5)
         elif int(status) in StatusEnumValues:
             task['status']= TaskStatus(int(status)).name
             break
@@ -341,6 +344,9 @@ def newTask(collaborators):
         priority = input()
         if priority == '':
             break
+        elif not priority.isdigit():
+            console.print('Please enter between 1 to 3', style='red bold')
+            clear_terminal(1.5)
         elif int(priority) in PriorityEnumValues:
             task['priority'] = TaskPriority(int(priority)).name
             break
@@ -585,7 +591,7 @@ def editTasknew(editProjIndex, editTaskIndex):
             while commentedTxt != '':
                 comment = [(datetime.now()).strftime('%d-%m-%Y %H:%M'), users[inUser]['username'], commentedTxt]
                 task['comments'].append(comment)
-                historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the comment: "+ '('+commentedTxt+')'+"has been added to the task by "+ users[inUser]['username']
+                historyMessage = datetime.now().strftime('%d-%m-%Y %H:%M') + " : the comment: "+ '('+commentedTxt+')'+" has been added to the task by "+ users[inUser]['username']
                 task['history'].append(historyMessage)
                 loggingMessage = users[inUser]['username'] + " added a comment to task number "+ str(editProjIndex+1)+ " of project "+projects[editProjIndex]['name'] 
                 logger.info(loggingMessage)
@@ -747,7 +753,8 @@ def editAtask():
                 console.print('------------------------------------------')
                 console.print(task['history'][i])
                 console.print('------------------------------------------')
-                time.sleep(1.5)
+                console.print()
+                time.sleep(2)
         if users[inUser]['username'] in projects[editProjIndex]['tasks'][editTaskIndex]['assigness']:
             projects[editProjIndex]['tasks'][editTaskIndex] = editTasknew(editProjIndex, editTaskIndex)
             filesWrite()
@@ -906,6 +913,14 @@ def editProject():
                 # debug: console.print('checkIn: ', checkInUsers(collabEdit, 'username'), projects[editProjIndex]['name'], style='blue', end=' ')
                 console.print(collabEdit, 'has been successfully added to task\'s collaborators', style='green')
                 clear_terminal(1.5)
+        table = Table(title=projects[editProjIndex]['name'])
+        table.add_column('key', justify='center', style='bold blue')
+        table.add_column('value', justify='center')
+        table.add_row('id', projects[editProjIndex]['id'])
+        table.add_row('name', projects[editProjIndex]['name'])
+        table.add_row('leader', projects[editProjIndex]['leader'])
+        table.add_row('collaborators', ', '.join(projects[editProjIndex]['collaborators']))
+        console.print(table)
         console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
         console.print('collaborators: ', projects[editProjIndex]['collaborators'], end=' ')

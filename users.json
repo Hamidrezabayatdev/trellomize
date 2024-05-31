@@ -11,7 +11,8 @@
         ],
         "memberOf": [
             "sleep for good",
-            "new tat"
+            "new tat",
+            "fil"
         ]
     },
     {
@@ -26,7 +27,8 @@
             "Pro#1",
             "sleep for good",
             "pro2",
-            "Saving Gotham"
+            "Saving Gotham",
+            "fil"
         ]
     },
     {
@@ -57,5 +59,17 @@
         "isActive": false,
         "leaderOf": [],
         "memberOf": []
+    },
+    {
+        "email": "fil@gmai.com",
+        "username": "poori",
+        "password": "zakan",
+        "isActive": true,
+        "leaderOf": [
+            "fil"
+        ],
+        "memberOf": [
+            "new tat"
+        ]
     }
 ]

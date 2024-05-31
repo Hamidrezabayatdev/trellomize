@@ -132,3 +132,12 @@
 2024-05-31 00:31:00, main.py INFO alireza changed the Status of task number 2 of project sleep for good to TODO
 2024-05-31 01:48:21, main.py INFO User logged in to account Pouria
 2024-05-31 01:50:24, main.py INFO user created a new project
+2024-05-31 12:10:33, main.py INFO user created a new account
+2024-05-31 12:11:02, main.py INFO User logged in to account poori
+2024-05-31 12:12:58, main.py INFO user created a new project
+2024-05-31 12:14:52, main.py INFO poori added a new task to the project fil
+2024-05-31 12:15:46, main.py INFO poori added a comment to task number 6 of project fil
+2024-05-31 12:16:20, main.py INFO poori changed the title of task number 1 of Project fil
+2024-05-31 12:17:59, main.py INFO poori changed the description of task number 1 of Project fil
+2024-05-31 12:18:35, main.py INFO User logged in to account poori
+2024-05-31 12:19:45, main.py INFO User logged in to account hamidreza
