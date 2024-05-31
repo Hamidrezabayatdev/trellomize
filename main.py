@@ -666,6 +666,10 @@ def editAtask():
             console.print("press enter to continue", style="yellow")
             editProjName = input()
             editProjIndex = checkInProjects(editProjName, 'name')
+        console.print('All tasks in this project:', style='magenta')
+        for task in projects[editProjIndex]['tasks']:
+            console.print(task['title'], end=', ')
+        console.print()
         console.print('Tasks which are assigned to you:', style='magenta')
         for task in projects[editProjIndex]['tasks']:
             if users[inUser]['username'] in task['assigness']:
@@ -679,6 +683,10 @@ def editAtask():
             while taskIndex(editTaskName, 'title', editProjIndex) == False and str(taskIndex(editTaskName, 'title', editProjIndex)) != '0':
                 console.print('This task doesn\'t exist!', style='red bold')
                 clear_terminal(1)
+                console.print('All tasks in this project:', style='magenta')
+                for task in projects[editProjIndex]['tasks']:
+                    console.print(task['title'], end=', ')
+                console.print()
                 for task in projects[editProjIndex]['tasks']:
                     if users[inUser]['username'] in task['assigness']:
                         console.print(task['title'], end=', ')
@@ -758,7 +766,9 @@ def editAtask():
         if users[inUser]['username'] in projects[editProjIndex]['tasks'][editTaskIndex]['assigness']:
             projects[editProjIndex]['tasks'][editTaskIndex] = editTasknew(editProjIndex, editTaskIndex)
             filesWrite()
-
+        else:
+            console.print('press enter to return to the main menu', style='yellow')
+            continueForEditTask = input()
         # new task assigness
 
 
@@ -884,7 +894,7 @@ def editProject():
     # console.print('your projects specifications:', projects[editProjIndex])
     console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
     console.print('press enter to continue', style='yellow')
-    console.print('collaborators: ', projects[editProjIndex]['collaborators'], end=' ')
+    # console.print('collaborators: ', projects[editProjIndex]['collaborators'], end=' ')
     collabEdit = input()
     clear_terminal()
     while collabEdit != '':
@@ -923,7 +933,7 @@ def editProject():
         console.print(table)
         console.print('If you want to add/remove a collaborator, type the name', end=' ', style='magenta')
         console.print('press enter to continue', style='yellow')
-        console.print('collaborators: ', projects[editProjIndex]['collaborators'], end=' ')
+        # console.print('collaborators: ', projects[editProjIndex]['collaborators'], end=' ')
         collabEdit = input()
         clear_terminal()
     # console.print(projects, style='blue')
@@ -965,7 +975,7 @@ while True:
         clear_terminal()
         console.print('Here is your panel', end=' ', style='magenta')
         console.print("press enter to log out", style="yellow")
-        console.print('\t1. new project\n\t2. show existing projects and tasks\n\t3. edit your projects\n\t4. see/edit a task', style='magenta')
+        console.print('\t1. new project\n\t2. show existing projects and tasks\n\t3. edit your projects / add tasks\n\t4. see/edit a task', style='magenta')
         panelJob = input()
         clear_terminal()
         while panelJob != '':
@@ -986,7 +996,7 @@ while True:
             clear_terminal()
             console.print('Here is your panel', end=' ', style='magenta')
             console.print("press enter to log out", style="yellow")
-            console.print('\t1. new project\n\t2. show existing projects and tasks\n\t3. edit your projects\n\t4. see/edit a task', style='magenta')
+            console.print('\t1. new project\n\t2. show existing projects and tasks\n\t3. edit your projects / add tasks\n\t4. see/edit a task', style='magenta')
             panelJob = input()
             clear_terminal()
     elif signInType == '2':

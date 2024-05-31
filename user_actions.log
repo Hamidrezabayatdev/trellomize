@@ -141,3 +141,25 @@
 2024-05-31 12:17:59, main.py INFO poori changed the description of task number 1 of Project fil
 2024-05-31 12:18:35, main.py INFO User logged in to account poori
 2024-05-31 12:19:45, main.py INFO User logged in to account hamidreza
+2024-05-31 20:57:06, main.py INFO user created a new account
+2024-05-31 20:57:39, main.py INFO user created a new account
+2024-05-31 20:57:56, main.py INFO user created a new account
+2024-05-31 20:58:27, main.py INFO user created a new account
+2024-05-31 20:58:45, main.py INFO user created a new account
+2024-05-31 20:58:59, main.py INFO User logged in to account hamidreza
+2024-05-31 21:04:44, main.py INFO user created a new project
+2024-05-31 21:05:18, main.py INFO hamidreza removed amin from project markaz
+2024-05-31 21:07:25, main.py INFO hamidreza removed Pouria from project markaz
+2024-05-31 21:08:46, main.py INFO hamidreza added a new task to the project markaz
+2024-05-31 21:10:01, main.py INFO hamidreza changed the description of task number 3 of Project markaz
+2024-05-31 21:10:12, main.py INFO hamidreza added a comment to task number 1 of project markaz
+2024-05-31 21:10:21, main.py INFO hamidreza added a comment to task number 1 of project markaz
+2024-05-31 21:10:31, main.py INFO hamidreza changed the Status of task number 1 of project markaz to DONE
+2024-05-31 21:11:32, main.py INFO User logged in to account amin
+2024-05-31 21:11:56, main.py INFO amin added a comment to task number 1 of project markaz
+2024-05-31 21:12:01, main.py INFO amin changed the priority of task number 1 of project markaz to MEDIUM
+2024-05-31 21:12:51, main.py INFO amin changed the priority of task number 1 of project markaz to CRITICAL
+2024-05-31 21:12:55, main.py INFO amin changed the priority of task number 1 of project markaz to HIGH
+2024-05-31 21:13:01, main.py INFO amin changed the priority of task number 1 of project markaz to LOW
+2024-05-31 21:17:35, main.py INFO User logged in to account amin
+2024-05-31 21:24:18, main.py INFO User logged in to account amin

@@ -1,1 +1,48 @@
-[]
+[
+    {
+        "email": "bayat.h.r114@gmai.com",
+        "username": "hamidreza",
+        "password": "JDJiJDEyJHFKYnpweWVnV2dqakVKQUc5T3dRaS5ORkJLNDB0am8zTDJrT0pBdlE2MVpBR1N1WTlWNHhH",
+        "isActive": true,
+        "leaderOf": [
+            "markaz"
+        ],
+        "memberOf": []
+    },
+    {
+        "email": "lexpouri@gmail.com",
+        "username": "Pouria",
+        "password": "JDJiJDEyJFpodEFBb3Q1YjdzUE5rVjRxaDdYcU9aaFRNNWx0dXJXejF1Q3djQXB5MnhWNUg5RXpDbkRD",
+        "isActive": true,
+        "leaderOf": [],
+        "memberOf": []
+    },
+    {
+        "email": "saeed@gmail.com",
+        "username": "saeed",
+        "password": "JDJiJDEyJHFYbm43cXlvMzd6L3ozWFRBYll0QWVpMmFGdGNkTDJpTWpDMFFDZ2I2T0lnUmtNN0RRYzd1",
+        "isActive": true,
+        "leaderOf": [],
+        "memberOf": [
+            "markaz"
+        ]
+    },
+    {
+        "email": "soroush@gmail.com",
+        "username": "soroush",
+        "password": "JDJiJDEyJGh4RXl1Sy41eGRPQm9NYnlLakVabnVPd1dTV3YzL21md2tNL3MxM1MvRmp1Wk00bUpEbzhp",
+        "isActive": true,
+        "leaderOf": [],
+        "memberOf": []
+    },
+    {
+        "email": "amin@yahoo.com",
+        "username": "amin",
+        "password": "JDJiJDEyJEJqc0pUWUs3SnZ5MnQ5alF6OG9NSHVNOW95cVM0TDdPb3loeTRmdXZtZ0hUY05MTDBudXdt",
+        "isActive": true,
+        "leaderOf": [],
+        "memberOf": [
+            "markaz"
+        ]
+    }
+]
