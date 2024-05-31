@@ -163,3 +163,10 @@
 2024-05-31 21:13:01, main.py INFO amin changed the priority of task number 1 of project markaz to LOW
 2024-05-31 21:17:35, main.py INFO User logged in to account amin
 2024-05-31 21:24:18, main.py INFO User logged in to account amin
+2024-05-31 21:33:52, manager.py INFO Manager created!...Name: Kazem
+2024-05-31 21:33:52, manager.py INFO These arguments were passed to the (createAdmin) function : Kazem , IUSTforever
+2024-05-31 21:35:50, manager.py INFO Manager created!...Name: Kazem
+2024-05-31 21:35:50, manager.py INFO These arguments were passed to the (createAdmin) function : Kazem , IUSTforever
+2024-05-31 21:36:15, main.py INFO user entered as manager
+2024-05-31 21:36:19, main.py INFO user deactivated hamidreza as the manager
+2024-05-31 21:36:21, main.py INFO user activated hamidreza as the manager

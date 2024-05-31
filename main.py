@@ -266,13 +266,14 @@ def EnterAsManager():
         global checkingIfuserIsManager  
         checkingIfuserIsManager=True
         console.print("Confirm that you are the manager:", style="magenta")
-        console.print("Enter your username:", end="")
+        console.print("Enter your username:", end=" ")
         enteredUsername = input()
-        console.print("\nEnter your password:", end="")
+        console.print("\nEnter your password:", end=" ")
         enteredPass=input()
         with open("managerInfo.json", 'r') as h:
             jj=json.load(h)
-            if enteredUsername != jj["name"] or enteredPass != jj['password'] :
+            
+            if enteredUsername != jj["name"] or not check_password(enteredPass, jj['password']) :
                 checkingIfuserIsManager = False
         
     validating() 
