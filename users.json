@@ -3,9 +3,10 @@
         "email": "bayat.h.r114@gmai.com",
         "username": "hamidreza",
         "password": "JDJiJDEyJHFKYnpweWVnV2dqakVKQUc5T3dRaS5ORkJLNDB0am8zTDJrT0pBdlE2MVpBR1N1WTlWNHhH",
-        "isActive": true,
+        "isActive": false,
         "leaderOf": [
-            "markaz"
+            "markaz",
+            "tatal"
         ],
         "memberOf": []
     },
@@ -24,7 +25,8 @@
         "isActive": true,
         "leaderOf": [],
         "memberOf": [
-            "markaz"
+            "markaz",
+            "tatal"
         ]
     },
     {
@@ -42,7 +44,16 @@
         "isActive": true,
         "leaderOf": [],
         "memberOf": [
-            "markaz"
+            "markaz",
+            "tatal"
         ]
+    },
+    {
+        "email": "maamd@gmail.com",
+        "username": "mamad",
+        "password": "JDJiJDEyJEpMcUZnUU4uRkQuMFdFMFUudHlCby5Uck9KZzRkMTdCazVkeFpDTm9XbjY3ZVBmSHZhOS9t",
+        "isActive": true,
+        "leaderOf": [],
+        "memberOf": []
     }
 ]

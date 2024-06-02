@@ -170,3 +170,20 @@
 2024-05-31 21:36:15, main.py INFO user entered as manager
 2024-05-31 21:36:19, main.py INFO user deactivated hamidreza as the manager
 2024-05-31 21:36:21, main.py INFO user activated hamidreza as the manager
+2024-06-01 11:43:53, main.py INFO User logged in to account hamidreza
+2024-06-01 11:48:02, main.py INFO user created a new project
+2024-06-01 11:48:28, main.py INFO hamidreza removed amin from project tatal
+2024-06-01 11:49:27, main.py INFO hamidreza added a new task to the project tatal
+2024-06-01 11:51:08, main.py INFO hamidreza added a comment to task number 2 of project tatal
+2024-06-01 11:51:12, main.py INFO hamidreza changed the Status of task number 2 of project tatal to DOING
+2024-06-01 11:51:52, main.py INFO User logged in to account amin
+2024-06-01 11:52:48, main.py INFO User logged in to account saeed
+2024-06-01 11:53:10, main.py INFO saeed changed the Status of task number 2 of project tatal to DOING
+2024-06-01 11:53:40, main.py INFO User logged in to account hamidreza
+2024-06-01 11:54:19, main.py INFO user entered as manager
+2024-06-01 11:54:25, main.py INFO user deactivated hamidreza as the manager
+2024-06-01 11:54:27, main.py INFO user activated hamidreza as the manager
+2024-06-01 12:07:26, main.py INFO user created a new account
+2024-06-01 12:08:54, main.py INFO User logged in to account mamad
+2024-06-01 12:24:17, main.py INFO user entered as manager
+2024-06-01 12:25:06, main.py INFO user deactivated hamidreza as the manager
